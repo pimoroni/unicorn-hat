@@ -1,0 +1,16 @@
+You are using this at your OWN RISK. I believe this software is reasonably safe to use (aside
+from the intrinsic risk to those who are photosensitive - see below), although I can't be certain
+that it won't trash your hardware or cause property damage.
+
+Speaking of risk, WS2812 pixels are bright enough to cause eye pain and (for all I know) possibly
+retina damage when run at full strength. It's a good idea to set the brightness at 0.2 or so for
+direct viewing (whether you're looking directly at the pixels or not), or to put some diffuse
+material between you and the LEDs.
+
+PHOTOSENSITIVITY WARNING:
+Patterns of light and darkness (stationary or moving), flashing lights, patterns and backgrounds
+on screens, and the like, may cause epilleptic seizures in some people. This is a danger EVEN IF
+THE PERSON (WHICH MAY BE *YOU*) HAS NEVER KNOWINGLY HAD A PHOTOSENSITIVE EPISODE BEFORE. It's up
+to you to learn the warning signs, but symptoms may include dizziness, nausea, vision changes,
+convlusions, disorientation, involuntary movements, and eye twitching. (This list is not    
+necessarily exhaustive.)
