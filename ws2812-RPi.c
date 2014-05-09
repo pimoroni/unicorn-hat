@@ -133,6 +133,20 @@
 #define GPIO_BASE		0x20200000
 #define GPIO_LEN		0xB4
 
+// GPIO
+// -------------------------------------------------------------------------------------------------
+#define GPFSEL0			0x20200000			// GPIO function select, pins 0-9 (bits 30-31 reserved)
+#define GPFSEL1			0x20200004			// Pins 10-19
+#define GPFSEL2			0x20200008			// Pins 20-29
+#define GPFSEL3			0x2020000C			// Pins 30-39
+#define GPFSEL4			0x20200010			// Pins 40-49
+#define GPFSEL5			0x20200014			// Pins 50-53
+#define GPSET0			0x2020001C			// Set (turn on) pin
+#define GPCLR0			0x20200028			// Clear (turn off) pin
+#define GPPUD			0x20200094			// Internal pullup/pulldown resistor control
+#define GPPUDCLK0		0x20200098			// PUD clock for pins 0-31
+#define GPPUDCLK1		0x2020009C			// PUD clock for pins 32-53
+
 // Memory offsets for the PWM clock register, which is undocumented! Please fix that, Broadcom!
 // -------------------------------------------------------------------------------------------------
 #define	PWM_CLK_CNTL 	40		// Control (on/off)
@@ -352,7 +366,11 @@ static struct control_data_s *ctl;
 #define false 0
 
 // GPIO
+#define INP_GPIO(g) *(gpio_reg+((g)/10)) &= ~(7<<(((g)%10)*3))
+#define OUT_GPIO(g) *(gpio_reg+((g)/10)) |=  (1<<(((g)%10)*3))
 #define SET_GPIO_ALT(g,a) *(gpio_reg+(((g)/10))) |= (((a)<=3?(a)+4:(a)==4?3:2)<<(((g)%10)*3))
+#define GPIO_SET *(gpio_reg+7)  // sets   bits which are 1 ignores bits which are 0
+#define GPIO_CLR *(gpio_reg+10) // clears bits which are 1 ignores bits which are 0
 
 
 // =================================================================================================
@@ -801,8 +819,12 @@ void initHardware() {
 
 	// Set PWM alternate function for GPIO18
 	// ---------------------------------------------------------------
+	//gpio_reg[1] &= ~(7 << 24);
+	//usleep(100);
+	//gpio_reg[1] |= (2 << 24);
+	//usleep(100);
 	SET_GPIO_ALT(18, 5);
-
+	
 
 	// Allocate memory for the DMA control block & data to be sent
 	// ---------------------------------------------------------------
@@ -887,6 +909,7 @@ void initHardware() {
 	cbp->dst = phys_pwm_fifo_addr;
 
 	// Etc...
+	// FIXME: Change length to enough bytes to transmit data, plus two words to ensure final zero is sent
 	cbp->length = NUM_DATA_WORDS * 4;		// DMA xfer length is in bytes, but words are 4 bytes long!
 	cbp->stride = 0;
 	cbp->pad[0] = 0;
@@ -905,39 +928,46 @@ void initHardware() {
 	ctl->sample[6] = 0xF00F0000;
 	*/
 
-	// Reset PWM and DMA controllers
-	// ---------------------------------------------------------------
-	// Nuke the PWM control word
-	pwm_reg[PWM_CTL] = 0;
-	usleep(1000);
 
-	// Reset the DMA controller
-	dma_reg[DMA_CS] = (1 << DMA_CS_ABORT);
+	// Stop any existing DMA transfers
+	// ---------------------------------------------------------------
+	dma_reg[DMA_CS] |= (1 << DMA_CS_ABORT);
 	usleep(1000);
 	dma_reg[DMA_CS] = (1 << DMA_CS_RESET);
 	usleep(1000);
 
+
 	// PWM Clock
 	// ---------------------------------------------------------------
+	// Kill the clock
+	// FIXME: Change this to use a DEFINE
+	clk_reg[PWM_CLK_CNTL] = 0x5A000000 | (1 << 5);
+	usleep(1000);
+
+	// Disable DMA requests
+	CLRBIT(pwm_reg[PWM_DMAC], PWM_DMAC_ENAB);
+	usleep(1000);
+
 	// The fractional part is quantized to a range of 0-1024, so multiply the decimal part by 1024.
 	// E.g., 0.25 * 1024 = 256.
 	// So, if you want a divisor of 400.5, set idiv to 400 and fdiv to 512.
 	unsigned int idiv = 400;
 	unsigned short fdiv = 0;	// Should be 16 bits, but the value must be <= 1024
-
-	clk_reg[PWM_CLK_CNTL] = 0x5A000000 | (1 << 5);				// Kill clock
-	usleep(1000);
-	clk_reg[PWM_CLK_CNTL] = 0x5A000000 | (idiv << 12) | fdiv;	// Set clock multiplier
+	clk_reg[PWM_CLK_DIV] = 0x5A000000 | (idiv << 12) | fdiv;	// Set clock multiplier
 	usleep(1000);
 
 	// Enable the clock. Next-to-last digit means "enable clock". Last digit is 1 (oscillator),
 	// 4 (PLLA), 5 (PLLC), or 6 (PLLD) (according to the docs) although PLLA doesn't seem to work.
+	// FIXME: Change this to use a DEFINE
 	clk_reg[PWM_CLK_CNTL] = 0x5A000015;
 	usleep(1000);
 
 
 	// PWM
 	// ---------------------------------------------------------------
+	// Clear any preexisting crap from the control & status register
+	pwm_reg[PWM_CTL] = 0;
+
 	// Set transmission range (32 bytes, or 1 word)
 	// <32: Truncate. >32: Pad with SBIT1. As it happens, 32 is perfect.
 	pwm_reg[PWM_RNG1] = 32;
@@ -978,7 +1008,6 @@ void initHardware() {
 	CLRBIT(pwm_reg[PWM_CTL], PWM_CTL_MSEN1);
 	usleep(1000);
 	
-
 
 	// DMA
 	// ---------------------------------------------------------------
@@ -1147,7 +1176,6 @@ int main(int argc, char **argv) {
 
 	// Random fade
 	srand(time(NULL));
-	setBrightness(0.2);
 	for(j=0; j<10; j++) {
 		ptr = 0;
 		uint8_t red = rand();
@@ -1163,7 +1191,7 @@ int main(int argc, char **argv) {
 
 	// Watermelon fade :)
 	float k;
-	for(k=0; k<0.3; k+=.001) {
+	for(k=0; k<0.5; k+=.01) {
 		ptr=0;
 		setBrightness(k);
 		for(i=0; i<numLEDs; i++) {
