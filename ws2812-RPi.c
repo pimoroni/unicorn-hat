@@ -31,10 +31,12 @@
 // convlusions, disorientation, involuntary movements, and eye twitching. (This list is not
 // necessarily exhaustive.)
 //
+// NEOPIXEL BEST PRACTICES: https://learn.adafruit.com/adafruit-neopixel-uberguide/best-practices
+//
 // Connections:
 //		Positive to Raspberry Pi's 3.3v
 //		Negative to Raspberry Pi's ground
-//		Data to pin #18
+//		Data to pin #18 (through a resistor, which you should know from the Best Practices guide!)
 //
 // GitHub (source, support, etc.): https://github.com/626Pilot/RaspberryPi-NeoPixel-WS2812
 //    Buy WS2812-based stuff from: http://adafruit.com

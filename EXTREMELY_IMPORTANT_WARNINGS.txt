@@ -14,3 +14,7 @@ THE PERSON (WHICH MAY BE *YOU*) HAS NEVER KNOWINGLY HAD A PHOTOSENSITIVE EPISODE
 to you to learn the warning signs, but symptoms may include dizziness, nausea, vision changes,
 convlusions, disorientation, involuntary movements, and eye twitching. (This list is not    
 necessarily exhaustive.)
+
+BEST PRACTICES: https://learn.adafruit.com/adafruit-neopixel-uberguide/best-practices
+It's a good idea to read these. They include advice for how to protect your NeoPixels against
+shorting out, and how to use a capacitor to ensure smooth power delivery.
