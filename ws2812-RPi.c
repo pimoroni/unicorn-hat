@@ -14,6 +14,8 @@
 // Adapted for the WS2812 by 626Pilot, April/May 2014
 // Huge ASCII art section labels are from http://patorjk.com/software/taag/
 //
+// License: GPL
+//
 // You are using this at your OWN RISK. I believe this software is reasonably safe to use (aside
 // from the intrinsic risk to those who are photosensitive - see below), although I can't be certain
 // that it won't trash your hardware or cause property damage.
@@ -543,10 +545,7 @@ unsigned char setBrightness(float b) {
 
 // Zero out the PWM waveform buffer
 void clearPWMBuffer() {
-	int i;
-	for(i=0; i<NUM_DATA_WORDS; i++) {
-		PWMWaveform[i] = 0x00000000;
-	}
+	memset(PWMWaveform, 0, NUM_DATA_WORDS * 4);	// Times four because memset deals in bytes.
 }
 
 // Zero out the LED buffer
@@ -573,15 +572,30 @@ unsigned char setPixelColor(unsigned int pixel, unsigned char r, unsigned char g
 		return false;
 	}
 	if(pixel > LED_BUFFER_LENGTH - 1) {
-		printf("Unable to set pixel %d (don't have that many LEDs!)\n", pixel);
+		printf("Unable to set pixel %d (LED buffer is %d pixels long)\n", pixel, LED_BUFFER_LENGTH);
 		return false;
-	} else {
-		LEDBuffer[pixel] = RGB2Color(r, g, b);
-		return true;
 	}
+	LEDBuffer[pixel] = RGB2Color(r, g, b);
+	return true;
+}
+
+// Get pixel color
+Color_t getPixelColor(unsigned int pixel) {
+	if(pixel < 0) {
+		printf("Unable to get pixel %d (less than zero?)\n", pixel);
+		return RGB2Color(0, 0, 0);
+	}
+	if(pixel > LED_BUFFER_LENGTH - 1) {
+		printf("Unable to get pixel %d (LED buffer is %d pixels long)\n", pixel, LED_BUFFER_LENGTH);
+		return RGB2Color(0, 0, 0);
+	}
+	return LEDBuffer[pixel];
 }
 
 // Set an individual bit in the PWM output array, accounting for word boundaries
+// The (31 - bitIdx) is so that we write the data backwards, correcting its endianness
+// This means getPWMBit will return something other than what was written, so it would be nice
+// if the logic that calls this function would figure it out instead. (However, that's trickier)
 void setPWMBit(unsigned int bitPos, unsigned char bit) {
 
 	// Fetch word the bit is in
@@ -592,10 +606,12 @@ void setPWMBit(unsigned int bitPos, unsigned char bit) {
 
 	switch(bit) {
 		case 1:
-			PWMWaveform[wordOffset] |= (1 << bitIdx);
+			PWMWaveform[wordOffset] |= (1 << (31 - bitIdx));
+//			PWMWaveform[wordOffset] |= (1 << bitIdx);
 			break;
 		case 0:
-			PWMWaveform[wordOffset] &= ~(1 << bitIdx);
+			PWMWaveform[wordOffset] &= ~(1 << (31 - bitIdx));
+//			PWMWaveform[wordOffset] &= ~(1 << bitIdx);
 			break;
 	}
 }
@@ -634,8 +650,9 @@ void dumpLEDBuffer() {
 	}
 }
 
-// Dump contents of PWM waveform.
-// The buffer is big enough to hold 170.66 commands, so the last number dumped will have only 2 digits!
+// Dump contents of PWM waveform
+// The last number dumped may not have a multiple of 3 digits (our basic unit of data is 3 bits,
+// whereas the RAM comprising the buffer has to be a multiple of 2 bits in size)
 void dumpPWMBuffer() {
 	int i;
 	printf("Dumping PWM output buffer:\n");
@@ -810,6 +827,10 @@ void initHardware() {
 	int fd;
 	char pagemap_fn[64];
 
+	// Clear the PWM buffer
+	// ---------------------------------------------------------------
+	clearPWMBuffer();
+
 	// Set up peripheral access
 	// ---------------------------------------------------------------
 	dma_reg = map_peripheral(DMA_BASE, DMA_LEN);
@@ -910,12 +931,22 @@ void initHardware() {
 	// Destination is the PWM controller
 	cbp->dst = phys_pwm_fifo_addr;
 
-	// Etc...
-	// FIXME: Change length to enough bytes to transmit data, plus two words to ensure final zero is sent
-	cbp->length = NUM_DATA_WORDS * 4;		// DMA xfer length is in bytes, but words are 4 bytes long!
+	// 72 bits per pixel / 32 bits per word = 2.25 words per pixel
+	// Add 1 to make sure the PWM FIFO gets the message: "we're sending zeroes"
+	// Times 4 because DMA works in bytes, not words
+	cbp->length = ((numLEDs * 2.25) + 1) * 4;
+	if(cbp->length > NUM_DATA_WORDS) {
+		cbp->length = NUM_DATA_WORDS;
+	}
+
+	// We don't use striding
 	cbp->stride = 0;
+	
+	// These are reserved
 	cbp->pad[0] = 0;
 	cbp->pad[1] = 0;
+	
+	// Pointer to next block - 0 shuts down the DMA channel when transfer is complete
 	cbp->next = 0;
 
 	// Testing
@@ -934,9 +965,9 @@ void initHardware() {
 	// Stop any existing DMA transfers
 	// ---------------------------------------------------------------
 	dma_reg[DMA_CS] |= (1 << DMA_CS_ABORT);
-	usleep(1000);
+	usleep(100);
 	dma_reg[DMA_CS] = (1 << DMA_CS_RESET);
-	usleep(1000);
+	usleep(100);
 
 
 	// PWM Clock
@@ -944,11 +975,11 @@ void initHardware() {
 	// Kill the clock
 	// FIXME: Change this to use a DEFINE
 	clk_reg[PWM_CLK_CNTL] = 0x5A000000 | (1 << 5);
-	usleep(1000);
+	usleep(100);
 
 	// Disable DMA requests
 	CLRBIT(pwm_reg[PWM_DMAC], PWM_DMAC_ENAB);
-	usleep(1000);
+	usleep(100);
 
 	// The fractional part is quantized to a range of 0-1024, so multiply the decimal part by 1024.
 	// E.g., 0.25 * 1024 = 256.
@@ -956,13 +987,13 @@ void initHardware() {
 	unsigned int idiv = 400;
 	unsigned short fdiv = 0;	// Should be 16 bits, but the value must be <= 1024
 	clk_reg[PWM_CLK_DIV] = 0x5A000000 | (idiv << 12) | fdiv;	// Set clock multiplier
-	usleep(1000);
+	usleep(100);
 
 	// Enable the clock. Next-to-last digit means "enable clock". Last digit is 1 (oscillator),
 	// 4 (PLLA), 5 (PLLC), or 6 (PLLD) (according to the docs) although PLLA doesn't seem to work.
 	// FIXME: Change this to use a DEFINE
 	clk_reg[PWM_CLK_CNTL] = 0x5A000015;
-	usleep(1000);
+	usleep(100);
 
 
 	// PWM
@@ -973,7 +1004,7 @@ void initHardware() {
 	// Set transmission range (32 bytes, or 1 word)
 	// <32: Truncate. >32: Pad with SBIT1. As it happens, 32 is perfect.
 	pwm_reg[PWM_RNG1] = 32;
-	usleep(1000);
+	usleep(100);
 	
 	// Send DMA requests to fill the FIFO
 	pwm_reg[PWM_DMAC] =
@@ -984,51 +1015,51 @@ void initHardware() {
 	
 	// Clear the FIFO
 	SETBIT(pwm_reg[PWM_CTL], PWM_CTL_CLRF1);
-	usleep(1000);
+	usleep(100);
 	
 	// Don't repeat last FIFO contents if it runs dry
 	CLRBIT(pwm_reg[PWM_CTL], PWM_CTL_RPTL1);
-	usleep(1000);
+	usleep(100);
 	
 	// Silence (default) bit is 0
 	CLRBIT(pwm_reg[PWM_CTL], PWM_CTL_SBIT1);
-	usleep(1000);
+	usleep(100);
 	
 	// Polarity = default (low = 0, high = 1)
 	CLRBIT(pwm_reg[PWM_CTL], PWM_CTL_POLA1);
-	usleep(1000);
+	usleep(100);
 	
 	// Enable serializer mode
 	SETBIT(pwm_reg[PWM_CTL], PWM_CTL_MODE1);
-	usleep(1000);
+	usleep(100);
 	
 	// Use FIFO rather than DAT1
 	SETBIT(pwm_reg[PWM_CTL], PWM_CTL_USEF1);
-	usleep(1000);
+	usleep(100);
 
 	// Disable MSEN1
 	CLRBIT(pwm_reg[PWM_CTL], PWM_CTL_MSEN1);
-	usleep(1000);
+	usleep(100);
 	
 
 	// DMA
 	// ---------------------------------------------------------------
 	// Raise an interrupt when transfer is complete, which will set the INT flag in the CS register
 	SETBIT(dma_reg[DMA_CS], DMA_CS_INT);
-	usleep(1000);
+	usleep(100);
 	
 	// Clear the END flag (by setting it - this is a "write 1 to clear", or W1C, bit)
 	SETBIT(dma_reg[DMA_CS], DMA_CS_END);
-	usleep(1000);
+	usleep(100);
 	
 	// Send the physical address of the control block into the DMA controller
 	dma_reg[DMA_CONBLK_AD] = mem_virt_to_phys(ctl->cb);
-	usleep(1000);
+	usleep(100);
 	
 	// Clear error flags, if any (these are also W1C bits)
 	// FIXME: Use a define instead of this
 	dma_reg[DMA_DEBUG] = 7;
-	usleep(1000);
+	usleep(100);
 }
 
 // Begin the transfer
@@ -1059,7 +1090,7 @@ void startTransfer() {
 void show() {
 
 	// Clear out the PWM buffer
-	clearPWMBuffer();
+	// Disabled, because we will overwrite the buffer anyway.
 
 	// Read data from LEDBuffer[], translate it into wire format, and write to PWMWaveform
 	int i, j;
@@ -1103,16 +1134,14 @@ void show() {
 	// Copy PWM waveform to DMA's data buffer
 	//printf("Copying %d words to DMA data buffer\n", NUM_DATA_WORDS);
 	ctl = (struct control_data_s *)virtbase;
-	for(i=0; i<NUM_DATA_WORDS; i++) {
-		// First, we have to reverse the bit order
-		PWMWaveform[i] = reverseWord(PWMWaveform[i]);
+	dma_cb_t *cbp = ctl->cb;
 
-//		printf("Adding word to DMA buffer: ");
-//		printBinary(PWMWaveform[i], 32);
-//		printf("\n");
-
+	// This block is a major CPU hog when there are lots of pixels to be transmitted.
+	// It would go quicker with DMA.
+	for(i = 0; i < (cbp->length / 4); i++) {
 		ctl->sample[i] = PWMWaveform[i];
 	}
+
 
 	// Enable DMA and PWM engines, which should now send the data
 	startTransfer();
@@ -1140,6 +1169,19 @@ The FIFO only has enough words for about 7 LEDs, which is why we use DMA instead
 /**/
 
 }
+
+
+
+// =================================================================================================
+//	___________ _____  _____              __          
+//	\_   _____// ____\/ ____\____   _____/  |_  ______
+//	 |    __)_\   __\\   __\/ __ \_/ ___\   __\/  ___/
+//	 |        \|  |   |  | \  ___/\  \___|  |  \___ \ 
+//	/_______  /|__|   |__|  \___  >\___  >__| /____  >
+//	        \/                  \/     \/          \/ 
+// =================================================================================================
+
+
 
 // =================================================================================================
 //	   _____         .__        
@@ -1193,13 +1235,24 @@ int main(int argc, char **argv) {
 
 	// Watermelon fade :)
 	float k;
-	for(k=0; k<0.5; k+=.01) {
-		ptr=0;
-		setBrightness(k);
-		for(i=0; i<numLEDs; i++) {
-			setPixelColor(i, i*5, 64, i*2);
+	while(1) {
+		for(k=0; k<0.5; k+=.01) {
+			ptr=0;
+			setBrightness(k);
+			for(i=0; i<numLEDs; i++) {
+				setPixelColor(i, i*5, 64, i*2);
+			}
+			show();
 		}
-		show();
+		for(k=0.5; k>=0; k-=.01) {
+			ptr=0;
+			setBrightness(k);
+			for(i=0; i<numLEDs; i++) {
+				setPixelColor(i, i*5, 64, i*2);
+			}
+			show();
+		}
+		usleep(1000);
 	}
 
 	// Exit cleanly, freeing memory and stopping the DMA & PWM engines
