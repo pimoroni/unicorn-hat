@@ -935,8 +935,8 @@ void initHardware() {
 	// Add 1 to make sure the PWM FIFO gets the message: "we're sending zeroes"
 	// Times 4 because DMA works in bytes, not words
 	cbp->length = ((numLEDs * 2.25) + 1) * 4;
-	if(cbp->length > NUM_DATA_WORDS) {
-		cbp->length = NUM_DATA_WORDS;
+	if(cbp->length > NUM_DATA_WORDS * 4) {
+		cbp->length = NUM_DATA_WORDS * 4;
 	}
 
 	// We don't use striding
