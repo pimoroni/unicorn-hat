@@ -1218,44 +1218,63 @@ int main(int argc, char **argv) {
 	clearLEDBuffer();
 
 
-	// Random fade
-	srand(time(NULL));
-	for(j=0; j<10; j++) {
-		ptr = 0;
-		uint8_t red = rand();
-		uint8_t green = rand();
-		uint8_t blue = rand();
-		//printf("red=%d green=%d blue=%d\n", red, green, blue);
-		for(i=0; i<numLEDs; i++) {
-			setPixelColor(ptr++, ((float)red * (float)i/(float)numLEDs), green, blue);
-		}
-		show();
-		usleep(250000);
-	}
+	// Here are some demo effects!
 
 	// Watermelon fade :)
 	float k;
+	for(k=0; k<0.5; k+=.01) {
+		ptr=0;
+		setBrightness(k);
+		for(i=0; i<numLEDs; i++) {
+			setPixelColor(i, i*5, 64, i*2);
+		}
+		show();
+	}
+	for(k=0.5; k>=0; k-=.01) {
+		ptr=0;
+		setBrightness(k);
+		for(i=0; i<numLEDs; i++) {
+			setPixelColor(i, i*5, 64, i*2);
+		}
+		show();
+	}
+	usleep(1000);
+
+	// Random color fade
+	srand(time(NULL));
+	uint8_t lastRed = 0;
+	uint8_t lastGreen = 0;
+	uint8_t lastBlue = 0;
+	Color_t curPixel;
+	setBrightness(0.5);
 	while(1) {
-		for(k=0; k<0.5; k+=.01) {
-			ptr=0;
-			setBrightness(k);
-			for(i=0; i<numLEDs; i++) {
-				setPixelColor(i, i*5, 64, i*2);
+		for(j=0; j<10; j++) {
+			ptr = 0;
+			uint8_t red = rand();
+			uint8_t green = rand();
+			uint8_t blue = rand();
+			for(k=0; k<1; k+=.01) {
+				for(i=0; i<numLEDs; i++) {
+					setPixelColor(
+						i,
+						(red * k) + (lastRed * (1-k)),
+						i * 5,//(green * k) + (lastGreen * (1-k)),
+						(blue * k) + (lastBlue * (1-k))
+						);
+					curPixel = getPixelColor(i);
+				}
+				show();
+				usleep(1000);
 			}
-			show();
+			lastRed = red;
+			lastGreen = green;
+			lastBlue = blue;
 		}
-		for(k=0.5; k>=0; k-=.01) {
-			ptr=0;
-			setBrightness(k);
-			for(i=0; i<numLEDs; i++) {
-				setPixelColor(i, i*5, 64, i*2);
-			}
-			show();
-		}
-		usleep(1000);
 	}
 
+
 	// Exit cleanly, freeing memory and stopping the DMA & PWM engines
+	// We trap all signals (including Ctrl+C), so even if you don't get here, it terminates correctly
 	terminate(0);
 
 	return 0;
