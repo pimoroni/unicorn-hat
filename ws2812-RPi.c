@@ -510,10 +510,11 @@ static void * map_peripheral(uint32_t base, uint32_t len) {
 // =================================================================================================
 
 // Brightness - I recommend 0.2 for direct viewing at 3.3v.
-float brightness = 1.0;
+#define DEFAULT_BRIGHTNESS 1.0
+float brightness = DEFAULT_BRIGHTNESS;
 
 // LED buffer (this will be translated into pulses in PWMWaveform[])
-typedef struct Color_t {
+typedef struct {
 	unsigned char r;
 	unsigned char g;
 	unsigned char b;
@@ -565,6 +566,11 @@ Color_t RGB2Color(unsigned char r, unsigned char g, unsigned char b) {
 	//return ((unsigned int)r << 16) | ((unsigned int)g << 8) | b;
 }
 
+// Alias for the above
+Color_t Color(unsigned char r, unsigned char g, unsigned char b) {
+	return RGB2Color(r, g, b);
+}
+
 // Set pixel color (24-bit color)
 unsigned char setPixelColor(unsigned int pixel, unsigned char r, unsigned char g, unsigned char b) {
 	if(pixel < 0) {
@@ -579,6 +585,20 @@ unsigned char setPixelColor(unsigned int pixel, unsigned char r, unsigned char g
 	return true;
 }
 
+// Set pixel color, by a direct Color_t
+unsigned char setPixelColorT(unsigned int pixel, Color_t c) {
+	if(pixel < 0) {
+		printf("Unable to set pixel %d (less than zero?)\n", pixel);
+		return false;
+	}
+	if(pixel > LED_BUFFER_LENGTH - 1) {
+		printf("Unable to set pixel %d (LED buffer is %d pixels long)\n", pixel, LED_BUFFER_LENGTH);
+		return false;
+	}
+	LEDBuffer[pixel] = c;
+	return true;
+}
+
 // Get pixel color
 Color_t getPixelColor(unsigned int pixel) {
 	if(pixel < 0) {
@@ -590,6 +610,16 @@ Color_t getPixelColor(unsigned int pixel) {
 		return RGB2Color(0, 0, 0);
 	}
 	return LEDBuffer[pixel];
+}
+
+// Return # of pixels
+unsigned int numPixels() {
+	return numLEDs;
+}
+
+// Return pointer to pixels (FIXME: dunno if this works!)
+Color_t* getPixels() {
+	return LEDBuffer;
 }
 
 // Set an individual bit in the PWM output array, accounting for word boundaries
@@ -1180,6 +1210,97 @@ The FIFO only has enough words for about 7 LEDs, which is why we use DMA instead
 //	/_______  /|__|   |__|  \___  >\___  >__| /____  >
 //	        \/                  \/     \/          \/ 
 // =================================================================================================
+// The effects in this section are adapted from the Adafruit NeoPixel library at:
+// https://github.com/adafruit/Adafruit_NeoPixel/blob/master/examples/strandtest/strandtest.ino
+
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g - b - back to r.
+Color_t Wheel(uint8_t WheelPos) {
+	if(WheelPos < 85) {
+		return Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+	} else if(WheelPos < 170) {
+		WheelPos -= 85;
+		return Color(255 - WheelPos * 3, 0, WheelPos * 3);
+	} else {
+		WheelPos -= 170;
+		return Color(0, WheelPos * 3, 255 - WheelPos * 3);
+	}
+}
+
+
+// Fill the dots one after the other with a color
+void colorWipe(Color_t c, uint8_t wait) {
+	uint16_t i;
+	for(i=0; i<numPixels(); i++) {
+		setPixelColorT(i, c);
+		show();
+		usleep(wait * 1000);
+	}
+}
+
+// Rainbow
+void rainbow(uint8_t wait) {
+	uint16_t i, j;
+
+	for(j=0; j<256; j++) {
+		for(i=0; i<numPixels(); i++) {
+			setPixelColorT(i, Wheel((i+j) & 255));
+		}
+		show();
+		usleep(wait * 1000);
+	}
+}
+
+// Slightly different, this makes the rainbow equally distributed throughout
+void rainbowCycle(uint8_t wait) {
+	uint16_t i, j;
+
+	for(j=0; j<256*5; j++) { // 5 cycles of all colors on wheel
+		for(i=0; i<numPixels(); i++) {
+			setPixelColorT(i, Wheel(((i * 256 / numPixels()) + j) & 255));
+		}
+		show();
+		usleep(wait * 1000);
+	}
+}
+
+//Theatre-style crawling lights.
+void theaterChase(Color_t c, uint8_t wait) {
+	unsigned int j, q, i;
+	for (j=0; j<15; j++) {  //do this many cycles of chasing
+		for (q=0; q < 3; q++) {
+			for (i=0; i < numPixels(); i=i+3) {
+				setPixelColorT(i+q, c);			// Turn every third pixel on
+			}
+			show();
+     
+			usleep(wait * 1000);
+
+			for (i=0; i < numPixels(); i=i+3) {
+				setPixelColor(i+q, 0, 0, 0);	// Turn every third pixel off
+			}
+		}
+	}
+}
+
+//Theatre-style crawling lights with rainbow effect
+void theaterChaseRainbow(uint8_t wait) {
+	int j, q, i;
+	for (j=0; j < 256; j+=4) {     // cycle through every 4th color on the wheel
+		for (q=0; q < 3; q++) {
+			for (i=0; i < numPixels(); i=i+3) {
+				setPixelColorT(i+q, Wheel((i+j) % 255));    //turn every third pixel on
+			}
+			show();
+
+			usleep(wait * 1000);
+       
+			for (i=0; i < numPixels(); i=i+3) {
+				setPixelColor(i+q, 0, 0, 0);        //turn every third pixel off
+			}
+		}
+	}
+}
 
 
 
@@ -1192,36 +1313,23 @@ The FIFO only has enough words for about 7 LEDs, which is why we use DMA instead
 //	        \/     \/        \/ 
 // =================================================================================================
 
-int main(int argc, char **argv) { 
+void effectsDemo() {
 
 	int i, j, ptr;
+	float k;
 
-	// Catch all signals possible - it's vital we kill the DMA engine on process exit!
-	for (i = 0; i < 64; i++) {
-		struct sigaction sa;
-		memset(&sa, 0, sizeof(sa));
-		sa.sa_handler = terminate;
-		sigaction(i, &sa, NULL);
-	}
-
-	// Don't buffer console output
-	setvbuf(stdout, NULL, _IONBF, 0);
-
-	// How many LEDs?
-	numLEDs = 24;
-
-	// How bright? (Recommend 0.2 for direct viewing @ 3.3V)
-	setBrightness(0.2);
-
-	// Init PWM generator and clear LED buffer
-	initHardware();
-	clearLEDBuffer();
-
-
-	// Here are some demo effects!
+	// Default effects from the Arduino lib
+	colorWipe(Color(255, 0, 0), 50); // Red
+	colorWipe(Color(0, 255, 0), 50); // Green
+	colorWipe(Color(0, 0, 255), 50); // Blue
+	theaterChase(Color(127, 127, 127), 50); // White
+	theaterChase(Color(127,   0,   0), 50); // Red
+	theaterChase(Color(  0,   0, 127), 50); // Blue
+	rainbow(5);
+	rainbowCycle(5);
+	theaterChaseRainbow(50);
 
 	// Watermelon fade :)
-	float k;
 	for(k=0; k<0.5; k+=.01) {
 		ptr=0;
 		setBrightness(k);
@@ -1245,33 +1353,71 @@ int main(int argc, char **argv) {
 	uint8_t lastRed = 0;
 	uint8_t lastGreen = 0;
 	uint8_t lastBlue = 0;
+	uint8_t red, green, blue;
 	Color_t curPixel;
-	setBrightness(0.5);
-	while(1) {
-		for(j=0; j<10; j++) {
-			ptr = 0;
-			uint8_t red = rand();
-			uint8_t green = rand();
-			uint8_t blue = rand();
-			for(k=0; k<1; k+=.01) {
-				for(i=0; i<numLEDs; i++) {
-					setPixelColor(
-						i,
-						(red * k) + (lastRed * (1-k)),
-						i * 5,//(green * k) + (lastGreen * (1-k)),
-						(blue * k) + (lastBlue * (1-k))
-						);
-					curPixel = getPixelColor(i);
-				}
-				show();
-				usleep(1000);
-			}
-			lastRed = red;
-			lastGreen = green;
-			lastBlue = blue;
+	setBrightness(DEFAULT_BRIGHTNESS);
+	for(j=1; j<16; j++) {
+		ptr = 0;
+		if(j % 3) {
+			red = 120;
+			green = 64;
+			blue = 48;
+		} else if(j % 7) {
+			red = 255;
+			green = 255;
+			blue = 255;
+		} else {
+			red = rand();
+			green = rand();
+			blue = rand();
 		}
+		for(k=0; k<1; k+=.01) {
+			for(i=0; i<numLEDs; i++) {
+				setPixelColor(
+					i,
+					(red * k) + (lastRed * (1-k)),
+					i * (255 / numLEDs), //(green * k) + (lastGreen * (1-k)),
+					(blue * k) + (lastBlue * (1-k))
+					);
+				curPixel = getPixelColor(i);
+			}
+			show();
+		}
+		lastRed = red;
+		lastGreen = green;
+		lastBlue = blue;
+	}
+}
+
+
+int main(int argc, char **argv) { 
+
+	// Catch all signals possible - it's vital we kill the DMA engine on process exit!
+	int i;
+	for (i = 0; i < 64; i++) {
+		struct sigaction sa;
+		memset(&sa, 0, sizeof(sa));
+		sa.sa_handler = terminate;
+		sigaction(i, &sa, NULL);
 	}
 
+	// Don't buffer console output
+	setvbuf(stdout, NULL, _IONBF, 0);
+
+	// How many LEDs?
+	numLEDs = 24;
+
+	// How bright? (Recommend 0.2 for direct viewing @ 3.3V)
+	setBrightness(DEFAULT_BRIGHTNESS);
+
+	// Init PWM generator and clear LED buffer
+	initHardware();
+	clearLEDBuffer();
+
+	// Show some effects
+	while(true) {
+		effectsDemo();
+	}
 
 	// Exit cleanly, freeing memory and stopping the DMA & PWM engines
 	// We trap all signals (including Ctrl+C), so even if you don't get here, it terminates correctly
