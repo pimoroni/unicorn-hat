@@ -104,6 +104,10 @@ def show():
   return _ws2812.show()
 show = _ws2812.show
 
+def Wheel(*args):
+  return _ws2812.Wheel(*args)
+Wheel = _ws2812.Wheel
+
 def colorWipe(*args):
   return _ws2812.colorWipe(*args)
 colorWipe = _ws2812.colorWipe

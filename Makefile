@@ -13,6 +13,14 @@ bindings:
 module: lib bindings
 	./setup.py build
 
+module_install: lib bindings
+	sudo ./setup.py install
+
 shared:
 	gcc -fPIC -c ws2812-RPi.c
 	gcc -shared ws2812-RPi.o -o ws2812-RPi.so	
+
+clean:
+	-rm -rf build/
+	-rm *.o
+	-rm *.a

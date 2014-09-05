@@ -3457,6 +3457,28 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Wheel(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  uint8_t arg1 ;
+  unsigned char val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Color_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Wheel",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_char(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Wheel" "', argument " "1"" of type '" "uint8_t""'");
+  } 
+  arg1 = (uint8_t)(val1);
+  result = Wheel(arg1);
+  resultobj = SWIG_NewPointerObj((Color_t *)memcpy((Color_t *)malloc(sizeof(Color_t)),&result,sizeof(Color_t)), SWIGTYPE_p_Color_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_colorWipe(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Color_t arg1 ;
@@ -4040,6 +4062,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"init", _wrap_init, METH_VARARGS, NULL},
 	 { (char *)"clear", _wrap_clear, METH_VARARGS, NULL},
 	 { (char *)"show", _wrap_show, METH_VARARGS, NULL},
+	 { (char *)"Wheel", _wrap_Wheel, METH_VARARGS, NULL},
 	 { (char *)"colorWipe", _wrap_colorWipe, METH_VARARGS, NULL},
 	 { (char *)"rainbow", _wrap_rainbow, METH_VARARGS, NULL},
 	 { (char *)"rainbowCycle", _wrap_rainbowCycle, METH_VARARGS, NULL},

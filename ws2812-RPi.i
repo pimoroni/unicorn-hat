@@ -21,6 +21,7 @@ extern void init(int numPixels);
 extern void clear(void);
 extern void show(void);
 
+extern Color_t Wheel(uint8_t WheelPos);
 extern void colorWipe(Color_t c, uint8_t wait);
 extern void rainbow(uint8_t wait);
 extern void rainbowCycle(uint8_t wait);
