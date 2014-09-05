@@ -151,6 +151,9 @@ void clearPWMBuffer(void) {
 	memset(PWMWaveform, 0, NUM_DATA_WORDS * 4);	// Times four because memset deals in bytes.
 }
 
+void clear(void){
+	clearLEDBuffer();
+}
 // Zero out the LED buffer
 void clearLEDBuffer(void) {
 	int i;
@@ -452,8 +455,13 @@ void dumpDMA(void) {
 //	         \/                  \/      \/           \/              \/            \/ 
 // =================================================================================================
 
+void init(int numPixels) {
+	numLEDs = numPixels;
+	brightness = DEFAULT_BRIGHTNESS;
+	initHardware();
+}
+
 void initHardware(void) {
-	numLEDs = 64;
 
 	int i = 0;
 	int pid;
@@ -693,8 +701,6 @@ void initHardware(void) {
 	// FIXME: Use a define instead of this
 	dma_reg[DMA_DEBUG] = 7;
 	usleep(100);
-
-	brightness = DEFAULT_BRIGHTNESS;
 }
 
 // Begin the transfer

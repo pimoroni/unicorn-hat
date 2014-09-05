@@ -450,7 +450,7 @@ int main(int argc, char **argv) {
 
 	//setBrightness(DEFAULT_BRIGHTNESS);
 
-	initHardware();
+	initHardware(64);
 	clearLEDBuffer();
 
 	if(argc < 2){

@@ -92,13 +92,13 @@ Color_t_swigregister = _ws2812.Color_t_swigregister
 Color_t_swigregister(Color_t)
 
 
-def initHardware():
-  return _ws2812.initHardware()
-initHardware = _ws2812.initHardware
+def init(*args):
+  return _ws2812.init(*args)
+init = _ws2812.init
 
-def clearLEDBuffer():
-  return _ws2812.clearLEDBuffer()
-clearLEDBuffer = _ws2812.clearLEDBuffer
+def clear():
+  return _ws2812.clear()
+clear = _ws2812.clear
 
 def show():
   return _ws2812.show()

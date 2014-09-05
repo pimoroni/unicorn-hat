@@ -129,7 +129,7 @@
 // These will be "memory mapped" into virtual RAM so that they can be written and read directly.
 // -------------------------------------------------------------------------------------------------
 #define DMA_BASE		0x20007000
-#define DMA_LEN			0x64
+#define DMA_LEN			0x24
 #define PWM_BASE		0x2020C000
 #define PWM_LEN			0x28
 #define CLK_BASE	    0x20101000
@@ -406,7 +406,7 @@ typedef struct {
 
 unsigned int numLEDs;		// How many LEDs there are on the chain
 
-#define LED_BUFFER_LENGTH 64
+#define LED_BUFFER_LENGTH 1024 // Hard maximum set for now, PH
 Color_t LEDBuffer[LED_BUFFER_LENGTH];
 
 // PWM waveform buffer (in words), 16 32-bit words are enough to hold 170 wire bits.
@@ -416,6 +416,7 @@ unsigned int PWMWaveform[NUM_DATA_WORDS];
 
 unsigned char setBrightness(float b);
 void clearPWMBuffer(void);
+void clear(void);
 void clearLEDBuffer(void);
 
 
@@ -458,6 +459,7 @@ void dumpDMA(void);
 //	         \/                  \/      \/           \/              \/            \/ 
 // =================================================================================================
 
+void init(int numPixels);
 void initHardware(void);
 void startTransfer(void);
 

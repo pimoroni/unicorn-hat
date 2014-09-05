@@ -3136,29 +3136,6 @@ SWIG_From_unsigned_SS_char  (unsigned char value)
 
 
 SWIGINTERN int
-SWIG_AsVal_unsigned_SS_int (PyObject * obj, unsigned int *val)
-{
-  unsigned long v;
-  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
-  if (SWIG_IsOK(res)) {
-    if ((v > UINT_MAX)) {
-      return SWIG_OverflowError;
-    } else {
-      if (val) *val = (unsigned int)(v);
-    }
-  }  
-  return res;
-}
-
-
-SWIGINTERNINLINE PyObject*
-  SWIG_From_unsigned_SS_int  (unsigned int value)
-{
-  return PyInt_FromSize_t((size_t) value);
-}
-
-
-SWIGINTERN int
 SWIG_AsVal_long (PyObject *obj, long* val)
 {
   if (PyInt_Check(obj)) {
@@ -3210,6 +3187,29 @@ SWIG_AsVal_int (PyObject * obj, int *val)
     }
   }  
   return res;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_int (PyObject * obj, unsigned int *val)
+{
+  unsigned long v;
+  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v > UINT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = (unsigned int)(v);
+    }
+  }  
+  return res;
+}
+
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_unsigned_SS_int  (unsigned int value)
+{
+  return PyInt_FromSize_t((size_t) value);
 }
 
 #ifdef __cplusplus
@@ -3412,11 +3412,20 @@ SWIGINTERN PyObject *Color_t_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObje
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *_wrap_initHardware(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_init(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)":initHardware")) SWIG_fail;
-  initHardware();
+  if (!PyArg_ParseTuple(args,(char *)"O:init",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "init" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = (int)(val1);
+  init(arg1);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -3424,11 +3433,11 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_clearLEDBuffer(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   
-  if (!PyArg_ParseTuple(args,(char *)":clearLEDBuffer")) SWIG_fail;
-  clearLEDBuffer();
+  if (!PyArg_ParseTuple(args,(char *)":clear")) SWIG_fail;
+  clear();
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -4028,8 +4037,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_Color_t", _wrap_new_Color_t, METH_VARARGS, NULL},
 	 { (char *)"delete_Color_t", _wrap_delete_Color_t, METH_VARARGS, NULL},
 	 { (char *)"Color_t_swigregister", Color_t_swigregister, METH_VARARGS, NULL},
-	 { (char *)"initHardware", _wrap_initHardware, METH_VARARGS, NULL},
-	 { (char *)"clearLEDBuffer", _wrap_clearLEDBuffer, METH_VARARGS, NULL},
+	 { (char *)"init", _wrap_init, METH_VARARGS, NULL},
+	 { (char *)"clear", _wrap_clear, METH_VARARGS, NULL},
 	 { (char *)"show", _wrap_show, METH_VARARGS, NULL},
 	 { (char *)"colorWipe", _wrap_colorWipe, METH_VARARGS, NULL},
 	 { (char *)"rainbow", _wrap_rainbow, METH_VARARGS, NULL},

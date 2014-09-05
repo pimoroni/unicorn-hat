@@ -12,13 +12,13 @@
 %apply unsigned char { uint8_t };
 
 typedef struct {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
+        unsigned char r;
+        unsigned char g;
+        unsigned char b;
 } Color_t;
 
-extern void initHardware(void);
-extern void clearLEDBuffer(void);
+extern void init(int numPixels);
+extern void clear(void);
 extern void show(void);
 
 extern void colorWipe(Color_t c, uint8_t wait);
