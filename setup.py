@@ -4,8 +4,14 @@ from setuptools import setup, find_packages, Extension
 
 _ws2812 = Extension(
 	'_ws2812',
+	library_dirs=[
+		'.'
+	],
+	libraries=[
+		'ws2812-RPi'
+	],
 	sources=[
-		'ws2812-RPi.c',
+		#'ws2812-RPi.c',
 		'ws2812-RPi_wrap.c'
 	]
 )
