@@ -1,0 +1,7 @@
+include ws2812.py
+include ws2812-RPi.h
+include ws2812-RPi.c
+include README
+include README.md
+include LICENSE.txt
+include setup.py

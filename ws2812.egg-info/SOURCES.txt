@@ -1,8 +1,0 @@
-README
-setup.py
-ws2812-RPi_wrap.c
-ws2812.py
-ws2812.egg-info/PKG-INFO
-ws2812.egg-info/SOURCES.txt
-ws2812.egg-info/dependency_links.txt
-ws2812.egg-info/top_level.txt

@@ -1,7 +1,6 @@
 all: lib
 	gcc -Wall leds.c -o leds -L. -lws2812-RPi -lpng
 
-
 lib:
 	gcc -fPIC -c ws2812-RPi.c
 	ar rc libws2812-RPi.a ws2812-RPi.o
@@ -13,7 +12,7 @@ bindings:
 module: lib bindings
 	./setup.py build
 
-module_install: lib bindings
+module_install:
 	sudo ./setup.py install
 
 shared:

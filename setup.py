@@ -7,11 +7,8 @@ _ws2812 = Extension(
 	library_dirs=[
 		'.'
 	],
-	libraries=[
-		'ws2812-RPi'
-	],
 	sources=[
-		#'ws2812-RPi.c',
+		'ws2812-RPi.c',
 		'ws2812-RPi_wrap.c'
 	]
 )

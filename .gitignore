@@ -4,3 +4,4 @@ build/
 *.pyc
 dist/
 __pycache__
+ws2812.egg-info/
