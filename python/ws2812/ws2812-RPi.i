@@ -1,7 +1,7 @@
 %module ws2812
 
 %{
-#include "ws2812-RPi.h"
+#include "lib/ws2812-RPi.h"
 %}
 
 %typemap(in) (unsigned char *data, int len) {

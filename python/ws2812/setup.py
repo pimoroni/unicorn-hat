@@ -5,10 +5,13 @@ from setuptools import setup, find_packages, Extension
 _ws2812 = Extension(
 	'_ws2812',
 	library_dirs=[
-		'.'
+		'lib/'
+	],
+	include_dirs=[
+		'lib/'
 	],
 	sources=[
-		'ws2812-RPi.c',
+		'lib/ws2812-RPi.c',
 		'ws2812-RPi_wrap.c'
 	]
 )
@@ -25,6 +28,6 @@ setup(
 	py_modules = [ 'ws2812' ],
 	install_requires = [],
 	headers = [
-		'ws2812-RPi.h'
+		'lib/ws2812-RPi.h'
 	]
 )

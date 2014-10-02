@@ -31,81 +31,6 @@
 //	        \/     \/        \/ 
 // =================================================================================================
 
-void effectsDemo() {
-
-	int i, j, ptr;
-	float k;
-
-	// Default effects from the Arduino lib
-	colorWipe(Color(255, 0, 0), 50); // Red
-	colorWipe(Color(0, 255, 0), 50); // Green
-	colorWipe(Color(0, 0, 255), 50); // Blue
-	theaterChase(Color(127, 127, 127), 50); // White
-	theaterChase(Color(127,   0,   0), 50); // Red
-	theaterChase(Color(  0,   0, 127), 50); // Blue
-	rainbow(5);
-	rainbowCycle(5);
-	theaterChaseRainbow(50);
-
-	// Watermelon fade :)
-	for(k=0; k<0.5; k+=.01) {
-		ptr=0;
-		setBrightness(k);
-		for(i=0; i<numLEDs; i++) {
-			setPixelColor(i, i*5, 64, i*2);
-		}
-		show();
-	}
-	for(k=0.5; k>=0; k-=.01) {
-		ptr=0;
-		setBrightness(k);
-		for(i=0; i<numLEDs; i++) {
-			setPixelColor(i, i*5, 64, i*2);
-		}
-		show();
-	}
-	usleep(1000);
-
-	// Random color fade
-	srand(time(NULL));
-	uint8_t lastRed = 0;
-	uint8_t lastGreen = 0;
-	uint8_t lastBlue = 0;
-	uint8_t red, green, blue;
-	Color_t curPixel;
-	setBrightness(DEFAULT_BRIGHTNESS);
-	for(j=1; j<16; j++) {
-		ptr = 0;
-		if(j % 3) {
-			red = 120;
-			green = 64;
-			blue = 48;
-		} else if(j % 7) {
-			red = 255;
-			green = 255;
-			blue = 255;
-		} else {
-			red = rand();
-			green = rand();
-			blue = rand();
-		}
-		for(k=0; k<1; k+=.01) {
-			for(i=0; i<numLEDs; i++) {
-				setPixelColor(
-					i,
-					(red * k) + (lastRed * (1-k)),
-					i * (255 / numLEDs), //(green * k) + (lastGreen * (1-k)),
-					(blue * k) + (lastBlue * (1-k))
-					);
-				curPixel = getPixelColor(i);
-			}
-			show();
-		}
-		lastRed = red;
-		lastGreen = green;
-		lastBlue = blue;
-	}
-}
 
 void abort_(const char * s, ...)
 {
@@ -307,8 +232,6 @@ void shadePixel(double t, int pixel, float x, float y){
 	angle /= 57.2957795;
 
 	float px, py, cs, sn;
-
-	float ox, oy;
 	
 	// Move origin to center
 	x-=0.5;
@@ -329,11 +252,7 @@ void shadePixel(double t, int pixel, float x, float y){
 	float hue = (((px+py)/8) + t / 10000.0);
 
 	//hue = fmodf(hue, 1.0);
-
-	
-
 	h2rgb(hue, &r, &g, &b);
-
 
 	// Reduce the brightness
 	//r*=0.2;g*=0.2;b*=0.2;
@@ -394,6 +313,15 @@ void run_shader(void){
 
 }
 
+void unicorn_exit(int status){
+	int i;
+	for (i = 0; i < 64; i++){
+		setPixelColor(i,0,0,0);
+	}
+	show();
+	terminate(status);
+}
+
 int getPixelPosition(int x, int y){
 
 	int map[8][8] = {
@@ -411,11 +339,6 @@ int getPixelPosition(int x, int y){
 }
 
 int main(int argc, char **argv) {
-	/*if (argc >= 2) {
-		printf("usage: %s filename \n", argv[0] );
-		return 0;
-	}*/
-
 	if (argc >= 3){
 		if(sscanf (argv[2], "%i", &anim_delay)!=1){
 			printf ("Error, delay must be an integer \n");
@@ -440,7 +363,7 @@ int main(int argc, char **argv) {
 	for (i = 0; i < 64; i++) {
 		struct sigaction sa;
 		memset(&sa, 0, sizeof(sa));
-		sa.sa_handler = terminate;
+		sa.sa_handler = unicorn_exit;
 		sigaction(i, &sa, NULL);
 	}
 
@@ -450,7 +373,7 @@ int main(int argc, char **argv) {
 
 	//setBrightness(DEFAULT_BRIGHTNESS);
 
-	initHardware(64);
+	initHardware();
 	clearLEDBuffer();
 
 	if(argc < 2){
@@ -466,55 +389,8 @@ int main(int argc, char **argv) {
 		}
 	
 	}
-		
-/*	while(true){
-		for(i=0; i<numLEDs; i++){
-			setPixelColor(i, 255, 255, 0);	
-		}
-		show();
-	}
-*/
 
-	terminate(0);
+	unicorn_exit(0);
 
 	return 0;
 }
-
-
-/*
-int main(int argc, char **argv) { 
-
-	// Catch all signals possible - it's vital we kill the DMA engine on process exit!
-	int i;
-	for (i = 0; i < 64; i++) {
-		struct sigaction sa;
-		memset(&sa, 0, sizeof(sa));
-		sa.sa_handler = terminate;
-		sigaction(i, &sa, NULL);
-	}
-
-	// Don't buffer console output
-	setvbuf(stdout, NULL, _IONBF, 0);
-
-	// How many LEDs?
-	numLEDs = 64;
-
-	// How bright? (Recommend 0.2 for direct viewing @ 3.3V)
-	setBrightness(DEFAULT_BRIGHTNESS);
-
-	// Init PWM generator and clear LED buffer
-	initHardware();
-	clearLEDBuffer();
-
-	// Show some effects
-	while(true) {
-		effectsDemo();
-	}
-
-	// Exit cleanly, freeing memory and stopping the DMA & PWM engines
-	// We trap all signals (including Ctrl+C), so even if you don't get here, it terminates correctly
-	terminate(0);
-
-	return 0;
-}
-*/
