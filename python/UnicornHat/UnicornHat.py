@@ -16,6 +16,12 @@ def clear():
   ws2812.show()
  
 def get_index_from_xy(x, y):
+  if x > 7:
+    raise ValueError('X position must be between 0 and 7')
+    return
+  if y > 7:
+    raise ValueError('Y position must be between 0 and 7')
+    return
 
   map = [
     [7 ,6 ,5 ,4 ,3 ,2 ,1 ,0 ],
@@ -32,7 +38,8 @@ def get_index_from_xy(x, y):
 
 def set_pixel(x, y, r, g, b):
   index = get_index_from_xy(x, y)
-  ws2812.setPixelColor(index, r, g, b)
+  if index != None:
+    ws2812.setPixelColor(index, r, g, b)
 
 def show():
   ws2812.show()

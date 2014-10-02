@@ -745,10 +745,10 @@ void show(void) {
 	for(i=0; i<numLEDs; i++) {
 		// Create bits necessary to represent one color triplet (in GRB, not RGB, order)
 		//printf("RGB: %d, %d, %d\n", LEDBuffer[i].r, LEDBuffer[i].g, LEDBuffer[i].b);
-		LEDBuffer[i].r *= brightness;
-		LEDBuffer[i].g *= brightness;
-		LEDBuffer[i].b *= brightness;
-		colorBits = ((unsigned int)LEDBuffer[i].r << 8) | ((unsigned int)LEDBuffer[i].g << 16) | LEDBuffer[i].b;
+		//LEDBuffer[i].r *= brightness;
+		//LEDBuffer[i].g *= brightness;
+		//LEDBuffer[i].b *= brightness;
+		colorBits = ((unsigned int)(LEDBuffer[i].r*brightness) << 8) | ((unsigned int)(LEDBuffer[i].g*brightness) << 16) | (unsigned int)(LEDBuffer[i].b*brightness);
 		//printBinary(colorBits, 24);
 		//printf(" (binary, GRB order)\n");
 
