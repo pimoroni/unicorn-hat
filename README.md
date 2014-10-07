@@ -13,4 +13,4 @@ Then process to python/examples.
 RaspberryPi-NeoPixel-WS2812
 ===========================
 
-This library is a slightly modified version of the ws2812 C driver from: https://github.com/626Pilot/RaspberryPi-NeoPixel-WS2812
+This library is based upon a modified version of the ws2812 C driver from: https://github.com/626Pilot/RaspberryPi-NeoPixel-WS2812

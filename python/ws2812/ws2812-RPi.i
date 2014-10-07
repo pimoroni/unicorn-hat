@@ -27,6 +27,7 @@ extern void rainbow(uint8_t wait);
 extern void rainbowCycle(uint8_t wait);
 extern void theaterChase(Color_t c, uint8_t wait);
 extern void theaterChaseRainbow(uint8_t wait);
+extern unsigned char setBrightness(float b);
 
 extern Color_t RGB2Color(unsigned char r, unsigned char g, unsigned char b);
 extern Color_t Color(unsigned char r, unsigned char g, unsigned char b);

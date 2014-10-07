@@ -128,6 +128,10 @@ def theaterChaseRainbow(*args):
   return _ws2812.theaterChaseRainbow(*args)
 theaterChaseRainbow = _ws2812.theaterChaseRainbow
 
+def setBrightness(*args):
+  return _ws2812.setBrightness(*args)
+setBrightness = _ws2812.setBrightness
+
 def RGB2Color(*args):
   return _ws2812.RGB2Color(*args)
 RGB2Color = _ws2812.RGB2Color

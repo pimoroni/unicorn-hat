@@ -109,14 +109,6 @@ void read_png_file(char* file_name)
 
 void process_file(void)
 {
-        /*if (png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_RGB)
-                abort_("[process_file] input file is PNG_COLOR_TYPE_RGB but must be PNG_COLOR_TYPE_RGBA "
-                       "(lacks the alpha channel)");
-
-        if (png_get_color_type(png_ptr, info_ptr) != PNG_COLOR_TYPE_RGBA)
-                abort_("[process_file] color_type of input file must be PNG_COLOR_TYPE_RGBA (%d) (is %d)",
-                       PNG_COLOR_TYPE_RGBA, png_get_color_type(png_ptr, info_ptr));
-*/
 	int currentFrame;
 
 	for (currentFrame=0; currentFrame<(height/8); currentFrame++){
@@ -124,13 +116,9 @@ void process_file(void)
                 png_byte* row = row_pointers[y + (8*currentFrame)];
                 for (x=0; x<width; x++) {
                         png_byte* ptr = &(row[x*3]);
-                        //printf("Pixel at position [ %d - %d ] has RGB values: %d - %d - %d\n",
-    //                           x, y, ptr[0], ptr[1], ptr[2]);
 
 			setPixelColor(getPixelPosition(x,y), ptr[0], ptr[1], ptr[2]);
 
-                        //ptr[0] = 0;
-                        //ptr[1] = ptr[2];
                 }
         }
 	show();
@@ -237,25 +225,20 @@ void shadePixel(double t, int pixel, float x, float y){
 	x-=0.5;
 	y-=0.5;
 
+	// Pan the X/Y position on a sine wave
 	x+=sin(t/10000.0);
 	y+=sin(y/10000.0);
 
+	// Rotate the pixels
 	cs = cos(angle);
 	sn = sin(angle);
 
 	px = (x * cs) - (y * sn);
 	py = (y * cs) + (x * sn);
 
-
 	// Convert hue to RGB
-
 	float hue = (((px+py)/8) + t / 10000.0);
-
-	//hue = fmodf(hue, 1.0);
 	h2rgb(hue, &r, &g, &b);
-
-	// Reduce the brightness
-	//r*=0.2;g*=0.2;b*=0.2;
 
 	// Clamp max value
 	if(r>1.0) r=1.0;
@@ -265,32 +248,10 @@ void shadePixel(double t, int pixel, float x, float y){
 	setPixelColor(pixel, (int)(r*255), (int)(g*255), (int)(b*255));
 
 }
+
 /*
-void shadePixel(double t, int pixel, float x, float y){
-	
-	float h, r, g, b;
-
-	t /= 10.0;
-
-	h = ((x+y)/10.0) + (fmodf(t,360.0)/360.0);
-
-	h2rgb(h, &r, &g, &b);
-
-	float br = ( 0.5 + (sin(t/50) / 2.0) );
-
-	r*=br;
-	g*=br;;
-	b*=br;
-
-	makeRGB(&r, &g, &b, 1.5, 0.1, 0.1, 0, 1.5, 3, 30, 30, (x+y)*t);
-
-	r*=0.2;
-	g*=0.8;
-
-	setPixelColor(pixel, (int)(r*255), (int)(g*255), (int)(b*255));
-
-
-}
+  Loop through every pixel in the display and call shadePixel with its
+  coordinates, its index and the current time vector.
 */
 void run_shader(void){
 
@@ -301,10 +262,8 @@ void run_shader(void){
 		t = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 		for(y=0; y<8; y++){
 			for(x=0; x<8; x++){
-
 				int pixel = getPixelPosition(x,y);
 				shadePixel(t, pixel, x/7.0, y/7.0);
-	
 			}
 		}
 		show();
@@ -313,6 +272,9 @@ void run_shader(void){
 
 }
 
+/*
+  Clear the display and exit gracefully
+*/
 void unicorn_exit(int status){
 	int i;
 	for (i = 0; i < 64; i++){
@@ -322,6 +284,9 @@ void unicorn_exit(int status){
 	terminate(status);
 }
 
+/*
+  Remap an x/y coordinate to a pixel index
+*/
 int getPixelPosition(int x, int y){
 
 	int map[8][8] = {
@@ -339,6 +304,8 @@ int getPixelPosition(int x, int y){
 }
 
 int main(int argc, char **argv) {
+	int shader = false;
+
 	if (argc >= 3){
 		if(sscanf (argv[2], "%i", &anim_delay)!=1){
 			printf ("Error, delay must be an integer \n");
@@ -358,6 +325,12 @@ int main(int argc, char **argv) {
 			setBrightness(newbrightness/100.0);
 		}
 	}
+ 	if (argc == 2){
+		if(sscanf (argv[1], "%i", &newbrightness)==1){
+			setBrightness(newbrightness/100.0);
+			shader = true;
+		}
+	}
 
 	int i;
 	for (i = 0; i < 64; i++) {
@@ -371,12 +344,15 @@ int main(int argc, char **argv) {
 	
 	numLEDs = 64;
 
-	//setBrightness(DEFAULT_BRIGHTNESS);
 
 	initHardware();
 	clearLEDBuffer();
 
 	if(argc < 2){
+		shader = true;
+	}
+
+	if(shader){
 		run_shader();
 	}else{
 

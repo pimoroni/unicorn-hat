@@ -21,7 +21,7 @@ setup(
 	version = '1.0.0',
 	author = 'Philip Howard',
 	author_email = 'phil@pimoroni.com',
-	url = '',
+	url = 'https://github.com/pimoroni/ws2812-RPi/',
 	description = """A python interface to ws2812 RPi""",
 	long_description=open('README').read(),
 	ext_modules = [ _ws2812 ],

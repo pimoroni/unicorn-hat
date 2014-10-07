@@ -2964,7 +2964,7 @@ static swig_module_info swig_module = {swig_types, 3, 0, 0, 0, 0};
 #define SWIG_as_voidptrptr(a) ((void)SWIG_as_voidptr(*a),(void**)(a)) 
 
 
-#include "ws2812-RPi.h"
+#include "lib/ws2812-RPi.h"
 
 
 #include <limits.h>
@@ -3184,6 +3184,22 @@ SWIG_AsVal_int (PyObject * obj, int *val)
       return SWIG_OverflowError;
     } else {
       if (val) *val = (int)(v);
+    }
+  }  
+  return res;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_float (PyObject * obj, float *val)
+{
+  double v;
+  int res = SWIG_AsVal_double (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v < -FLT_MAX || v > FLT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = (float)(v);
     }
   }  
   return res;
@@ -3608,6 +3624,28 @@ SWIGINTERN PyObject *_wrap_theaterChaseRainbow(PyObject *SWIGUNUSEDPARM(self), P
   arg1 = (uint8_t)(val1);
   theaterChaseRainbow(arg1);
   resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_setBrightness(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  float arg1 ;
+  float val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  unsigned char result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:setBrightness",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_float(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "setBrightness" "', argument " "1"" of type '" "float""'");
+  } 
+  arg1 = (float)(val1);
+  result = (unsigned char)setBrightness(arg1);
+  resultobj = SWIG_From_unsigned_SS_char((unsigned char)(result));
   return resultobj;
 fail:
   return NULL;
@@ -4068,6 +4106,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"rainbowCycle", _wrap_rainbowCycle, METH_VARARGS, NULL},
 	 { (char *)"theaterChase", _wrap_theaterChase, METH_VARARGS, NULL},
 	 { (char *)"theaterChaseRainbow", _wrap_theaterChaseRainbow, METH_VARARGS, NULL},
+	 { (char *)"setBrightness", _wrap_setBrightness, METH_VARARGS, NULL},
 	 { (char *)"RGB2Color", _wrap_RGB2Color, METH_VARARGS, NULL},
 	 { (char *)"Color", _wrap_Color, METH_VARARGS, NULL},
 	 { (char *)"setPixelColor", _wrap_setPixelColor, METH_VARARGS, NULL},

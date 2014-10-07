@@ -5,3 +5,4 @@ include README
 include README.md
 include LICENSE.txt
 include setup.py
+include lib/*
