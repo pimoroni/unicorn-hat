@@ -18,6 +18,8 @@ while not connected:
 		connected = True
 		print('Connected',port)
 	except:
+		if port >= 10:
+			exit("Unable to connect to UnicornHat Emulator")
 		port += 1
 
 def close():
