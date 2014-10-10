@@ -6,3 +6,4 @@ build/
 dist/
 __pycache__
 ws2812.egg-info/
+.DS_Store

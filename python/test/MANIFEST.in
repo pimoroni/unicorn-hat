@@ -1,0 +1,5 @@
+include README
+include CHANGELOG
+include LICENSE.txt
+include UnicornHat.py
+include setup.py
