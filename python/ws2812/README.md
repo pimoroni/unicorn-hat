@@ -38,3 +38,17 @@ Reference
 * theaterChase(color, wait) - Animate a colour across pixels
 
 * terminate(0) - Should ideally be called upon exiting to clean up hardware
+
+Changes
+-------
+
+Please do not modify ws2812-RPi_wrap.c or ws2812.py directly.
+
+You should change only the bindings file: ws2812-RPi.i
+
+Changes to this file will let you use SWIG to auto-generate the correct bindings:
+
+   swig2.0 -python ws2812-RPi.i
+
+If you wish to add any Python methods for a specific product or application, then it's
+recommended that you create a separate module ( like UnicornHat ).

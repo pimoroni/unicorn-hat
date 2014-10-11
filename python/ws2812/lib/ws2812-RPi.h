@@ -394,7 +394,7 @@ void * map_peripheral(uint32_t base, uint32_t len);
 // =================================================================================================
 
 // Brightness - I recommend 0.2 for direct viewing at 3.3v.
-#define DEFAULT_BRIGHTNESS 0.9
+#define DEFAULT_BRIGHTNESS 0.2
 float brightness;
 
 // LED buffer (this will be translated into pulses in PWMWaveform[])
