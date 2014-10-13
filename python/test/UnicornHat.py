@@ -10,17 +10,19 @@ port = 7676
 
 pixels = ['000000'] * 64
 
+attempt = 0
+
 while not connected:
 	try:
 		time.sleep(0.5)
-		print('Trying port',port)
-		sck.connect(('127.0.0.1',port))
+		print('Trying port',port + attempt)
+		sck.connect(('127.0.0.1',port + attempt))
 		connected = True
-		print('Connected',port)
+		print('Connected',port + attempt)
 	except:
-		if port >= 10:
+		if attempt >= 10:
 			exit("Unable to connect to UnicornHat Emulator")
-		port += 1
+		attempt += 1
 
 def close():
 	send('stop')
