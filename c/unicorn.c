@@ -371,8 +371,6 @@ int main(int argc, char **argv) {
 	
 	numLEDs = 64;
 
-	//setBrightness(DEFAULT_BRIGHTNESS);
-
 	initHardware();
 	clearLEDBuffer();
 
