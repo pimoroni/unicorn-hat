@@ -6,10 +6,10 @@ import threading
 
 control_panel = """
 	<ul class="tools">
-		<li data-tool="paint" class="paint selected"><span class="fa fa-paint-brush"></span>x <input type="text" class="mc" style="height:30px;"></li>
-		<li data-tool="pick" class="pick"><span class="fa fa-eyedropper"></span>y </li>
-		<li data-tool="lighten" class="lighten"><span class="fa fa-eyedropper"></span>L </li>
-		<li data-tool="darken" class="darken"><span class="fa fa-eyedropper"></span>D </li>
+		<li data-tool="paint" class="paint selected"><span class="fa fa-paint-brush"></span> <input type="text" class="mc" style="height:30px;"></li>
+		<li data-tool="pick" class="pick"><span class="fa fa-eyedropper"></span></li>
+		<li data-tool="lighten" class="lighten"><span class="fa fa-adjust"></span> Lighten</li>
+		<li data-tool="darken" class="darken"><span class="fa fa-adjust"></span> Darken</li>
 	</ul>
 	<table cellspacing="0" cellpadding="0" border-collapse="collapse">"""
 
@@ -28,7 +28,7 @@ def home():
 	output = """<html>
 <head>
 	<title>Unicorn Hat</title>
-	<link href=/static/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/static/jquery.minicolors.css">
 	<link rel="stylesheet" type="text/css" href="/static/unicorn-paint.css">
 </head>
