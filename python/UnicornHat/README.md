@@ -8,11 +8,11 @@ and exposing the basic methods you need to set pixels and update UnicornHat.
 Installing
 ----------
 
-** PIP **
+**PIP**
 
     sudo pip install unicornhat
 
-** GitHub **
+**GitHub**
 
     sudo ./setup.py install
 

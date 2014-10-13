@@ -16,7 +16,7 @@ show_png.py
 
 Shows how you can open and display a PNG image file, great for sprite animations.
 
-** Requirements: **
+**Requirements:**
 
     sudo pip install pillow
 
