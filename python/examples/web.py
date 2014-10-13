@@ -23,27 +23,63 @@ def home():
 	<title>Unicorn Hat</title>
 	<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
 	<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.minicolors/2.1.2/jquery.minicolors.js"></script>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.minicolors/2.1.2/jquery.minicolors.css">
 </head>
 <body>"""
 	output += control_panel
 	output += """
+	<ul class="tools">
+		<li class="paint"><span class="fa fa-paint-brush"></span></li>
+		<li class="pick"><span class="fa fa-eyedropper"></span></li>
+	</ul>
 	<p>Endpoints:</p>
 	<ul>
 		<li>/pixel/x/y/r/g/b - set pixel at x/y to colour r/g/b</li>
 	</ul>
 	<script type="text/javascript">
 		var col = {};
+		var tool = 'paint';
 		var md = false;
 		$(document).ready(function(){
 			$('table').on('mousedown',function(e){e.preventDefault();md=true;console.log(md);return false;});
 			$('table').on('mouseup',function(e){e.preventDefault();md=false;console.log(md);return false;});
-			$('table td').on('click',function(){
-				if( col.hex != $(this).data('hex') ){
-					$(this).data('hex', col.hex);
-					x = $(this).data('x');
-					y = $(this).data('y');
-					$(this).css('background-color','#' + col.hex)
+
+			$('.tools li').on('click',function(){
+				tool = $(this).attr('class');
+			});
+
+			function handle_tool(obj){
+				switch(tool){
+					case 'paint':
+						paint(obj);
+						break;
+					case 'pick':
+						pick(obj);
+						break;
+				}
+			}
+
+			function set_color(hex){
+				hex = hex.replace('#','');
+				r = parseInt('0x' + hex.substring(0,2));
+				g = parseInt('0x' + hex.substring(2,4));
+				b = parseInt('0x' + hex.substring(4,6));
+				col = {'hex': hex, 'r': r, 'g': g, 'b': b};
+			}
+
+			function pick(obj){
+				var hex = $(obj).data('hex');
+				$('input').minicolors('value','#' + hex);
+				set_color(hex);
+			}
+
+			function paint(obj){
+				if( col.hex != $(obj).data('hex') ){
+					$(obj).data('hex', col.hex);
+					x = $(obj).data('x');
+					y = $(obj).data('y');
+					$(obj).css('background-color','#' + col.hex)
 					r = col.r;
 					g = col.g;
 					b = col.b;
@@ -51,32 +87,20 @@ def home():
 					$.get('/pixel/' + x + '/' + y + '/' + r + '/' + g + '/' + b);
 					$.get('/show');
 				}
+			}
+
+			$('table td').on('click',function(){
+				handle_tool(this);
 			});
 			$('table td').on('mousemove',function(){
-				console.log('mousemove');
 				if(!md) return false;
-				if( col.hex != $(this).data('hex') ){
-					$(this).data('hex', col.hex);
-					x = $(this).data('x');
-					y = $(this).data('y');
-					$(this).css('background-color','#' + col.hex)
-					r = col.r;
-					g = col.g;
-					b = col.b;
-					console.log(x, y);
-					$.get('/pixel/' + x + '/' + y + '/' + r + '/' + g + '/' + b);
-					$.get('/show');
-				}
+				handle_tool(this);
 			})
 			$('.mc').minicolors({
 					change: function(hex, opacity) {
-						hex = hex.replace('#','');
-						r = parseInt('0x' + hex.substring(0,2));
-						g = parseInt('0x' + hex.substring(2,4));
-						b = parseInt('0x' + hex.substring(4,6));
-						col = {'hex': hex, 'r': r, 'g': g, 'b': b};
+						set_color(hex);
 					}
-				});
+			});
 		});
 	</script>
 </body>
