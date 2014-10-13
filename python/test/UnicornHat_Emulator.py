@@ -170,7 +170,7 @@ while not bound:
 	except socket.error:
 		port+=1
 
-sck.listen(5)
+sck.listen(50)
 
 t_setup = AsyncWorker(tcp)
 t_setup.start()
