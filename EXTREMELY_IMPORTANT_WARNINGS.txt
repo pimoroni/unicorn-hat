@@ -1,3 +1,6 @@
+Original Warning from https://github.com/626Pilot/RaspberryPi-NeoPixel-WS2812
+but included here because it's useful information!
+
 You are using this at your OWN RISK. I believe this software is reasonably safe to use (aside
 from the intrinsic risk to those who are photosensitive - see below), although I can't be certain
 that it won't trash your hardware or cause property damage.

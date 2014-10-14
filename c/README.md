@@ -1,5 +1,5 @@
-Unicorn
-=======
+Unicorn Hat C Example
+=====================
 
 This simple C program will let you display PNG files on your Unicorn Hat, and even run frame-based animations with them.
 
@@ -36,3 +36,11 @@ By default, unicorn will display a swirly rainbow pattern demo.
 You can try different brightnesses by adding them on as a parameter from 0 to 100:
 
     sudo ./unicorn 50
+
+Notes
+-----
+
+If you plan on writing your own C applications to control ws2812 LEDs then please pay special attention
+to how unicorn.c handles exit signals and terminates cleanly.
+
+You absolutely must call terminate() on the ws2812 library when exiting!
