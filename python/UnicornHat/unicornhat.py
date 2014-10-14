@@ -22,6 +22,7 @@ HDMI port facing downwards
 '''
 _rotation = 0
 
+
 '''
 Store a map of pixel indexes for
 translating x, y coordinates.
@@ -38,6 +39,7 @@ map = [
 ]
 
 def rotation(r = 0):
+  global _rotation
   '''
   Set the display rotation valid values:
   0

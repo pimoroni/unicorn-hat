@@ -15,6 +15,9 @@ import unicornhat as unicorn
 from PIL import Image
 import signal, numpy, time
 
+unicorn.rotation(90)
+unicorn.brightness(0.4)
+
 img = Image.open('lofi.png')
 
 for o_x in range(img.size[0]/8):

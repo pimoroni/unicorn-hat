@@ -20,12 +20,12 @@ Installing
 Usage
 -----
 
-Just import UnicornHat, it'll set up ws2812 for you!
+Just import unicornhat, it'll set up ws2812 for you!
 
 Then all you need is:
 
-* UnicornHat.set_pixel( x, y, red, blue, green ) - Set a pixel in the buffer to the specified colour
-* UnicornHat.show - Update UnicornHat with the current buffer
-* UnicornHat.clear - Turn off all the pixels in the buffer and update UnicornHat
+* unicornhat.set_pixel( x, y, red, blue, green ) - Set a pixel in the buffer to the specified colour
+* unicornhat.show - Update UnicornHat with the current buffer
+* unicornhat.clear - Turn off all the pixels in the buffer and update UnicornHat
 
 See the examples for more advanced usage.

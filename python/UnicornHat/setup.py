@@ -4,7 +4,7 @@ from setuptools import setup, find_packages, Extension
 
 setup(
 	name = 'unicornhat',
-	version = '1.0.0',
+	version = '1.0.1',
 	author = 'Philip Howard',
 	author_email = 'phil@pimoroni.com',
 	url = 'https://github.com/pimoroni/ws2812-RPi/',

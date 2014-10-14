@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import UnicornHat as UH
+import unicornhat as UH
 import time
 
 for y in range(8):
