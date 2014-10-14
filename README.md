@@ -5,7 +5,7 @@ Here you'll find everything you need to start lighting up your UnicornHat in pyt
 
 Python users should probably ignore most of this repository and just:
 
-    pip install unicornhat
+    sudo pip install unicornhat
 
 Then proceed to python/examples.
 
