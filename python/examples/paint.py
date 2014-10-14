@@ -5,12 +5,6 @@ import time
 import threading
 
 control_panel = """
-	<ul class="tools">
-		<li data-tool="paint" class="paint selected"><span class="fa fa-paint-brush"></span></li>
-		<li data-tool="pick" class="pick"><span class="fa fa-eyedropper"></span></li>
-		<li data-tool="lighten" class="lighten"><span class="fa fa-adjust"></span> Lighten</li>
-		<li data-tool="darken" class="darken"><span class="fa fa-adjust"></span> Darken</li>
-	</ul>
 	<table cellspacing="0" cellpadding="0" border-collapse="collapse">"""
 
 for y in range(8):
@@ -20,6 +14,15 @@ for y in range(8):
 	control_panel += '</tr>'
 
 control_panel += '</table><div class="mc"></div>'
+
+control_panel += """
+	<ul class="tools">
+		<li data-tool="paint" class="paint selected"><span class="fa fa-paint-brush"></span></li>
+		<li data-tool="pick" class="pick"><span class="fa fa-eyedropper"></span></li>
+		<li data-tool="lighten" class="lighten"><span class="fa fa-adjust"></span> Lighten</li>
+		<li data-tool="darken" class="darken"><span class="fa fa-adjust"></span> Darken</li>
+	</ul>"""
+	
 
 app = Flask(__name__)
 
@@ -32,12 +35,14 @@ def home():
 	<link rel="stylesheet" type="text/css" href="/static/jquery.minicolors.css">
 	<link rel="stylesheet" type="text/css" href="/static/unicorn-paint.css">
 </head>
-<body>"""
+<body>
+<div class="unicorn">"""
 	output += control_panel
 	output += """
 	<script type="text/javascript" src="/static/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/jquery.minicolors.js"></script>
 	<script type="text/javascript" src="/static/unicorn-paint.js"></script>
+</div>
 </body>
 </html>
 	"""

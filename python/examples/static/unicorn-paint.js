@@ -2,8 +2,14 @@ var col = {};
 var tool = 'paint';
 var md = false;
 $(document).ready(function(){
-$('table').on('mousedown',function(e){e.preventDefault();md=true;console.log(md);return false;});
-$('table').on('mouseup',function(e){e.preventDefault();md=false;console.log(md);return false;});
+$(document)
+	.on('mousedown',function(e){md=true;})
+	.on('mouseup',function(e){md=false;});
+
+$('table').on('dragstart',function(e){
+	e.preventDefault();
+	return false;
+});
 
 $('.tools li').on('click',function(){
 	$('.tools li').removeClass('selected');
