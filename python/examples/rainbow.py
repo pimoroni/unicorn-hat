@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-import UnicornHat as unicorn
+import unicornhat as unicorn
 import time, colorsys
+
+unicorn.brightness(0.9)
 
 while True:
 	for z in range(360):

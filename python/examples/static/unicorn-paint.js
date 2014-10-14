@@ -33,9 +33,9 @@ function lighten(obj){
 
 	var rgb = hex_to_rgb(col);
 
-	rgb.r+=5;
-	rgb.g+=5;
-	rgb.b+=5;
+	rgb.r+=2;
+	rgb.g+=2;
+	rgb.b+=2;
 
 	col = rgb_to_hex(rgb);
 
@@ -47,9 +47,9 @@ function darken(obj){
 
 	var rgb = hex_to_rgb(col);
 
-	rgb.r-=5;
-	rgb.g-=5;
-	rgb.b-=5;
+	rgb.r-=2;
+	rgb.g-=2;
+	rgb.b-=2;
 
 	col = rgb_to_hex(rgb);
 
@@ -62,7 +62,7 @@ function set_color(hex){
 
 function pick(obj){
 	var hex = $(obj).data('hex');
-	$('input').minicolors('value','#' + hex);
+	$('.mc').minicolors('value','#' + hex);
 	set_color(hex);
 }
 
@@ -91,15 +91,37 @@ function update_pixel(obj, col){
 	if( col != $(obj).data('hex') ){
 		$(obj)
 			.data('hex', col)
+			.data('changed', true)
 			.css('background-color','#' + col);
 
-		var x = $(obj).data('x');
-		var y = $(obj).data('y');
+		//var x = $(obj).data('x');
+		//var y = $(obj).data('y');
 
-		rgb = hex_to_rgb(col);
+		//rgb = hex_to_rgb(col);
 
-		console.log('/pixel/' + x + '/' + y + '/' + rgb.r + '/' + rgb.g + '/' + rgb.b);
-		$.get('/pixel/' + x + '/' + y + '/' + rgb.r + '/' + rgb.g + '/' + rgb.b);
+		//console.log('/pixel/' + x + '/' + y + '/' + rgb.r + '/' + rgb.g + '/' + rgb.b);
+		
+		//$.get('/pixel/' + x + '/' + y + '/' + rgb.r + '/' + rgb.g + '/' + rgb.b);
+		//$.get('/show');
+	}
+}
+
+function update_pixels(){
+	var changed = false;
+	$('td').each(function( index, obj ){
+		if( $(obj).data('changed') ){
+			$(obj).data('changed',false);
+			changed = true;
+			var x = $(obj).data('x');
+			var y = $(obj).data('y');
+			var col = hex_to_rgb($(obj).data('hex'));
+			
+			var data = [x,y,col.r,col.g,col.b];
+
+			$.get('/pixel/' + data.join('/'));
+		}
+	});
+	if(changed){
 		$.get('/show');
 	}
 }
@@ -118,9 +140,17 @@ $('table td').on('mousemove',function(){
 
 col = '0000FF';
 $('.mc').minicolors({
+		control: 'saturation',
+		inline: true,
 		defaultValue: '#' + col,
 		change: function(hex, opacity) {
 			set_color(hex);
 		}
 });
+
+$.get('/clear');
+$.get('/show');
+
+var update = setInterval(update_pixels, 50);
 });	
+

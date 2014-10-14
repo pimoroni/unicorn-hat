@@ -11,7 +11,7 @@ http://forums.tigsource.com/index.php?topic=8834.0
 Licensed under Creative Commons Attribution-Noncommercial-Share Alike 3.0 Unported License.
 '''
 
-import UnicornHat as unicorn
+import unicornhat as unicorn
 from PIL import Image
 import signal, numpy, time
 

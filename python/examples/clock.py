@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import UnicornHat as unicorn
+import unicornhat as unicorn
 from graphics import Drawing, Color
 import time, signal, threading
 

@@ -1,3 +1,5 @@
+body {background:#000;}
+
 .tools {
 	margin:0;padding:0;list-style:none;
 	clear:both;
@@ -16,24 +18,29 @@
 	display:block;
 	height:30px;
 	line-height:30px;
-	list-style:none;border:1px solid #DDDDDD;
-	background:#F5F5F5;
+	background:#333333;
 	border-radius:5px;
 	float:left;
 	cursor:pointer;
+	color:#FFF;
 }
 .tools li.selected {
-	border-color:#333333;
-	background:#EEEEEE;
+	background:#555555;
 }
 
 table {
 	clear:both;
-	width:160px;
-	height:160px;
-	margin-top:10px;
+	width:320px;
+	height:320px;
+	margin-top:20px;
+	margin-bottom:20px;
 	cursor:pointer;
 }
 table td {
-	width:20px;height:20px;border:1px solid #333;
+	width:40px;height:40px;border:2px solid #333;
+}
+
+.minicolors-panel {
+	border:3px solid #333;
+	background:#000000;
 }
