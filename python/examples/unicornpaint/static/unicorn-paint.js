@@ -1,7 +1,10 @@
-var col = {};
-var tool = 'paint';
 var md = false;
+var color = tinycolor('#840000');
+
 $(document).ready(function(){
+
+$('.unicorn').draggable({ handle: "h1" });
+
 $(document)
 	.on('mousedown',function(e){md=true;})
 	.on('mouseup',function(e){md=false;});
@@ -11,104 +14,148 @@ $('table').on('dragstart',function(e){
 	return false;
 });
 
+
 $('.tools li').on('click',function(){
-	$('.tools li').removeClass('selected');
-	$(this).addClass('selected');
-	tool = $(this).data('tool');
+	switch($(this).index()){
+		case 6:
+			clear();
+			break;
+		default:
+			$('.tools li').removeClass('selected');
+			$(this).addClass('selected');
+			break;
+	}
 });
 
-function handle_tool(obj){
-	switch(tool){
-		case 'paint':
+$('.palette li').on('click',function(){
+	$('.palette li').removeClass('selected');
+	$(this).addClass('selected');
+
+	$('.current').css('background-color', current_color().toRgbString() );
+	$('.mc').trigger("colorpickersliders.updateColor", current_color().toHexString());
+
+}).each(function(){
+	$(this).data('default', $(this).css('background-color'));
+});
+
+function current_color(){
+	return color;
+}
+
+function handle_tool(obj, is_click){
+	switch($('.tools li.selected').index()){
+		case 0: //'paint':
 			paint(obj);
 			break;
-		case 'pick':
+		case 1: // Fill
+			if( is_click ) fill(obj);
+			break;
+		case 2: // Erase
+			update_pixel(obj, tinycolor('#000000'));
+			break;
+		case 3: //'pick':
 			pick(obj);
 			break;
-		case 'lighten':
+		case 4: //'lighten':
 			lighten(obj);
 			break;
-		case 'darken':
+		case 5: //'darken':
 			darken(obj);
 			break;
 	}
 }
 
+var fill_target = null;
+var fill_stack = [];
+function fill(obj){
+	fill_target = tinycolor($(obj).css('background-color')).toRgbString();
+
+	if( fill_target == current_color().toRgbString ){
+		return false;
+	}
+
+	console.log('Fill Target',fill_target);
+	console.log('Fill With',current_color());
+
+	do_fill(obj);
+
+	while(fill_stack.length > 0){
+		pixel = fill_stack.pop();
+		do_fill(pixel);
+	}
+}
+
+function is_target_color(obj){
+	
+	return ( tinycolor($(obj).css('background-color')).toRgbString() == fill_target);
+
+}
+
+function do_fill(obj){
+	obj = $(obj);
+
+	if( is_target_color(obj) ){
+
+		update_pixel(obj, current_color());
+
+		var r = obj.next('td');
+		var l = obj.prev('td');
+		var u = obj.parent().prev('tr').find('td:eq(' + obj.index() + ')');
+		var d = obj.parent().next('tr').find('td:eq(' + obj.index() + ')');
+
+		if( r.length && is_target_color(r[0]) ) fill_stack.push(r[0]);
+		if( l.length && is_target_color(l[0]) ) fill_stack.push(l[0]);
+		if( u.length && is_target_color(u[0]) ) fill_stack.push(u[0]);
+		if( d.length && is_target_color(d[0]) ) fill_stack.push(d[0]);
+	}
+}
+
+function clear(){
+	$('td').css('background-color','rgb(0,0,0)').data('changed',false);
+	$.get('/clear');
+	$.get('/show');
+}
+
 function lighten(obj){
-	var col = $(obj).data('hex');
+	var rgb = tinycolor($(obj).css('background-color')).toRgb();
 
-	var rgb = hex_to_rgb(col);
-
-	rgb.r+=2;
-	rgb.g+=2;
-	rgb.b+=2;
-
-	col = rgb_to_hex(rgb);
-
-	update_pixel(obj, col);
+	update_pixel(obj, tinycolor({
+		r: rgb.r + 2,
+		g: rgb.g + 2,
+		b: rgb.b + 2
+	}));
 }
 
 function darken(obj){
-	var col = $(obj).data('hex');
+	var rgb = tinycolor($(obj).css('background-color')).toRgb();
 
-	var rgb = hex_to_rgb(col);
-
-	rgb.r-=2;
-	rgb.g-=2;
-	rgb.b-=2;
-
-	col = rgb_to_hex(rgb);
-
-	update_pixel(obj, col);
+	update_pixel(obj, tinycolor({
+		r: rgb.r - 2,
+		g: rgb.g - 2,
+		b: rgb.b - 2
+	}));
 }
 
+/*
 function set_color(hex){
-	col = hex.replace('#','');
+	$('.palette li.selected').css('background-color', rgb_string(rgb));
+	$('.current').css('background-color',rgb_string(rgb));
 }
+*/
 
 function pick(obj){
-	var hex = $(obj).data('hex');
-	$('.mc').minicolors('value','#' + hex);
-	set_color(hex);
-}
-
-function rgb_to_hex(rgb){
-	var r = rgb.r >= 0 ? (rgb.r <= 255 ? rgb.r : 255) : 0;
-	var g = rgb.g >= 0 ? (rgb.g <= 255 ? rgb.g : 255) : 0;
-	var b = rgb.b >= 0 ? (rgb.b <= 255 ? rgb.b : 255) : 0;
-	r = r.toString(16);
-	g = g.toString(16);
-	b = b.toString(16);
-	if( r.length < 2 ) r = '0' + r;
-	if( g.length < 2 ) g = '0' + g;
-	if( b.length < 2 ) b = '0' + b;
-	console.log(rgb);
-	return [r,g,b].join('');
-}
-
-function hex_to_rgb(hex){
-	r = parseInt('0x' + hex.substring(0,2), 16);
-	g = parseInt('0x' + hex.substring(2,4), 16);
-	b = parseInt('0x' + hex.substring(4,6), 16);
-	return {'r':r,'g':g,'b':b};
+	var col = tinycolor($(obj).css('background-color'));
+	$('.mc').trigger("colorpickersliders.updateColor", col.toHexString());
 }
 
 function update_pixel(obj, col){
-	if( col != $(obj).data('hex') ){
+
+	var bgcol = tinycolor($(obj).css('background-color'));
+
+	if( col.toRgbString() != bgcol.toRgbString() ){
 		$(obj)
-			.data('hex', col)
 			.data('changed', true)
-			.css('background-color','#' + col);
-
-		//var x = $(obj).data('x');
-		//var y = $(obj).data('y');
-
-		//rgb = hex_to_rgb(col);
-
-		//console.log('/pixel/' + x + '/' + y + '/' + rgb.r + '/' + rgb.g + '/' + rgb.b);
-		
-		//$.get('/pixel/' + x + '/' + y + '/' + rgb.r + '/' + rgb.g + '/' + rgb.b);
-		//$.get('/show');
+			.css('background-color',col.toRgbString());
 	}
 }
 
@@ -118,9 +165,10 @@ function update_pixels(){
 		if( $(obj).data('changed') ){
 			$(obj).data('changed',false);
 			changed = true;
-			var x = $(obj).data('x');
-			var y = $(obj).data('y');
-			var col = hex_to_rgb($(obj).data('hex'));
+
+			var x = $(this).index();
+			var y = $(this).parent().index();
+			var col = tinycolor($(obj).css('background-color')).toRgb();
 			
 			var data = [x,y,col.r,col.g,col.b];
 
@@ -133,25 +181,40 @@ function update_pixels(){
 }
 
 function paint(obj){
-	update_pixel(obj, col);
+	update_pixel(obj, current_color());
 }
 
 $('table td').on('click',function(){
-	handle_tool(this);
+	handle_tool(this, true);
 });
 $('table td').on('mousemove',function(){
 	if(!md) return false;
-	handle_tool(this);
+	handle_tool(this, false);
 })
 
-col = '0000FF';
-$('.mc').minicolors({
-		control: 'saturation',
-		inline: true,
-		defaultValue: '#' + col,
-		change: function(hex, opacity) {
-			set_color(hex);
-		}
+swatches = [
+'rgb(0,0,0)','rgb(132,0,0)','rgb(0,132,0)','rgb(132,132,0)','rgb(0,0,132)','rgb(132,0,132)','rgb(0,132,132)','rgb(132,132,132)',
+'rgb(198,198,198)','rgb(255,0,0)','rgb(0,255,0)','rgb(255,255,0)','rgb(0,0,255)','rgb(255,0,255)','rgb(0,255,255)','rgb(255,255,255)'
+];
+
+$('.mc').ColorPickerSliders({
+	flat: true,
+	previewformat: 'hex',
+	color: current_color(),
+	labels: {
+		preview: '',
+		hslhue: 'Hue',
+		hslsaturation: 'Saturation',
+		hsllightness: 'Lightness'
+	},
+	swatches: swatches,
+	order: {
+		hsl: 1,
+		preview: 2
+	},
+	onchange: function(obj, c){
+		color = c.tiny;
+	}
 });
 
 $.get('/clear');

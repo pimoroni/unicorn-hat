@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-from flask import Flask
+
+from flask import Flask, render_template
 import unicornhat as unicorn
 import time
 import threading
@@ -28,6 +29,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
+	return render_template('paint.html')
+
+@app.route('/old')
+def old():
 	output = """<html>
 <head>
 	<title>Unicorn Hat</title>
@@ -65,7 +70,6 @@ def set_pixel(x, y, r, g, b):
 	x, y, r, g, b = int(x), int(y), int(r), int(g), int(b)
 	unicorn.set_pixel(x, y, r, g, b)
 	return "ok"
-
 
 if __name__ == "__main__":
 	unicorn.brightness(0.3)
