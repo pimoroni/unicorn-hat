@@ -15,7 +15,7 @@ Python 2:
     sudo apt-get install python-pip python-dev
     sudo pip install unicornhat
 
-Then proceed to python/examples.
+Then proceed to [python/examples](python/examples).
 
 
 RaspberryPi-NeoPixel-WS2812
