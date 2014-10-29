@@ -7,7 +7,7 @@ Python users should probably ignore most of this repository and just:
 
 ### Full install for beginners:
 
-    /curl -sS get.pimoroni.com/unicornhat | bash
+    \curl -sS get.pimoroni.com/unicornhat | bash
 
 ### Python 3 ( idle3 ):
 
