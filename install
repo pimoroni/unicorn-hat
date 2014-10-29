@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "Updating package indexes..."
+sudo apt-get update
+echo "Installing UnicornHat requirements..."
+sudo apt-get --yes --force-yes install python-pip python3-pip python-dev python3-dev
+echo "Installing UnicornHat for Python 2..."
+sudo pip install unicornhat
+echo "Installing UnicornHat for Python 3..."
+sudo pip-3.2 install unicornhat
