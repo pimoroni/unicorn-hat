@@ -5,6 +5,10 @@ Here you'll find everything you need to start lighting up your UnicornHat in pyt
 
 Python users should probably ignore most of this repository and just:
 
+### Full install for beginners:
+
+    /curl -sS get.pimoroni.com/unicornhat | bash
+
 ### Python 3 ( idle3 ):
 
     sudo apt-get install python3-pip python3-dev

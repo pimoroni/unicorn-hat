@@ -2,15 +2,24 @@
 
 echo ""
 echo "This script will install Unicorn Hat libraries"
-echo "and dependencies for both Python 2 and 3"
+echo "and dependencies for both Python 2 and 3."
+echo ""
+echo "This process may take several minutes."
 echo ""
 echo "--- Warning ---"
+echo ""
 echo "Always be careful when running scripts and commands"
 echo "copied from the internet. Ensure they are from a"
 echo "trusted source."
 echo ""
+echo "If you want to see what this script does before"
+echo "running it, you should run:"
+echo "    \curl -sS get.pimoroni.com/unicornhat"
+echo ""
+echo ""
 
-read -r -p "Do you wish to continue? [y/N] " response
+
+read -r -p "Do you wish to continue? [y/N] " response < /dev/tty
 response=${response,,}
 
 if [[ $response =~ ^(yes|y)$ ]]
