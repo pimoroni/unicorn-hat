@@ -5,12 +5,12 @@ Here you'll find everything you need to start lighting up your UnicornHat in pyt
 
 Python users should probably ignore most of this repository and just:
 
-Pyhon 3:
+### Python 3 ( idle3 ):
 
     sudo apt-get install python3-pip python3-dev
     sudo pip-3.2 install unicornhat
 
-Python 2:
+### Python 2 ( idle ):
 
     sudo apt-get install python-pip python-dev
     sudo pip install unicornhat
