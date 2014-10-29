@@ -22,6 +22,10 @@ rainbow.py
 
 Demonstrates the use of colorsys to animate through colour hues.
 
+rainbow_blinky.py
+-----------------
+
+Blinks a rainbow spot light on and off. Change `fwhm` to make the spot more/less focused (smaller numbers = more focused/larger numbers = less focused). Change the `time.sleep()` to blink faster/slower.
 
 show_png.py
 -----------
