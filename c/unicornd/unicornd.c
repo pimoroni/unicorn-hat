@@ -34,7 +34,8 @@
 
 #define	UNICORND_CMD_SET_BRIGHTNESS 0
 #define	UNICORND_CMD_SET_PIXEL      1
-#define	UNICORND_CMD_SHOW           2
+#define	UNICORND_CMD_SET_ALL_PIXELS 2
+#define	UNICORND_CMD_SHOW           3
 
 #define recv_or_return(socket, buf, len, flags) \
 {                                               \
@@ -165,9 +166,15 @@ static
 void
 handle_client(int client_socket) {
 	uint8_t cmd;
+
 	double bright;
+
 	pos_t pos;
 	col_t col;
+
+	col_t pixels[64];
+	
+	int x, y;
 
 	while (true) {
 		recv_or_return(client_socket, &cmd, sizeof(char), 0);
@@ -186,6 +193,18 @@ handle_client(int client_socket) {
 				recv_or_return(client_socket, &col, sizeof(col_t), 0);
 
 				setPixelColor(get_pixel_pos(pos.x, pos.y), col.r, col.g, col.b);
+				break;
+
+			case UNICORND_CMD_SET_ALL_PIXELS:
+				recv_or_return(client_socket, &pixels, 64 * sizeof(col_t), 0);
+
+				for (x = 0; x < 8; x++) {
+					for (y = 0; y < 8; y++) {
+						col_t *col = &pixels[x * 8 + y];
+						setPixelColor(get_pixel_pos(x, y), col->r, col->g, col->b);
+					}
+				}
+
 				break;
 
 			case UNICORND_CMD_SHOW:

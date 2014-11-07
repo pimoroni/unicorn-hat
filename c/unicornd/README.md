@@ -30,12 +30,37 @@ struct {
 struct {
 	uint8_t code; // set to 1
 
+	pos_t pos;
+	col_t col;
+};
+```
+
+where `pos_t` is a struct like this:
+
+```c
+struct {
 	uint8_t x;
 	uint8_t y;
+};
+```
 
+and where `col_t` is a struct like this:
+
+```c
+struct {
 	uint8_t r;
 	uint8_t g;
 	uint8_t b;
+};
+```
+
+##### set all pixels
+
+```c
+struct {
+	uint8_t code; // set to 2
+
+	col_t pixels[64];
 };
 ```
 
@@ -43,7 +68,7 @@ struct {
 
 ```c
 struct {
-	uint8_t code; // set to 2
+	uint8_t code; // set to 3
 };
 ```
 
