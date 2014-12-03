@@ -16,6 +16,10 @@ simple.py
 
 Sets each pixel in turn and updates the display.
 
+matrix.py
+----------
+
+Knock, knock, Neo.
 
 rainbow.py
 ----------
