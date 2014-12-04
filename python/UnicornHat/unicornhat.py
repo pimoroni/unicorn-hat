@@ -122,11 +122,7 @@ def get_pixels():
   '''
   Get the RGB value of all pixels in a 7x7x3 2d array of tuples
   '''
-  pixels = [[None for x in range(0,8)] for y in range(0,8)]
-  for x in range(0,8):
-    for y in range(0,8):
-      pixels[x][y] = get_pixel(x, y)
-  return pixels
+  return [[get_pixel(x,y) for x in range(0,8)] for y in range(0,8)]
 
 def show():
   '''
