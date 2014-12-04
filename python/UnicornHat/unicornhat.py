@@ -109,6 +109,15 @@ def set_pixel(x, y, r, g, b):
   if index != None:
     ws2812.setPixelColor(index, r, g, b)
 
+def get_pixel(x, y):
+  '''
+  Get the RGB value of a single pixel
+  '''
+  index = get_index_from_xy(x, y)
+  if index != None:
+    pixel = ws2812.getPixelColor(index)
+    return (int(pixel.r), int(pixel.g), int(pixel.b))
+
 def show():
   '''
   Update UnicornHat with the contents
