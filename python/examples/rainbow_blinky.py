@@ -15,7 +15,7 @@ def make_gaussian(fwhm):
 	return gauss
 
 while True:
-	for z in range(1,10)[::-1] + range(1,10):
+	for z in list(range(1, 10)[::-1]) + list(range(1, 10)):
 		fwhm = 5.0/z
 		gauss = make_gaussian(fwhm)
 		for y in range(8):
