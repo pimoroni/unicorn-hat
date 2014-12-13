@@ -64,6 +64,13 @@ def brightness(b = 0.2):
     return
   ws2812.setBrightness(b)
 
+def get_brightness():
+  '''
+  Get the display brightness value
+  Returns a float between 0.0 and 1.0
+  '''
+  return ws2812.getBrightness()
+
 def clear():
   '''
   Clear the buffer

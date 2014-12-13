@@ -18,7 +18,7 @@ _ws2812 = Extension(
 
 setup(
 	name = 'ws2812',
-	version = '1.0.0',
+	version = '1.1.0',
 	author = 'Philip Howard',
 	author_email = 'phil@pimoroni.com',
 	url = 'https://github.com/pimoroni/ws2812-RPi/',

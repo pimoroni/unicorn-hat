@@ -152,7 +152,7 @@ void * map_peripheral(uint32_t base, uint32_t len) {
 // =================================================================================================
 
 // Set brightness
-unsigned char setBrightness(float b) {
+unsigned char setBrightness(double b) {
 	if(b < 0) {
 		printf("Brightness can't be set below 0.\n");
 		return false;
@@ -163,6 +163,10 @@ unsigned char setBrightness(float b) {
 	}
 	brightness = b;
 	return true;
+}
+
+double getBrightness(){
+	return brightness;
 }
 
 // Zero out the PWM waveform buffer

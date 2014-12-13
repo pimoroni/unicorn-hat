@@ -395,7 +395,7 @@ void * map_peripheral(uint32_t base, uint32_t len);
 
 // Brightness - I recommend 0.2 for direct viewing at 3.3v.
 #define DEFAULT_BRIGHTNESS 0.2
-float brightness;
+double brightness;
 
 // LED buffer (this will be translated into pulses in PWMWaveform[])
 typedef struct {
@@ -414,7 +414,8 @@ Color_t LEDBuffer[LED_BUFFER_LENGTH];
 // 1024 (4096 bytes) should be enough for over 400 elements. It can be bumped up if you need more!
 unsigned int PWMWaveform[NUM_DATA_WORDS];
 
-unsigned char setBrightness(float b);
+unsigned char setBrightness(double b);
+double getBrightness();
 void clearPWMBuffer(void);
 void clear(void);
 void clearLEDBuffer(void);

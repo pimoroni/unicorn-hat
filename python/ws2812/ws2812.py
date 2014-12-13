@@ -132,6 +132,10 @@ def setBrightness(*args):
   return _ws2812.setBrightness(*args)
 setBrightness = _ws2812.setBrightness
 
+def getBrightness():
+  return _ws2812.getBrightness()
+getBrightness = _ws2812.getBrightness
+
 def RGB2Color(*args):
   return _ws2812.RGB2Color(*args)
 RGB2Color = _ws2812.RGB2Color
