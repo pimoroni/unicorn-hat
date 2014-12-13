@@ -3,6 +3,9 @@
 import unicornhat as unicorn
 import time, colorsys
 
+print("Some LEDs wont light up in this example.")
+print("Don't panic!")
+
 unicorn.brightness(0.9)
 
 while True:
