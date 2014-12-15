@@ -20,6 +20,9 @@ $('.tools li').on('click',function(){
 		case 6:
 			clear();
 			break;
+		case 7:
+			save();
+			break;
 		default:
 			$('.tools li').removeClass('selected');
 			$(this).addClass('selected');
@@ -108,6 +111,13 @@ function do_fill(obj){
 		if( u.length && is_target_color(u[0]) ) fill_stack.push(u[0]);
 		if( d.length && is_target_color(d[0]) ) fill_stack.push(d[0]);
 	}
+}
+
+function save(){
+	var filename = prompt('Please enter a filename', 'mypaint');
+	filename = filename.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+	$.get('/save/' + filename);
+	alert('Saved into saves/' + filename + '.py, \nRun with "sudo saves/' + filename + '.py"');
 }
 
 function clear(){

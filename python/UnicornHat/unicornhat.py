@@ -125,11 +125,17 @@ def get_pixel(x, y):
     pixel = ws2812.getPixelColor(index)
     return (int(pixel.r), int(pixel.g), int(pixel.b))
 
+def set_pixels(pixels):
+  for x in range(8):
+    for y in range(8):
+      r, g, b = pixels[y][x]
+      set_pixel(x,y,r,g,b)
+
 def get_pixels():
   '''
   Get the RGB value of all pixels in a 7x7x3 2d array of tuples
   '''
-  return [[get_pixel(x,y) for x in range(0,8)] for y in range(0,8)]
+  return [[get_pixel(x,y) for x in range(8)] for y in range(8)]
 
 def show():
   '''

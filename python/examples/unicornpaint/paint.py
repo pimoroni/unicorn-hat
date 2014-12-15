@@ -2,8 +2,7 @@
 
 from flask import Flask, render_template
 import unicornhat as unicorn
-import time
-import threading
+import time, os, stat, threading
 
 control_panel = """
 	<table cellspacing="0" cellpadding="0" border-collapse="collapse">"""
@@ -31,27 +30,26 @@ app = Flask(__name__)
 def home():
 	return render_template('paint.html')
 
-@app.route('/old')
-def old():
-	output = """<html>
-<head>
-	<title>Unicorn Hat</title>
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/static/jquery.minicolors.css">
-	<link rel="stylesheet" type="text/css" href="/static/unicorn-paint.css">
-</head>
-<body>
-<div class="unicorn">"""
-	output += control_panel
-	output += """
-	<script type="text/javascript" src="/static/jquery.min.js"></script>
-	<script type="text/javascript" src="/static/jquery.minicolors.js"></script>
-	<script type="text/javascript" src="/static/unicorn-paint.js"></script>
-</div>
-</body>
-</html>
-	"""
-	return output
+@app.route('/save/<filename>')
+def save(filename):
+        try:
+		data = unicorn.get_pixels()
+        	print(filename, data)
+		file = open('saves/' + filename + '.py', 'w')
+		file.write('#!/usr/bin/env python\n')
+		file.write('import unicornhat, signal\n')
+		file.write('pixels = ' + str(unicorn.get_pixels()) + '\n')
+		file.write('unicornhat.set_pixels(pixels)\n')
+		file.write('unicornhat.show()\n')
+		file.write('signal.pause()')
+		file.close()
+		os.chmod('saves/' + filename + '.py', 0777 | stat.S_IEXEC)
+		
+		return("ok" + str(unicorn.get_pixels()))
+	except AttributeError:
+		print("Unable to save, please update")
+		print("unicornhat library!")
+		return("fail")
 
 @app.route('/clear')
 def clear():
