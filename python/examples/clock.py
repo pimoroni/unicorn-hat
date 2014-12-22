@@ -30,13 +30,14 @@ O_Y = 3
 # Radius of clock
 R = 3
 # Rotation offset of clock, set to 0, 90, 180, 270, etc
-ROTATION = 0
+unicorn.rotation(0)
 
-def setBrightness():
+def setBrightness(currenttime):
+  currenthour = currenttime.tm_hour
   # if it's between 10 am and 8 pm,
   # use dimmer brightness
   if(currenthour < 10 or currenthour > 20):
-    unicorn.brightness(0.2)
+    unicorn.brightness(0.15)
   else:
     unicorn.brightness(0.5)
 
@@ -47,16 +48,16 @@ def tick():
   currentsec  = currenttime.tm_sec
 
   # Set daytime or nighttime brightness
-  setBrightness()
+  setBrightness(currenttime)
   
   d.clear()
   # Draw the circle around the clock
   d.circle(O_X,O_Y,R,Color(255,0,255))
   
   # Draw the clock hands
-  d.circle_line(O_X,O_Y,R-1,(ROTATION - 360.0*(currenthour/12.0)),Color(255,0,0))
-  d.circle_line(O_X,O_Y,R-1,(ROTATION - 360.0*(currentmin/60.0)), Color(0,255,0))
-  d.circle_line(O_X,O_Y,R-2,(ROTATION - 360.0*(currentsec/60.0)), Color(0,0,255))
+  d.circle_line(O_X,O_Y,R-1,(-360.0*(currenthour/12.0)),Color(255,0,0))
+  d.circle_line(O_X,O_Y,R-1,(-360.0*(currentmin/60.0)), Color(0,255,0))
+  d.circle_line(O_X,O_Y,R-1,(-360.0*(currentsec/60.0)), Color(0,0,255))
   
   # draw buffer to hardware
   d.show()
