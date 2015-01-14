@@ -3,7 +3,7 @@
 '''
 This basic example shows use of the Python Pillow library:
 
-sudo apt-get install pillow
+sudo pip-3.2 install pillow # or sudo pip install pillow
 
 The tiny 8x8 chars in lofi.png are from Oddball:
 http://forums.tigsource.com/index.php?topic=8834.0
