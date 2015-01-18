@@ -85,4 +85,4 @@ struct {
 ```
 
 ### examples
-See the Ruby test client
+See the Ruby and Perl test clients
