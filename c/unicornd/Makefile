@@ -6,3 +6,7 @@ lib:
 
 clean:
 	-rm unicornd
+
+install:
+	cp unicornd /usr/sbin
+	cp unicorn /etc/init.d

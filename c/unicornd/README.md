@@ -8,6 +8,18 @@ user.
 
 It can handle only one connection at a time.
 
+`make install` will install the daemon.
+
+```
+sudo make install
+sudo service unicorn start
+sudo service unicorn stop
+```
+
+To set the daemon to start at boot run `sudo update-rc.d unicorn defaults`
+
+The daemon makes the `pi` user the owner of the `/var/run/unicornd.socket`.
+
 ### Protocol
 The protocol is simple: each command is composed of a code (the command you want
 to execute) and its possible arguments.
@@ -73,4 +85,4 @@ struct {
 ```
 
 ### examples
-See the Ruby test client
+See the Ruby and Perl test clients
