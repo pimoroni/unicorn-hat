@@ -281,7 +281,8 @@ void unicorn_exit(int status){
 		setPixelColor(i,0,0,0);
 	}
 	show();
-	terminate(status);
+	terminate(0);
+	exit(status);
 }
 
 /*
