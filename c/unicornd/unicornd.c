@@ -69,7 +69,8 @@ unicornd_exit(int status)
 	}
 
 	show();
-	terminate(status);
+	terminate(0);
+	exit(status);
 }
 
 static int
