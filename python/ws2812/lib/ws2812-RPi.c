@@ -89,8 +89,6 @@ void terminate(int dummy) {
 	if(page_map != 0) {
 		free(page_map);
 	}
-
-	exit(1);
 }
 
 void fatal(char *fmt, ...) {
@@ -99,6 +97,7 @@ void fatal(char *fmt, ...) {
 	vfprintf(stderr, fmt, ap);
 	va_end(ap);
 	terminate(0);
+	exit(1);
 }
 
 
