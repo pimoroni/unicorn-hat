@@ -121,7 +121,9 @@
 // 0x3F000000 Pi 2
 // 0x20000000 Pi 1
 #define PERI_BASE 0x20000000
+#warning Defaulting PERI_BASE to 0x20000000
 #endif
+
 
 // =================================================================================================
 //	________          _____.__                         ____    ____   ____                    
@@ -139,7 +141,7 @@
 #define DMA_LEN			0x24
 #define PWM_BASE		PERI_BASE + 0x20C000
 #define PWM_LEN			0x28
-#define CLK_BASE	    PERI_BASE + 0x101000
+#define CLK_BASE	        PERI_BASE + 0x101000
 #define CLK_LEN			0xA8
 #define GPIO_BASE		PERI_BASE + 0x200000
 #define GPIO_LEN		0xB4
