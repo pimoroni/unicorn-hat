@@ -116,6 +116,13 @@
 #include <time.h>
 #include <signal.h>
 
+
+#ifndef PERI_BASE
+// 0x3F000000 Pi 2
+// 0x20000000 Pi 1
+#define PERI_BASE 0x20000000
+#endif
+
 // =================================================================================================
 //	________          _____.__                         ____    ____   ____                    
 //	\______ \   _____/ ____\__| ____   ____   ______  /  _ \   \   \ /   /____ _______  ______
@@ -128,27 +135,27 @@
 // Base addresses for GPIO, PWM, PWM clock, and DMA controllers (physical, not bus!)
 // These will be "memory mapped" into virtual RAM so that they can be written and read directly.
 // -------------------------------------------------------------------------------------------------
-#define DMA_BASE		0x20007000
+#define DMA_BASE		PERI_BASE + 0x7000
 #define DMA_LEN			0x24
-#define PWM_BASE		0x2020C000
+#define PWM_BASE		PERI_BASE + 0x20C000
 #define PWM_LEN			0x28
-#define CLK_BASE	    0x20101000
+#define CLK_BASE	    PERI_BASE + 0x101000
 #define CLK_LEN			0xA8
-#define GPIO_BASE		0x20200000
+#define GPIO_BASE		PERI_BASE + 0x200000
 #define GPIO_LEN		0xB4
 
 // GPIO
 // -------------------------------------------------------------------------------------------------
-#define GPFSEL1			0x20200004			// Pins 10-19
-#define GPFSEL2			0x20200008			// Pins 20-29
-#define GPFSEL3			0x2020000C			// Pins 30-39
-#define GPFSEL4			0x20200010			// Pins 40-49
-#define GPFSEL5			0x20200014			// Pins 50-53
-#define GPSET0			0x2020001C			// Set (turn on) pin
-#define GPCLR0			0x20200028			// Clear (turn off) pin
-#define GPPUD			0x20200094			// Internal pullup/pulldown resistor control
-#define GPPUDCLK0		0x20200098			// PUD clock for pins 0-31
-#define GPPUDCLK1		0x2020009C			// PUD clock for pins 32-53
+#define GPFSEL1			PERI_BASE + 0x200004			// Pins 10-19
+#define GPFSEL2			PERI_BASE + 0x200008			// Pins 20-29
+#define GPFSEL3			PERI_BASE + 0x20000C			// Pins 30-39
+#define GPFSEL4			PERI_BASE + 0x200010			// Pins 40-49
+#define GPFSEL5			PERI_BASE + 0x200014			// Pins 50-53
+#define GPSET0			PERI_BASE + 0x20001C			// Set (turn on) pin
+#define GPCLR0			PERI_BASE + 0x200028			// Clear (turn off) pin
+#define GPPUD			PERI_BASE + 0x200094			// Internal pullup/pulldown resistor control
+#define GPPUDCLK0		PERI_BASE + 0x200098			// PUD clock for pins 0-31
+#define GPPUDCLK1		PERI_BASE + 0x20009C			// PUD clock for pins 32-53
 
 // Memory offsets for the PWM clock register, which is undocumented! Please fix that, Broadcom!
 // -------------------------------------------------------------------------------------------------

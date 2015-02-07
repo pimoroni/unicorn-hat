@@ -1,5 +1,6 @@
 build/
 *.o
+*.so
 *.a
 *.pyc
 *.egg-info

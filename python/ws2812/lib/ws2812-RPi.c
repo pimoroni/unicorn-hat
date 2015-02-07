@@ -583,7 +583,7 @@ void initHardware(void) {
 	ctl = (struct control_data_s *)virtbase;
 	dma_cb_t *cbp = ctl->cb;
 	// FIXME: Change this to use DEFINEs
-	unsigned int phys_pwm_fifo_addr = 0x7e20c000 + 0x18;
+	unsigned int phys_pwm_fifo_addr = 0x9D20C000 + 0x18;// 0x7e20c000 + 0x18;
 
 	// No wide bursts, source increment, dest DREQ on line 5, wait for response, enable interrupt
 	cbp->info = DMA_TI_CONFIGWORD;
