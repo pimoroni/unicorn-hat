@@ -727,6 +727,15 @@ void initHardware(void) {
 
 // Begin the transfer
 void startTransfer(void) {
+#ifdef RPI2
+	// Force buffer clear
+	// Temp Pi2 fix, thanks Jon!
+	char* buffer;
+ 	buffer=(char*)malloc(1024*1024);
+ 	memset(buffer, 0, 1024*1024);
+ 	free(buffer);
+ #endif
+ 
 	// Enable DMA
 	dma_reg[DMA_CONBLK_AD] = mem_virt_to_phys(ctl->cb);
 	dma_reg[DMA_CS] = DMA_CS_CONFIGWORD | (1 << DMA_CS_ACTIVE);
