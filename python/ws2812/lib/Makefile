@@ -4,6 +4,7 @@ $(warning Detected CPU=$(CPU))
 
 ifeq ($(CPU),BCM2709)
 	PERI_BASE := 0x3F000000
+	RPI2 := 1
 else
 	PERI_BASE := 0x20000000
 endif
