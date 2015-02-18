@@ -17,19 +17,7 @@ const unsigned int ws2812_gamma[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 191,193,194,196,198,200,202,204,206,208,210,212,214,216,218,220,
 222,224,227,229,231,233,235,237,239,241,244,246,248,250,252,255};
 
-
-
-// =================================================================================================
-//	  ________                                  .__   
-//	 /  _____/  ____   ____   ________________  |  |  
-//	/   \  ____/ __ \ /    \_/ __ \_  __ \__  \ |  |  
-//	\    \_\  \  ___/|   |  \  ___/|  | \// __ \|  |__
-//	 \______  /\___  >___|  /\___  >__|  (____  /____/
-//	        \/     \/     \/     \/           \/      
-// =================================================================================================
-
 // Convenience functions
-// --------------------------------------------------------------------------------------------------
 // Print some bits of a binary number (2nd arg is how many bits)
 void printBinary(unsigned int i, unsigned int bits) {
 	int x;
@@ -68,7 +56,6 @@ static void udelay(int us) {
 
 
 // Shutdown functions
-// --------------------------------------------------------------------------------------------------
 void terminate(int dummy) {
 	// Shut down the DMA controller
 	if(dma_reg) {
@@ -102,11 +89,10 @@ void fatal(char *fmt, ...) {
 
 
 // Memory management
-// --------------------------------------------------------------------------------------------------
 // Translate from virtual address to physical
 unsigned int mem_virt_to_phys(void *virt) {
 	unsigned int offset = (uint8_t *)virt - virtbase;
-	return page_map[offset >> PAGE_SHIFT].physaddr + (offset % PAGE_SIZE);
+	return (page_map[offset >> PAGE_SHIFT].physaddr + (offset % PAGE_SIZE)) | 0xC0000000;
 }
 
 // Translate from physical address to virtual
@@ -117,7 +103,7 @@ unsigned int mem_phys_to_virt(uint32_t phys) {
 
 	for (i = 0; i < NUM_PAGES; i++) {
 		if (page_map[i].physaddr == pg_addr) {
-			return (uint32_t)virtbase + i * PAGE_SIZE + pg_offset;
+			return ((uint32_t)virtbase + i * PAGE_SIZE + pg_offset) | 0xC0000000;
 		}
 	}
 	fatal("Failed to reverse map phys addr %08x\n", phys);
@@ -140,15 +126,7 @@ void * map_peripheral(uint32_t base, uint32_t len) {
 	return vaddr;
 }
 
-
-// =================================================================================================
-//	.____     ___________________      _________ __          _____  _____ 
-//	|    |    \_   _____/\______ \    /   _____//  |_ __ ___/ ____\/ ____\
-//	|    |     |    __)_  |    |  \   \_____  \\   __\  |  \   __\\   __\ 
-//	|    |___  |        \ |    `   \  /        \|  | |  |  /|  |   |  |   
-//	|_______ \/_______  //_______  / /_______  /|__| |____/ |__|   |__|   
-//	        \/        \/         \/          \/                           
-// =================================================================================================
+// LED stuff
 
 // Set brightness
 unsigned char setBrightness(double b) {
@@ -287,16 +265,7 @@ unsigned char getPWMBit(unsigned int bitPos) {
 	}
 }
 
-
-
-// =================================================================================================
-//	________        ___.
-//	\______ \   ____\_ |__  __ __  ____  
-//	 |    |  \_/ __ \| __ \|  |  \/ ___\ 
-//	 |    `   \  ___/| \_\ \  |  / /_/  >
-//	 /_______  /\___  >___  /____/\___  / 
-//	         \/     \/    \/     /_____/  
-// =================================================================================================
+// Debug
 
 // Dump contents of LED buffer
 void dumpLEDBuffer(void) {
@@ -466,16 +435,7 @@ void dumpDMA(void) {
 
 }
 
-
-
-// =================================================================================================
-//	.___       .__  __      ___ ___                  .___                              
-//	|   | ____ |__|/  |_   /   |   \_____ _______  __| _/_  _  _______ _______   ____  
-//	|   |/    \|  \   __\ /    ~    \__  \\_  __ \/ __ |\ \/ \/ /\__  \\_  __ \_/ __ \ 
-//	|   |   |  \  ||  |   \    Y    // __ \|  | \/ /_/ | \     /  / __ \|  | \/\  ___/ 
-//	|___|___|  /__||__|    \___|_  /(____  /__|  \____ |  \/\_/  (____  /__|    \___  >
-//	         \/                  \/      \/           \/              \/            \/ 
-// =================================================================================================
+// Init Hardware
 
 void init(int numPixels) {
 	numLEDs = numPixels;
@@ -728,14 +688,15 @@ void initHardware(void) {
 // Begin the transfer
 void startTransfer(void) {
 #ifdef RPI2
+#warning "Pi 2 hack enabled"
 	// Force buffer clear
 	// Temp Pi2 fix, thanks Jon!
 	char* buffer;
  	buffer=(char*)malloc(1024*1024);
- 	memset(buffer, 0, 1024*1024);
+	memset(buffer, 0, 1024*1024);
  	free(buffer);
  #endif
- 
+
 	// Enable DMA
 	dma_reg[DMA_CONBLK_AD] = mem_virt_to_phys(ctl->cb);
 	dma_reg[DMA_CS] = DMA_CS_CONFIGWORD | (1 << DMA_CS_ACTIVE);
@@ -748,19 +709,8 @@ void startTransfer(void) {
 //	dumpDMA();
 }
 
-
-
-// =================================================================================================
-//	  ____ ___            .___       __           .____     ___________________          
-//	 |    |   \______   __| _/____ _/  |_  ____   |    |    \_   _____/\______ \   ______
-//	 |    |   /\____ \ / __ |\__  \\   __\/ __ \  |    |     |    __)_  |    |  \ /  ___/
-//	 |    |  / |  |_> > /_/ | / __ \|  | \  ___/  |    |___  |        \ |    `   \\___ \ 
-//	 |______/  |   __/\____ |(____  /__|  \___  > |_______ \/_______  //_______  /____  >
-//	           |__|        \/     \/          \/          \/        \/         \/     \/ 
-// =================================================================================================
-
+// Update LEDs
 void show(void) {
-
 	// Clear out the PWM buffer
 	// Disabled, because we will overwrite the buffer anyway.
 
@@ -826,6 +776,7 @@ void show(void) {
 	float bitTimeUSec = (float)(NUM_DATA_WORDS * 32) * 0.4;	// Bits sent * time to transmit one bit, which is 0.4μSec
 	//printf("Delay for %d μSec\n", (int)bitTimeUSec);
 	usleep((int)bitTimeUSec);
+
 /*
 
 This is the old FIFO-filling code.
@@ -845,16 +796,7 @@ The FIFO only has enough words for about 7 LEDs, which is why we use DMA instead
 
 }
 
-
-
-// =================================================================================================
-//	___________ _____  _____              __          
-//	\_   _____// ____\/ ____\____   _____/  |_  ______
-//	 |    __)_\   __\\   __\/ __ \_/ ___\   __\/  ___/
-//	 |        \|  |   |  | \  ___/\  \___|  |  \___ \ 
-//	/_______  /|__|   |__|  \___  >\___  >__| /____  >
-//	        \/                  \/     \/          \/ 
-// =================================================================================================
+// Effects
 // The effects in this section are adapted from the Adafruit NeoPixel library at:
 // https://github.com/adafruit/Adafruit_NeoPixel/blob/master/examples/strandtest/strandtest.ino
 

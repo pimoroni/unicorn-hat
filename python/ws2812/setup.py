@@ -2,8 +2,16 @@
 
 from setuptools import setup, find_packages, Extension
 
+cpu = open('/proc/cpuinfo','r').read()
+
+define = []
+
+if 'ARMv7' in cpu:
+  define = [('RPI2',''),('PERI_BASE','0x3F000000')]
+
 _ws2812 = Extension(
 	'_ws2812',
+	define_macros = define,
 	library_dirs=[
 		'lib/'
 	],
