@@ -9,10 +9,9 @@ print("Enabled unicorn poop module!")
 time.sleep(.5)
 print("Pooping rainbows...")
 
-unicorn.brightness(0.9)
+unicorn.brightness(0.1)
 
 i = 0.0
-brightness = .3
 offset = 30
 while True:
         i = i + 0.3
@@ -27,6 +26,6 @@ while True:
                         r = max(0, min(255, r + offset))
                         g = max(0, min(255, g + offset))
                         b = max(0, min(255, b + offset))
-                        unicorn.set_pixel(x,y,int(r * brightness),int(g * brightness),int(b * brightness))
+                        unicorn.set_pixel(x,y,int(r),int(g),int(b))
         unicorn.show()
         time.sleep(0.01)
