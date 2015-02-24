@@ -12,19 +12,21 @@ print("Pooping rainbows...")
 unicorn.brightness(0.9)
 
 i = 0.0
+brightness = .3
+offset = 30
 while True:
-        i = i + 0.1
+        i = i + 0.3
         for y in range(8):
                 for x in range(8):
                         r = 0#x * 32
                         g = 0#y * 32
                         xy = x + y / 4
-                        r = (math.cos((x+i)/2) + math.cos((y+i)/2)) * 128.0 + 128.0
-                        g = (math.sin((x+i)/2) + math.sin((y+i)/2)) * 128.0 + 128.0
-                        b = (math.sin((x+i)/2) + math.cos((y+i)/2)) * 128.0 + 128.0
-                        r = max(0, min(255, r))
-                        g = max(0, min(255, g))
-                        b = max(0, min(255, b))
-                        unicorn.set_pixel(x,y,int(r),int(g),int(b))
+                        r = (math.cos((x+i)/2.0) + math.cos((y+i)/2.0)) * 64.0 + 128.0
+                        g = (math.sin((x+i)/1.5) + math.sin((y+i)/2.0)) * 64.0 + 128.0
+                        b = (math.sin((x+i)/2.0) + math.cos((y+i)/1.5)) * 64.0 + 128.0
+                        r = max(0, min(255, r + offset))
+                        g = max(0, min(255, g + offset))
+                        b = max(0, min(255, b + offset))
+                        unicorn.set_pixel(x,y,int(r * brightness),int(g * brightness),int(b * brightness))
         unicorn.show()
-        time.sleep(0.02)
+        time.sleep(0.01)
