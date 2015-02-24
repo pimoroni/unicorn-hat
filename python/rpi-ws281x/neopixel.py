@@ -1,6 +1,7 @@
 # Adafruit NeoPixel library port to the rpi_ws281x library.
 # Author: Tony DiCola (tony@tonydicola.com), Jeremy Garff (jer@jers.net)
 import _rpi_ws281x as ws
+import atexit
 
 
 def Color(red, green, blue):
@@ -82,7 +83,9 @@ class Adafruit_NeoPixel(object):
 		# Grab the led data array.
 		self._led_data = _LED_Data(self._channel, num)
 
-	def __del__(self):
+		atexit.register(self._cleanup)
+
+	def _cleanup(self):	
 		# Clean up memory used by the library when not needed anymore.
 		if self._leds is not None:
 			ws.ws2811_fini(self._leds)
@@ -90,6 +93,10 @@ class Adafruit_NeoPixel(object):
 			self._leds = None
 			self._channel = None
 			# Note that ws2811_fini will free the memory used by led_data internally.
+
+	def __del__(self):
+		if ws != None:
+			self._cleanup()
 
 	def begin(self):
 		"""Initialize library, must be called once before other functions are

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # Python wrapper for the rpi_ws281x library.
 # Author: Tony DiCola (tony@tonydicola.com)
-from ez_setup import use_setuptools
-use_setuptools()
 from setuptools import setup, find_packages, Extension
 from setuptools.command.install import install
 import subprocess
