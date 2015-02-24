@@ -1,4 +1,4 @@
-#include "ws2812-RPi.h"
+#include "ws2811.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -20,6 +20,71 @@
 #include <signal.h>
 
 #include <png.h>
+
+#define TARGET_FREQ	WS2811_TARGET_FREQ
+#define GPIO_PIN	18
+#define DMA		5
+
+#define WIDTH		8
+#define HEIGHT		8
+#define LED_COUNT	(WIDTH * HEIGHT)
+
+ws2811_t ledstring =
+{
+	.freq = TARGET_FREQ,
+	.dmanum = DMA,
+	.channel = 
+	{
+		[0] =
+		{
+			.gpionum    = GPIO_PIN,
+			.count      = LED_COUNT,
+			.invert     = 0,
+			.brightness = 55,
+		}
+	}
+};
+
+void setBrightness(float b)
+{
+	return;
+}
+
+void setPixelColorRGB(int pixel, int r, int g, int b)
+{
+	ledstring.channel[0].leds[pixel] = (r << 16) | (g << 8) | b;
+	return;
+}
+
+void clearLEDBuffer(void){
+	int i;
+	for(i=0; i<LED_COUNT;i++){
+		setPixelColorRGB(i,0,0,0);
+	}
+}
+
+/*
+  Remap an x/y coordinate to a pixel index
+*/
+int getPixelPosition(int x, int y){
+
+	int map[8][8] = {
+		{7 ,6 ,5 ,4 ,3 ,2 ,1 ,0 },
+		{8 ,9 ,10,11,12,13,14,15},
+		{23,22,21,20,19,18,17,16},
+		{24,25,26,27,28,29,30,31},
+		{39,38,37,36,35,34,33,32},
+		{40,41,42,43,44,45,46,47},
+		{55,54,53,52,51,50,49,48},
+		{56,57,58,59,60,61,62,63}
+	};
+
+	return map[x][y];
+}
+
+void show(){
+	ws2811_render(&ledstring);
+}
 
 void abort_(const char * s, ...)
 {
@@ -106,7 +171,7 @@ void process_file(void)
                 for (x=0; x<width; x++) {
                         png_byte* ptr = &(row[x*3]);
 
-			setPixelColor(getPixelPosition(x,y), ptr[0], ptr[1], ptr[2]);
+			setPixelColorRGB(getPixelPosition(x,y), ptr[0], ptr[1], ptr[2]);
 
                 }
         }
@@ -234,7 +299,7 @@ void shadePixel(double t, int pixel, float x, float y){
 	if(g>1.0) g=1.0;
 	if(b>1.0) b=1.0;
 
-	setPixelColor(pixel, (int)(r*255), (int)(g*255), (int)(b*255));
+	setPixelColorRGB(pixel, (int)(r*255), (int)(g*255), (int)(b*255));
 
 }
 
@@ -256,7 +321,7 @@ void run_shader(void){
 			}
 		}
 		show();
-		usleep(10);
+		usleep(1);
 	}
 
 }
@@ -267,34 +332,16 @@ void run_shader(void){
 void unicorn_exit(int status){
 	int i;
 	for (i = 0; i < 64; i++){
-		setPixelColor(i,0,0,0);
+		setPixelColorRGB(i,0,0,0);
 	}
-	show();
-	terminate(0);
+	ws2811_render(&ledstring);
+	ws2811_fini(&ledstring);
+	
 	exit(status);
 }
 
-/*
-  Remap an x/y coordinate to a pixel index
-*/
-int getPixelPosition(int x, int y){
-
-	int map[8][8] = {
-		{7 ,6 ,5 ,4 ,3 ,2 ,1 ,0 },
-		{8 ,9 ,10,11,12,13,14,15},
-		{23,22,21,20,19,18,17,16},
-		{24,25,26,27,28,29,30,31},
-		{39,38,37,36,35,34,33,32},
-		{40,41,42,43,44,45,46,47},
-		{55,54,53,52,51,50,49,48},
-		{56,57,58,59,60,61,62,63}
-	};
-
-	return map[x][y];
-}
-
 int main(int argc, char **argv) {
-	int shader = false;
+	int shader = 0;
 
 	if (argc >= 3){
 		if(sscanf (argv[2], "%i", &anim_delay)!=1){
@@ -302,8 +349,6 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 	}
-
-	setBrightness(DEFAULT_BRIGHTNESS);
 
 	int newbrightness = 0;
 	if (argc >= 4){
@@ -318,7 +363,7 @@ int main(int argc, char **argv) {
  	if (argc == 2){
 		if(sscanf (argv[1], "%i", &newbrightness)==1){
 			setBrightness(newbrightness/100.0);
-			shader = true;
+			shader = 1;
 		}
 	}
 
@@ -331,13 +376,20 @@ int main(int argc, char **argv) {
 	}
 
 	setvbuf(stdout, NULL, _IONBF, 0);
-	
-	numLEDs = 64;
-	initHardware();
+
+	if (board_info_init() < 0)
+	{
+		return -1;
+	}
+	if(ws2811_init(&ledstring))
+	{
+		return -1;
+	}	
+
 	clearLEDBuffer();
 
 	if(argc < 2){
-		shader = true;
+		shader = 1;
 	}
 
 	if(shader){
