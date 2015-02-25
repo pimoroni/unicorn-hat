@@ -20,7 +20,7 @@ def swirl(x, y, step):
     r = r * 64.0
     r -= 20
 
-    return (r, r, r)
+    return (r, r + (s * 130), r + (c * 130))
 
 # roto-zooming checker board
 def checker(x, y, step):
@@ -83,20 +83,67 @@ def rainbow_search(x, y, step):
 
     return (r * 255, g * 255, b * 255)
 
-effects = [rainbow_search, swirl, checker]
+# zoom tunnel
+def tunnel(x, y, step):
+
+    speed = step / 100.0
+    x -= 4
+    y -= 4
+
+    xo = math.sin(step / 27.0) * 2
+    yo = math.cos(step / 18.0) * 2
+
+    x += xo
+    y += yo
+
+    if y == 0:
+        if x < 0:
+            angle = -(math.pi / 2)
+        else:
+            angle = (math.pi / 2)
+    else:
+        angle = math.atan(x / y)
+
+    if y > 0:
+        angle += math.pi
+
+    angle /= 2 * math.pi # convert angle to 0...1 range
+    
+    shade = math.sqrt(math.pow(x, 2) + math.pow(y, 2)) / 2.1
+    shade = 1 if shade > 1 else shade
+    
+
+    angle += speed
+    depth = speed + (math.sqrt(math.pow(x, 2) + math.pow(y, 2)) / 10)
+
+    col1 = colorsys.hsv_to_rgb((step % 255) / 255.0, 1, .8)
+    col2 = colorsys.hsv_to_rgb((step % 255) / 255.0, 1, .3)
+
+
+    col = col1 if int(abs(angle * 6.0)) % 2 == 0 else col2
+    
+    td = .3 if int(abs(depth * 3.0)) % 2 == 0 else 0
+
+    col = (col[0] + td, col[1] + td, col[2] + td)
+
+    col = (col[0] * shade, col[1] * shade, col[2] * shade)
+
+    return (col[0] * 255, col[1] * 255, col[2] * 255)
+
+effects = [tunnel, rainbow_search, checker, swirl]
 
 unicorn.brightness(0.05)
 
 step = 0
 while True:
-    for i in range(200):
+    for i in range(500):
         for y in range(8):
             for x in range(8):              
                 r, g, b = effects[0](x, y, step)
-                if i > 150:
+                if i > 400:
                     r2, g2, b2 = effects[-1](x, y, step)
 
-                    ratio = (200.00 - i) / 50.0
+                    ratio = (500.00 - i) / 100.0
                     r = r * ratio + r2 * (1.0 - ratio)
                     g = g * ratio + g2 * (1.0 - ratio)
                     b = b * ratio + b2 * (1.0 - ratio)
@@ -106,9 +153,10 @@ while True:
                 unicorn.set_pixel(x, y, r, g, b)
 
         step += 1
-        print step
+        
         unicorn.show()
+
+        time.sleep(0.01)
 
     effect = effects.pop()
     effects.insert(0, effect)
-    time.sleep(0.01)
