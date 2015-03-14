@@ -14,14 +14,13 @@ class CustomInstallCommand(build_py):
 
 
 setup(name              = 'rpi_ws281x',
-      version           = '1.0.1',
+      version           = '1.1.2',
       author            = 'Jeremy Garff',
       author_email      = 'jer@jers.net',
       description       = 'Userspace Raspberry Pi PWM library for WS281X LEDs.',
       license           = 'MIT',
       url               = 'https://github.com/jgarff/rpi_ws281x/',
       cmdclass		= {'build_py':CustomInstallCommand},
-      install_requires  = ['ez_setup'],
       py_modules        = ['neopixel'],
       ext_modules       = [Extension('_rpi_ws281x', 
                                      sources=['rpi_ws281x_wrap.c'],
