@@ -11,6 +11,7 @@ It can handle only one connection at a time.
 `make install` will install the daemon.
 
 ```
+sudo make
 sudo make install
 sudo service unicorn start
 sudo service unicorn stop

@@ -10,3 +10,4 @@ clean:
 install:
 	cp unicornd /usr/sbin
 	cp unicorn /etc/init.d
+	sudo chmod +x /etc/init.d/unicorn
