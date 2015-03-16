@@ -3,6 +3,8 @@ var color = tinycolor('#840000');
 
 $(document).ready(function(){
 
+$.ajaxSetup({ cache: false });
+
 $('.unicorn').draggable({ handle: "h1" });
 
 $(document)
