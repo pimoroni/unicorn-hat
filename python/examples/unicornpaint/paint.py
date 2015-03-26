@@ -32,9 +32,13 @@ def home():
 
 @app.route('/save/<filename>')
 def save(filename):
+	try:
+		os.mkdir('saves/')
+	except OSError:
+		pass
         try:
 		data = unicorn.get_pixels()
-        	print(filename, data)
+       		print(filename, data)
 		file = open('saves/' + filename + '.py', 'w')
 		file.write('#!/usr/bin/env python\n')
 		file.write('import unicornhat, signal\n')
