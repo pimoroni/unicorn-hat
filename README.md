@@ -1,5 +1,7 @@
 #Unicorn Hat Python Library & Examples
 
+Available from Pimoroni: http://shop.pimoroni.com/products/unicorn-hat
+
 Here you'll find everything you need to start lighting up your UnicornHat in python.
 
 Python users should probably ignore most of this repository and just:
