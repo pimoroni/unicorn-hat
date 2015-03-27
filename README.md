@@ -1,6 +1,8 @@
-#Unicorn Hat Python Library & Examples
+![Unicorn HAT](unicorn-hat-logo.png)
 
 Available from Pimoroni: http://shop.pimoroni.com/products/unicorn-hat
+
+###Unicorn Hat Python Library & Examples
 
 Here you'll find everything you need to start lighting up your UnicornHat in python.
 
@@ -36,7 +38,7 @@ Unicorn HAT needs root to function. Please make sure you start LXTerminal and ru
 sudo idle
 ```
 
-##Based Upon rpi_ws281x
+###Based Upon rpi_ws281x
 
 Unicorn HAT is based upon a modified, Pi 2 compatible version of the RPi ws281x Library by Jeremy Garff.
 
@@ -45,7 +47,7 @@ The library was modified by Richard Hirst.
 * Modified version: https://github.com/richardghirst/rpi_ws281x
 * Original: https://github.com/jgarff/rpi_ws281x
 
-##RaspberryPi-NeoPixel-WS2812
+###RaspberryPi-NeoPixel-WS2812
 
 Note: Unicorn HAT is no longer based upon this library, but this information is included for posterity.
 
