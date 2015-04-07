@@ -1,4 +1,5 @@
 #include "ws2811.h"
+#include "board_info.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -23,7 +24,7 @@
 
 #define TARGET_FREQ	WS2811_TARGET_FREQ
 #define GPIO_PIN	18
-#define DMA		5
+#define DMA		    5
 
 #define WIDTH		8
 #define HEIGHT		8
@@ -33,7 +34,7 @@ ws2811_t ledstring =
 {
 	.freq = TARGET_FREQ,
 	.dmanum = DMA,
-	.channel = 
+	.channel =
 	{
 		[0] =
 		{
@@ -110,14 +111,14 @@ int anim_delay = 50;
 
 void read_png_file(char* file_name)
 {
-        char header[8];    // 8 is the maximum size that can be checked
-
+        unsigned char header[8];    // 8 is the maximum size that can be checked
         /* open file and test for it being a png */
         FILE *fp = fopen(file_name, "rb");
         if (!fp)
                 abort_("[read_png_file] File %s could not be opened for reading", file_name);
         fread(header, 1, 8, fp);
-        if (png_sig_cmp(header, 0, 8))
+        png_bytep headerbp = header;
+        if (png_sig_cmp(headerbp, 0, 8))
                 abort_("[read_png_file] File %s is not recognized as a PNG file", file_name);
 
 
@@ -190,7 +191,7 @@ void h2rgb(float h, float *r, float *g, float *b){
 
 	// Wrap hue
 	if(h < 0.0 || h > 1.0){
-		h=fabsf(fmodf(h,1.0));	
+		h=fabsf(fmodf(h,1.0));
 	}
 
 	h *= 360.0;
@@ -233,12 +234,12 @@ void h2rgb(float h, float *r, float *g, float *b){
 			*g = p;
 			*b = q;
 			break;
-		
+
 	}
 
 }
 
-void makeRGB(float *r, float *g, float *b, 
+void makeRGB(float *r, float *g, float *b,
 		float f1, float f2, float f3,
 		float p1, float p2, float p3,
 		float c, float w, float pos){
@@ -256,7 +257,7 @@ void transformPixel(float *x, float *y, float angle){
 
 	cs = cos(angle);
 	sn = sin(angle);
-	
+
 	px = *x * cs - *y * sn;
 	py = *x * sn + *y * cs;
 
@@ -274,7 +275,7 @@ void shadePixel(double t, int pixel, float x, float y){
 	angle /= 57.2957795;
 
 	float px, py, cs, sn;
-	
+
 	// Move origin to center
 	x-=0.5;
 	y-=0.5;
@@ -336,7 +337,7 @@ void unicorn_exit(int status){
 	}
 	ws2811_render(&ledstring);
 	ws2811_fini(&ledstring);
-	
+
 	exit(status);
 }
 
@@ -384,7 +385,7 @@ int main(int argc, char **argv) {
 	if(ws2811_init(&ledstring))
 	{
 		return -1;
-	}	
+	}
 
 	clearLEDBuffer();
 
@@ -403,7 +404,7 @@ int main(int argc, char **argv) {
 				break;
 			}
 		}
-	
+
 	}
 
 	unicorn_exit(0);
