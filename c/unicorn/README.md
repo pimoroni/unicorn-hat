@@ -22,7 +22,7 @@ You can change the animation speed by specifying a delay between frames:
 
     sudo ./unicorn anim/rainbow.png 500
 
-And you can change the brightness by specifying a value between 0 and 100:
+And you can change the brightness by specifying a value between 0 and 255:
 
     sudo ./unicorn anim/rainbow.png 500 1
 
@@ -33,7 +33,7 @@ By default, unicorn will display a swirly rainbow pattern demo.
 
     sudo ./unicorn
 
-You can try different brightnesses by adding them on as a parameter from 0 to 100:
+You can try different brightnesses by adding them on as a parameter from 0 to 255:
 
     sudo ./unicorn 50
 
