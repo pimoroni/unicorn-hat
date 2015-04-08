@@ -22,13 +22,13 @@
 
 #include <png.h>
 
-#define TARGET_FREQ WS2811_TARGET_FREQ
-#define GPIO_PIN    18
-#define DMA         5
+#define TARGET_FREQ    WS2811_TARGET_FREQ
+#define GPIO_PIN       18
+#define DMA            5
 
-#define WIDTH       8
-#define HEIGHT      8
-#define LED_COUNT   (WIDTH * HEIGHT)
+#define WIDTH          8
+#define HEIGHT         8
+#define LED_COUNT      (WIDTH * HEIGHT)
 
 ws2811_t ledstring =
 {
@@ -46,8 +46,9 @@ ws2811_t ledstring =
     }
 };
 
-void setBrightness(float b)
+void setBrightness(int b)
 {
+    ledstring.channel[0].brightness = b;
     return;
 }
 
@@ -358,12 +359,12 @@ int main(int argc, char **argv) {
             return 0;
 
         }else{
-            setBrightness(newbrightness/100.0);
+            setBrightness(newbrightness);
         }
     }
     if (argc == 2){
         if(sscanf (argv[1], "%i", &newbrightness)==1){
-            setBrightness(newbrightness/100.0);
+            setBrightness(newbrightness);
             shader = 1;
         }
     }
