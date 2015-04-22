@@ -8,10 +8,13 @@ user.
 
 It can handle only one connection at a time.
 
-`make install` will install the daemon.
+### Installation
+#### Raspbian
+
+`make install` will install the daemon
 
 ```
-sudo make
+make
 sudo make install
 sudo service unicorn start
 sudo service unicorn stop
@@ -19,7 +22,19 @@ sudo service unicorn stop
 
 To set the daemon to start at boot run `sudo update-rc.d unicorn defaults`
 
-The daemon makes the `pi` user the owner of the `/var/run/unicornd.socket`.
+#### Arch Linux ARM
+
+`make install-archlinux` will install the daemon
+
+```
+make
+su
+make install-archlinux
+systemctl start unicornd
+systemctl stop unicornd
+```
+
+To set the daemon to start at boot run `systemctl enable unicornd`
 
 ### Protocol
 The protocol is simple: each command is composed of a code (the command you want

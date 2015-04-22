@@ -1,0 +1,8 @@
+[Unit]
+Description=Unicorn HAT daemon
+
+[Service]
+ExecStart=/usr/sbin/unicornd
+
+[Install]
+WantedBy=multi-user.target

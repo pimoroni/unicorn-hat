@@ -11,3 +11,7 @@ install:
 	cp unicornd /usr/sbin
 	cp unicorn /etc/init.d
 	sudo chmod +x /etc/init.d/unicorn
+
+install-archlinux:
+	cp unicornd /usr/sbin
+	cp unicornd.service /etc/systemd/system/
