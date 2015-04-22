@@ -6,7 +6,8 @@ Unicorn Hat daemon is a simple C program that listen on a Unix socket in
 Hat so that you can run the daemon as root and your programs as normal
 user.
 
-It can handle only one connection at a time.
+It can handle only one connection at a time and
+since the socket has `0777` mode every user can connect to the socket.
 
 ### Installation
 #### Raspbian

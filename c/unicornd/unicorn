@@ -22,8 +22,6 @@ case $1 in
 	start)
 		log_daemon_msg "Starting Unicorn Hat server" "unicornd"
   		start-stop-daemon --start -b --quiet --oknodo --pidfile $PIDFILE -m --startas $DAEMON -- $UNICORND_OPTS
-		sleep 1
-		chown pi /var/run/unicornd.socket
 		status=$?
 		log_end_msg $status
   		;;
