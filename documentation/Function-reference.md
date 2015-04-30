@@ -1,3 +1,15 @@
+<!--
+---
+title: Unicorn HAT Python Function Reference
+handle: unicorn-hat-python-function-reference
+type: tutorial
+summary: A comprehensive list of functions from the Unicorn HAT python library.
+author: Phil Howard
+products: [unicorn-hat]
+tags: [Unicorn HAT, Raspberry Pi, Python, Reference, Programming]
+images: [images/tba.png]
+difficulty: Beginner
+-->
 #Unicorn HAT Function Reference
 
 ```python
