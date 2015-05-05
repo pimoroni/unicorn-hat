@@ -136,6 +136,8 @@ setup_listen_socket(void)
 		exit(1);
 	}
 
+	chmod(SOCK_PATH, 0777);
+
 	ret = listen(listen_socket, 4);
 	if (ret == -1) {
 		fprintf(stderr, "cannot listen on socket");
