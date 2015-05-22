@@ -4,7 +4,7 @@ use warnings;
 use Unicorn;
 
 my $u = Unicorn->new();
-$u->set_brightness(0.2);
+$u->set_brightness(20);
 $u->clear();
 $u->set_pixel(2, 2, 255, 0, 0);
 $u->set_pixel(4, 4, 0, 255, 0);

@@ -31,7 +31,7 @@ def connect
 end
 
 def set_brightness(val)
-  $sock.write([UNICORND_CMD_SET_BRIGHTNESS, val].pack("Cd"))
+  $sock.write([UNICORND_CMD_SET_BRIGHTNESS, val].pack("CC"))
 end
 
 def set_pixel(x,y,r,g,b)
@@ -48,7 +48,7 @@ end
 
 connect
 
-set_brightness(0.4)
+set_brightness(40)
 
 set_pixel(2,2, 255, 0, 0)
 set_pixel(4,4, 0, 255, 0)
