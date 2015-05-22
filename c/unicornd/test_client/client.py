@@ -16,7 +16,7 @@ def connect():
     sock.connect(UNICORND_SOCKET_PATH)
 
 def set_brightness(val):
-    sock.send(struct.pack('=cd',*[chr(UNICORND_CMD_SET_BRIGHTNESS), val]))
+    sock.send(struct.pack('=cc',*[chr(UNICORND_CMD_SET_BRIGHTNESS), val]))
 
 def set_pixel(x,y,r,g,b):
     sock.send(''.join(chr(x) for x in [UNICORND_CMD_SET_PIXEL, x, y, r, g, b]))

@@ -238,7 +238,7 @@ void
 handle_client(int client_socket) {
 	uint8_t cmd;
 
-	double bright;
+	char bright;
 
 	pos_t pos;
 	col_t col;
@@ -253,7 +253,7 @@ handle_client(int client_socket) {
 		switch (cmd) {
 			case UNICORND_CMD_SET_BRIGHTNESS:
 
-				recv_or_return(client_socket, &bright, sizeof(double), 0);
+				recv_or_return(client_socket, &bright, sizeof(char), 0);
 
 				set_brightness(bright);
 				break;

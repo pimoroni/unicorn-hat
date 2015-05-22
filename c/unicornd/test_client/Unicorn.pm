@@ -41,7 +41,7 @@ sub set_brightness
 {
     my $self = shift;
     my $brightness = shift;
-    my $command = pack "Cd", $UNICORND_CMD_SET_BRIGHTNESS, $brightness;
+    my $command = pack "CC", $UNICORND_CMD_SET_BRIGHTNESS, $brightness;
     $self->{socket}->send($command);
 }
 
