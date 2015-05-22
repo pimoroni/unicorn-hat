@@ -134,8 +134,14 @@ init_unicorn_hat(void)
 
 	setvbuf(stdout, NULL, _IONBF, 0);
 
-	board_info_init();
-	ws2811_init(&ledstring);
+	if (board_info_init() < 0) {
+		exit(1);
+	}
+
+	if (ws2811_init(&ledstring) < 0) {
+		exit(1);
+	}
+
 	clear_led_buffer();
 	set_brightness(20);
 }
