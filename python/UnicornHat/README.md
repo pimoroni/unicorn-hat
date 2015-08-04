@@ -24,7 +24,7 @@ Just import unicornhat, it'll set up ws2812 for you!
 
 Then all you need is:
 
-* unicornhat.set_pixel( x, y, red, blue, green ) - Set a pixel in the buffer to the specified colour
+* unicornhat.set_pixel( x, y, red, green, blue ) - Set a pixel in the buffer to the specified colour
 * unicornhat.show - Update UnicornHat with the current buffer
 * unicornhat.clear - Turn off all the pixels in the buffer and update UnicornHat
 
