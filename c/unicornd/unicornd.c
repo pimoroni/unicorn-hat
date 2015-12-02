@@ -168,12 +168,12 @@ typedef struct col_s {
 	uint8_t r;
 	uint8_t g;
 	uint8_t b;
-} __attribute__ ((packed)) col_t;
+} col_t;
 
 typedef struct pos_s {
 	uint8_t x;
 	uint8_t y;
-} __attribute__ ((packed)) pos_t;
+} pos_t;
 
 #define TARGET_FREQ    WS2811_TARGET_FREQ
 #define GPIO_PIN       18
