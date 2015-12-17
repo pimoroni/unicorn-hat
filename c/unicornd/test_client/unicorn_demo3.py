@@ -21,7 +21,7 @@ class Unicorn:
         self.sock.connect(socket_path)
 
     def set_brightness(self, val):
-        self.sock.send(struct.pack('=cd', self.flag_lumen, val))
+        self.sock.send(struct.pack('=cc', self.flag_lumen, bytes([val])))
 
     def set_pixel(self, x, y, r, g, b):
         self.sock.send(self.flag_set_px + bytes([x, y, r, g, b]))
@@ -54,7 +54,7 @@ class UnicornDemo:
 def main():
     u = Unicorn()
     u.connect()
-    u.set_brightness(0.2)
+    u.set_brightness(20)
     u.clear()
 
     demo = UnicornDemo(u)

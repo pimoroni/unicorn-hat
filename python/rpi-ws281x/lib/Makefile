@@ -1,11 +1,11 @@
 all: lib test
 
 lib:
-	gcc -o ws2811.o -c -g -O2 -Wall -Werror ws2811.c
-	gcc -o pwm.o -c -g -O2 -Wall -Werror pwm.c
-	gcc -o dma.o -c -g -O2 -Wall -Werror dma.c
-	gcc -o board_info.o -c -g -O2 -Wall -Werror board_info.c
-	gcc -o mailbox.o -c -g -O2 -Wall -Werror mailbox.c
+	gcc -o ws2811.o -c -g -O2 -Wall -Werror ws2811.c -fPIC
+	gcc -o pwm.o -c -g -O2 -Wall -Werror pwm.c -fPIC
+	gcc -o dma.o -c -g -O2 -Wall -Werror dma.c -fPIC
+	gcc -o board_info.o -c -g -O2 -Wall -Werror board_info.c -fPIC
+	gcc -o mailbox.o -c -g -O2 -Wall -Werror mailbox.c -fPIC
 	ar rc libws2811.a ws2811.o pwm.o dma.o board_info.o mailbox.o
 	ranlib libws2811.a
 

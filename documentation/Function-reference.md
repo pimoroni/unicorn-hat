@@ -16,19 +16,19 @@ difficulty: Beginner
 rotation( 90 )
 ```
 
-Set the rotation of your Unicorn HAT's output, can be one of 0, 90, 180 ot 270 degrees.
+Set the rotation of your Unicorn HAT's output, can be one of 0, 90, 180 or 270 degrees.
 
 ```python
 brightness( 0.5 )
 ```
 
-Set the global brightness of Unicorn HAT. This defauls to 0.2 to save your eyes, but can be anywhere from 0.0 to 1.0.
+Set the global brightness of Unicorn HAT. This defaults to 0.2 to save your eyes, but can be anywhere from 0.0 to 1.0.
 
 ```python
 clear()
 ```
 
-Clears the buffer, setting all pixels to RGB 0,0,0. This wont update UnicornHAT until you call `show()`
+Clears the buffer, setting all pixels to RGB 0,0,0. This won't update UnicornHAT until you call `show()`
 
 ```python
 off()

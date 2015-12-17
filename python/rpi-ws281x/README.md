@@ -3,11 +3,11 @@ rpi_ws281x
 
 
 Originally from: https://github.com/jgarff/rpi_ws281x
-Thanks to Richard Hirst for Pi 2 compatibel code: https://github.com/richardghirst/rpi_ws281x
+Thanks to Richard Hirst for Pi 2 compatible code: https://github.com/richardghirst/rpi_ws281x
 
-Userspace Raspberry Pi PWM library for WS281X LEDs
+##Userspace Raspberry Pi PWM library for WS281X LEDs
 
-Background:
+###Background:
 
 The BCM2835 in the Raspberry Pi has a PWM module that is well suited to
 driving individually controllable WS281X LEDs.  Using the DMA, PWM FIFO,
@@ -23,7 +23,7 @@ controller as follows.
     Bit 0 - 1 0 0
 
 
-Hardware:
+###Hardware:
 
 WS281X LEDs are generally driven at 5V, which requires that the data
 signal be at the same level.  Converting the output from a Raspberry
@@ -41,7 +41,7 @@ Know what you're doing with the hardware and electricity.  I take no
 reponsibility for damage, harm, or mistakes.
 
 
-Build:
+###Build:
 
 - Install Scons (on raspbian, apt-get install scons).
 - Make sure to adjust the parameters in main.c to suit your hardare.
@@ -51,7 +51,7 @@ Build:
 - Type 'scons' from inside the source directory.
 
 
-Running:
+###Running:
 
 - Type 'sudo scons'.
 - Type 'sudo ./test'.
@@ -59,7 +59,7 @@ Running:
   display.
 
 
-Usage:
+###Usage:
 
 The API is very simple.  Make sure to create and initialize the ws2811_t
 structure as seen in main.c.  From there it can be initialized

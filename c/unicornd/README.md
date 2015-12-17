@@ -6,12 +6,16 @@ Unicorn Hat daemon is a simple C program that listen on a Unix socket in
 Hat so that you can run the daemon as root and your programs as normal
 user.
 
-It can handle only one connection at a time.
+It can handle only one connection at a time and
+since the socket has `0777` mode every user can connect to the socket.
 
-`make install` will install the daemon.
+### Installation
+#### Raspbian
+
+`make install` will install the daemon
 
 ```
-sudo make
+make
 sudo make install
 sudo service unicorn start
 sudo service unicorn stop
@@ -19,7 +23,36 @@ sudo service unicorn stop
 
 To set the daemon to start at boot run `sudo update-rc.d unicorn defaults`
 
-The daemon makes the `pi` user the owner of the `/var/run/unicornd.socket`.
+If you see an error like this,
+
+```
+[....] Starting unicorn (via systemctl): unicorn.serviceFailed to start unicorn.service: Unit unicorn.service failed to load: No such file or directory.
+```
+
+This is because you are running systemd on the new debian and the new
+sysv/systemd compatibility shim hasn't run.  Running it manually will
+generate the necessary service file.  This will be put in /tmp.  This
+process normally happens on startup so you aren't likely to need to
+do it again.
+
+```
+sudo /lib/systemd/system-generators/systemd-sysv-generator
+sudo service unicorn start
+```
+
+#### Arch Linux ARM
+
+`make install-archlinux` will install the daemon
+
+```
+make
+su
+make install-archlinux
+systemctl start unicornd
+systemctl stop unicornd
+```
+
+To set the daemon to start at boot run `systemctl enable unicornd`
 
 ### Protocol
 The protocol is simple: each command is composed of a code (the command you want
