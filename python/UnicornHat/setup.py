@@ -35,7 +35,7 @@ classifiers = ['Development Status :: 5 - Production/Stable',
 
 setup(
     name        = 'unicornhat',
-    version     = '2.0.4',
+    version     = '2.0.2',
     author      = 'Philip Howard',
     author_email= 'phil@pimoroni.com',
     description = """The Python library for UnicornHat a matrix of 64, eye-burning, ws2812 LEDs!""",
