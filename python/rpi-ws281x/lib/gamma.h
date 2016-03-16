@@ -1,6 +1,6 @@
 #ifndef GAMMA_H
 #define GAMMA_H
-const unsigned int ws281x_gamma[] = {
+const uint8_t ws281x_gamma[] = {
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5,

@@ -30,7 +30,6 @@
 #ifndef __PWM_H__
 #define __PWM_H__
 
-#include <stdint.h>
 
 /*
  *
@@ -97,7 +96,7 @@ typedef struct
     uint32_t resvd_0x1c;
     uint32_t rng2;
     uint32_t dat2;
-} pwm_t;
+} __attribute__((packed)) pwm_t;
 
 
 #define PWM_OFFSET                               (0x0020c000)
@@ -110,7 +109,7 @@ typedef struct
     int altnum;
 } pwm_pin_table_t;
 
-typedef struct 
+typedef struct
 {
     const int count;
     const pwm_pin_table_t *pins;

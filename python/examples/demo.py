@@ -132,7 +132,7 @@ def tunnel(x, y, step):
 
 effects = [tunnel, rainbow_search, checker, swirl]
 
-unicorn.brightness(0.05)
+unicorn.brightness(0.1)
 
 step = 0
 while True:

@@ -70,6 +70,12 @@ except AttributeError:
 
 
 WS2811_TARGET_FREQ = _rpi_ws281x.WS2811_TARGET_FREQ
+WS2811_STRIP_RGB = _rpi_ws281x.WS2811_STRIP_RGB
+WS2811_STRIP_RBG = _rpi_ws281x.WS2811_STRIP_RBG
+WS2811_STRIP_GRB = _rpi_ws281x.WS2811_STRIP_GRB
+WS2811_STRIP_GBR = _rpi_ws281x.WS2811_STRIP_GBR
+WS2811_STRIP_BRG = _rpi_ws281x.WS2811_STRIP_BRG
+WS2811_STRIP_BGR = _rpi_ws281x.WS2811_STRIP_BGR
 class ws2811_channel_t(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, ws2811_channel_t, name, value)
@@ -88,6 +94,9 @@ class ws2811_channel_t(_object):
     __swig_setmethods__["brightness"] = _rpi_ws281x.ws2811_channel_t_brightness_set
     __swig_getmethods__["brightness"] = _rpi_ws281x.ws2811_channel_t_brightness_get
     if _newclass:brightness = _swig_property(_rpi_ws281x.ws2811_channel_t_brightness_get, _rpi_ws281x.ws2811_channel_t_brightness_set)
+    __swig_setmethods__["strip_type"] = _rpi_ws281x.ws2811_channel_t_strip_type_set
+    __swig_getmethods__["strip_type"] = _rpi_ws281x.ws2811_channel_t_strip_type_get
+    if _newclass:strip_type = _swig_property(_rpi_ws281x.ws2811_channel_t_strip_type_get, _rpi_ws281x.ws2811_channel_t_strip_type_set)
     __swig_setmethods__["leds"] = _rpi_ws281x.ws2811_channel_t_leds_set
     __swig_getmethods__["leds"] = _rpi_ws281x.ws2811_channel_t_leds_get
     if _newclass:leds = _swig_property(_rpi_ws281x.ws2811_channel_t_leds_get, _rpi_ws281x.ws2811_channel_t_leds_set)
@@ -109,6 +118,9 @@ class ws2811_t(_object):
     __swig_setmethods__["device"] = _rpi_ws281x.ws2811_t_device_set
     __swig_getmethods__["device"] = _rpi_ws281x.ws2811_t_device_get
     if _newclass:device = _swig_property(_rpi_ws281x.ws2811_t_device_get, _rpi_ws281x.ws2811_t_device_set)
+    __swig_setmethods__["rpi_hw"] = _rpi_ws281x.ws2811_t_rpi_hw_set
+    __swig_getmethods__["rpi_hw"] = _rpi_ws281x.ws2811_t_rpi_hw_get
+    if _newclass:rpi_hw = _swig_property(_rpi_ws281x.ws2811_t_rpi_hw_get, _rpi_ws281x.ws2811_t_rpi_hw_set)
     __swig_setmethods__["freq"] = _rpi_ws281x.ws2811_t_freq_set
     __swig_getmethods__["freq"] = _rpi_ws281x.ws2811_t_freq_get
     if _newclass:freq = _swig_property(_rpi_ws281x.ws2811_t_freq_get, _rpi_ws281x.ws2811_t_freq_set)
