@@ -35,7 +35,7 @@ classifiers = ['Development Status :: 5 - Production/Stable',
 
 setup(
     name        = 'unicornhat',
-    version     = '2.0.2',
+    version     = '2.0.3',
     author      = 'Philip Howard',
     author_email= 'phil@pimoroni.com',
     description = """The Python library for UnicornHat a matrix of 64, eye-burning, ws2812 LEDs!""",
@@ -45,5 +45,5 @@ setup(
     url         = 'http://shop.pimoroni.com',
     classifiers = classifiers,
     py_modules  = [ 'unicornhat' ],
-    install_requires = ['rpi_ws281x >= 1.0.1'],
+    install_requires = ['rpi_ws281x >= 2.0.0'],
 )
