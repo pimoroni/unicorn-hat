@@ -15,7 +15,7 @@
  *         provided with the distribution.
  *     3.  Neither the name of the owner nor the names of its contributors may be used to endorse
  *         or promote products derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE
@@ -39,9 +39,9 @@
 #include <sys/mman.h>
 #include <signal.h>
 
-#include "board_info.h"
 #include "clk.h"
 #include "gpio.h"
+#include "dma.h"
 #include "pwm.h"
 
 #include "ws2811.h"
@@ -114,25 +114,29 @@ int dotspos[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
 ws2811_led_t dotcolors[] =
 {
     0x200000,  // red
-    0x202000,  // yellow
-    0x002020,  // lightblue
-    0x200010,  // pink
-    0x002000,  // green
-    0x100010,  // purple
-    0x000020,  // blue
     0x201000,  // orange
+    0x202000,  // yellow
+    0x002000,  // green
+    0x002020,  // lightblue
+    0x000020,  // blue
+    0x100010,  // purple
+    0x200010,  // pink
 };
 
 void matrix_bottom(void)
 {
     int i;
-    static int x = 0;
 
-    for (i = 0; i < WIDTH; i++)
+    for (i = 0; i < ARRAY_SIZE(dotspos); i++)
     {
-        matrix[i][HEIGHT - 1] = dotcolors[x & 7];
+        dotspos[i]++;
+        if (dotspos[i] > (WIDTH - 1))
+        {
+            dotspos[i] = 0;
+        }
+
+        matrix[dotspos[i]][HEIGHT - 1] = dotcolors[i];
     }
-    x++;
 }
 
 static void ctrl_c_handler(int signum)
@@ -147,17 +151,13 @@ static void setup_handlers(void)
         .sa_handler = ctrl_c_handler,
     };
 
-    sigaction(SIGKILL, &sa, NULL);
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGTERM, &sa, NULL);
 }
 
 int main(int argc, char *argv[])
 {
     int ret = 0;
-
-    if (board_info_init() < 0)
-    {
-        return -1;
-    }
 
     setup_handlers();
 
@@ -165,23 +165,11 @@ int main(int argc, char *argv[])
     {
         return -1;
     }
-    if (0)
-    {
-        void *p = malloc(32000000);
-        memset(p, 42, 32000000);
-        free(p);
-    }
 
     while (1)
     {
         matrix_raise();
         matrix_bottom();
-        if (0)
-        {
-            void *p = malloc(64000000);
-            memset(p, 42, 64000000);
-            free(p);
-        }
         matrix_render();
 
         if (ws2811_render(&ledstring))
@@ -191,7 +179,7 @@ int main(int argc, char *argv[])
         }
 
         // 15 frames /sec
-        usleep(500000);
+        usleep(1000000 / 15);
     }
 
     ws2811_fini(&ledstring);

@@ -69,7 +69,10 @@ def brightness(b=0.2):
     if b > 1 or b < 0:
         raise ValueError('Brightness must be between 0.0 and 1.0')
 
-    ws2812.setBrightness(int(b*255.0))
+    """Absolute max brightness has been capped to 50%, do not change
+    this unless you know what you're doing.
+    UnicornHAT draws too much current above 50%."""
+    ws2812.setBrightness(int(b*128.0))
 
 
 def get_brightness():

@@ -59,7 +59,7 @@ typedef struct
     uint32_t pudclk[2];                          // GPIO Pin Pull up/down Enable Clock
     uint32_t resvd_0xa0[4];
     uint32_t test;
-} gpio_t;
+} __attribute__((packed)) gpio_t;
 
 
 #define GPIO_OFFSET                              (0x00200000)
