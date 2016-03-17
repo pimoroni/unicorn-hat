@@ -16,7 +16,7 @@ from PIL import Image
 import signal, numpy, time
 
 unicorn.rotation(90)
-unicorn.brightness(0.4)
+unicorn.brightness(0.9)
 
 img = Image.open('lofi.png')
 

@@ -5,7 +5,6 @@ import time
 from random import randint
 
 uh.rotation(0)
-uh.brightness(0.1)
 heights = []
 
 

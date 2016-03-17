@@ -72,7 +72,10 @@ def brightness(b=0.2):
     """Absolute max brightness has been capped to 50%, do not change
     this unless you know what you're doing.
     UnicornHAT draws too much current above 50%."""
-    ws2812.setBrightness(int(b*128.0))
+    brightness = int(b*128.0)
+    if brightness < 30:
+        print("Warning: Low brightness chosen, your UnicornHAT might not light up!")
+    ws2812.setBrightness(brightness)
 
 
 def get_brightness():

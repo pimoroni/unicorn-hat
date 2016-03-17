@@ -9,7 +9,7 @@ height = 8
 rows = []
 row_pointer = 0
 
-unicorn.brightness(0.2)
+unicorn.brightness(0.4)
 
 
 def init():
