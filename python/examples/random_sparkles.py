@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import unicornhat as u
 from random import randint
 
