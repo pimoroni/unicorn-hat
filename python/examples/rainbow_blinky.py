@@ -4,8 +4,6 @@ import unicornhat as unicorn
 import time, colorsys
 import numpy as np
 
-unicorn.brightness(0.5)
-
 def make_gaussian(fwhm):
 	x = np.arange(0, 8, 1, float)
 	y = x[:, np.newaxis]

@@ -37,9 +37,9 @@ def setBrightness(currenttime):
   # if it's between 10 am and 8 pm,
   # use dimmer brightness
   if(currenthour < 10 or currenthour > 20):
-    unicorn.brightness(0.15)
-  else:
     unicorn.brightness(0.5)
+  else:
+    unicorn.brightness(1)
 
 def tick():
   currenttime = time.localtime()

@@ -17,8 +17,6 @@ tick_mask = [[0,0,0,0,0,0,0,0],
              [0,0,0,1,0,0,0,0],
              [0,0,0,0,0,0,0,0]]
 
-unicorn.brightness(1)
-
 steps_per = 16
 def background(x, y, step):
     v = math.sin(sin_off[x][y] + (step / 10.0))

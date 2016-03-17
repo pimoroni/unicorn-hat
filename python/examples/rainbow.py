@@ -9,8 +9,6 @@ print("Enabled unicorn poop module!")
 time.sleep(.5)
 print("Pooping rainbows...")
 
-unicorn.brightness(0.1)
-
 i = 0.0
 offset = 30
 while True:
