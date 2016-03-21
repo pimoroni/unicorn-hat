@@ -19,13 +19,16 @@ Store the rotation of UnicornHat, defaults to
 HDMI port facing downwards
 """
 _rotation = 0
-
+_wx = 8
+_wy = 8
+_is_phat = False
+_map = []
 
 """
 Store a map of pixel indexes for
 translating x, y coordinates.
 """
-map = [
+HAT = [
     [7 , 6 , 5 , 4 , 3 , 2 , 1 , 0 ],
     [8 , 9 , 10, 11, 12, 13, 14, 15],
     [23, 22, 21, 20, 19, 18, 17, 16],
@@ -36,6 +39,21 @@ map = [
     [56, 57, 58, 59, 60, 61, 62, 63]
 ]
 
+PHAT = [
+    [24, 16, 8,  0],
+    [25, 17, 9,  1],
+    [26, 18, 10, 2],
+    [27, 19, 11, 3],
+    [28, 20, 12, 4],
+    [29, 21, 13, 5],
+    [30, 22, 14, 6],
+    [31, 23, 15, 7]
+]
+
+def set_layout(pixel_map):
+    global _map
+
+    _map = pixel_map
 
 def _clean_shutdown():
     """Registered at exit to ensure ws2812 cleans up after itself
@@ -102,21 +120,29 @@ def off():
 
 def get_index_from_xy(x, y):
     """Convert an x, y value to an index on the display"""
-    if x > 7 or x < 0:
-        raise ValueError('X position must be between 0 and 7')
-    if y > 7 or y < 0:
-        raise ValueError('Y position must be between 0 and 7')
+    wx = len(_map) - 1
+    wy = len(_map[0]) - 1
 
-    y = 7-y
+    #if x > wx or x < 0:
+    #    raise ValueError('X position must be between 0 and {wx}'.format(wx=wx))
+    #if y > wy or y < 0:
+    #    raise ValueError('Y position must be between 0 and {wy}'.format(wy=wy))
 
-    if _rotation == 90:
-        x, y = y, 7-x
+    y = (wy)-y
+
+    if _rotation == 90 and wx == wy:
+        x, y = y, (wx)-x
     elif _rotation == 180:
-        x, y = 7-x, 7-y
-    elif _rotation == 270:
-        x, y = 7-y, x
+        x, y = (wx)-x, (wy)-y
+    elif _rotation == 270 and wx == wy:
+        x, y = (wy)-y, x
 
-    return map[x][y]
+    try:
+        index = _map[x][y]
+    except IndexError:
+        index = None
+
+    return index
 
 
 def set_pixel_hsv(x, y, h, s, v):
@@ -158,5 +184,6 @@ def show():
     """Update UnicornHat with the contents of the display buffer"""
     ws2812.show()
 
+set_layout(HAT)
 
 atexit.register(_clean_shutdown)
