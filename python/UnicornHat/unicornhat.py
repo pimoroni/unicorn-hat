@@ -21,7 +21,6 @@ HDMI port facing downwards
 _rotation = 0
 _wx = 8
 _wy = 8
-_is_phat = False
 _map = []
 
 """
