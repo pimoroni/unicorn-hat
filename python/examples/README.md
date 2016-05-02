@@ -10,6 +10,14 @@ or
     sudo python clock.py    
 
 
+Note: If you're using a Unicorn pHAT make sure you specify in your code, like so:
+
+```python
+import unicornhat
+unicornhat.set_layout(unicornhat.PHAT)
+```
+
+
 clock.py
 --------
 
