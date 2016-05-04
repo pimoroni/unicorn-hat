@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import unicornhat as uh
 import time
 from random import randint

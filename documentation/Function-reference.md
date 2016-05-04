@@ -1,9 +1,9 @@
 <!--
 ---
-title: Unicorn HAT Python Function Reference
+title: Unicorn HAT-pHAT Python Function Reference
 handle: unicorn-hat-python-function-reference
 type: tutorial
-summary: A comprehensive list of functions from the Unicorn HAT python library.
+summary: A comprehensive list of functions from the Unicorn pHAT/HAT python library.
 author: Phil Howard
 products: [unicorn-hat]
 tags: [Unicorn HAT, Raspberry Pi, Python, Reference, Programming]
@@ -11,6 +11,8 @@ images: [images/tba.png]
 difficulty: Beginner
 -->
 #Unicorn HAT Function Reference
+
+Note: all of the functions detailed below are applicable to the Unicorn pHAT, but please check the next section for important information.
 
 ```python
 rotation( 90 )
@@ -66,3 +68,33 @@ show()
 ```
 
 Updates the Unicorn HAT with the current buffer. The buffer contains all pixel data that you have drawn with the set_pixel or set_pixels methods.
+
+```python
+set_layout(unicorn.HAT)
+```
+
+Enforces the pixel mapping required for the Unicorn HAT. This is the default, so in nnormal circumstances only needed if you need to reset the layout after using the Unicorn pHAT. 
+
+#Unicorn pHAT Function Reference
+
+```python
+set_layout(unicorn.PHAT)
+```
+
+Enforces the pixel mapping required for the Unicorn pHAT. It must be called at the start of your routine for pixel coordinates to be handled correctly.
+
+```python
+rotation( 180 )
+```
+
+Set the rotation of your Unicorn pHAT's output. 180 will invert the display, i.e set the origin in the bottom right corner, looking at the PCB with the header at the top. O will reset the origin. It is not possible to swap the x and y axis.
+
+```python
+set_pixel(x, y, r, g, b)
+```
+
+Sets the pixel at x,y to colour r,g,b. The x value should be between 0 and 7, the y value should be between 0 and 3. r, g, b must be between 0 and 255. The actual brightness value displayed will depend upon the global brightness.
+
+Note that for compatibility with Unicorn HAT y values between 4 and 7 will be accepted but wrap around the range. In other words they are technically acceptable but should be avoided when writing programs designed for the pHAT.
+
+All other functions detailed in the HAT sections are otherwise valid and identical.
