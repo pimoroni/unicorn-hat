@@ -150,3 +150,10 @@ class Adafruit_NeoPixel(object):
 	def getPixelColor(self, n):
 		"""Get the 24-bit RGB color value for the LED at position n."""
 		return self._led_data[n]
+
+	def getPixelColorRGB(self, n):
+		c = lambda: None
+		setattr(c, 'r', self._led_data[n] >> 16 & 0xff)
+		setattr(c, 'g', self._led_data[n] >> 8  & 0xff)	
+		setattr(c, 'b', self._led_data[n]	& 0xff)
+		return c
