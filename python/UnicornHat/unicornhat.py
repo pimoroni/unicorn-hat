@@ -163,8 +163,11 @@ def get_pixel(x, y):
     """Get the RGB value of a single pixel"""
     index = get_index_from_xy(x, y)
     if index is not None:
-        pixel = ws2812.getPixelColorRGB(index)
-        return int(pixel.r), int(pixel.g), int(pixel.b)
+        pixel24bit = ws2812.getPixelColor(index)
+        pixel_r = (pixel24bit >> 16) & 255
+        pixel_g = (pixel24bit >> 8) & 255
+        pixel_b = pixel24bit & 255
+        return int(pixel_r), int(pixel_g), int(pixel_b)
 
 
 def set_pixels(pixels):
