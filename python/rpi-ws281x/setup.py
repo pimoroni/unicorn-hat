@@ -13,7 +13,7 @@ class CustomInstallCommand(build_py):
         build_py.run(self)
 
 setup(name              = 'rpi_ws281x',
-      version           = '2.0.0',
+      version           = '2.0.1',
       author            = 'Jeremy Garff',
       author_email      = 'jer@jers.net',
       description       = 'Userspace Raspberry Pi PWM library for WS281X LEDs.',
