@@ -78,7 +78,7 @@ def rotation(r=0):
         raise ValueError('Rotation must be 0, 90, 180 or 270 degrees')
 
 
-def brightness(b=0.2):
+def brightness():
     """Set the display brightness between 0.0 and 1.0
 
     0.2 is highly recommended, UnicornHat can get painfully bright!"""
@@ -86,21 +86,22 @@ def brightness(b=0.2):
     if b > 1 or b < 0:
         raise ValueError('Brightness must be between 0.0 and 1.0')
 
-    """Absolute max brightness has been capped to 50%, do not change
-    this unless you know what you're doing.
+    """Absolute max brightness gets immediately capped to 50%,
+     do not change this unless you know what you're doing.
     UnicornHAT draws too much current above 50%."""
-    brightness = int(b*128.0)
+    brightness = int(b*255)
     if brightness < 30:
         print("Warning: Low brightness chosen, your UnicornHAT might not light up!")
     ws2812.setBrightness(brightness)
 
+brightness(0.5)
 
 def get_brightness():
     """Get the display brightness value
 
     Returns a float between 0.0 and 1.0
     """
-    return round(ws2812.getBrightness()/128, 3)
+    return round(ws2812.getBrightness()/255, 3)
 
 
 def clear():
