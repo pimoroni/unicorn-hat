@@ -151,6 +151,13 @@ static const rpi_hw_t rpi_hw_info[] = {
         .videocore_base = VIDEOCORE_BASE_RPI,
         .desc = "Model B+",
     },
+    {
+        .hwver  = 0x13,
+        .type = RPI_HWVER_TYPE_PI1,
+        .periph_base = PERIPH_BASE_RPI,
+        .videocore_base = VIDEOCORE_BASE_RPI,
+        .desc = "Model B+",
+    },
 
     //
     // Compute Module
@@ -171,7 +178,14 @@ static const rpi_hw_t rpi_hw_info[] = {
         .type = RPI_HWVER_TYPE_PI1,
         .periph_base = PERIPH_BASE_RPI,
         .videocore_base = VIDEOCORE_BASE_RPI,
-        .desc = "Pi Zero",
+        .desc = "Pi Zero v1.2",
+    },
+    {
+        .hwver  = 0x900093,
+        .type = RPI_HWVER_TYPE_PI1,
+        .periph_base = PERIPH_BASE_RPI,
+        .videocore_base = VIDEOCORE_BASE_RPI,
+        .desc = "Pi Zero v1.3",
     },
 
     //
@@ -179,6 +193,13 @@ static const rpi_hw_t rpi_hw_info[] = {
     //
     {
         .hwver  = 0x12,
+        .type = RPI_HWVER_TYPE_PI1,
+        .periph_base = PERIPH_BASE_RPI,
+        .videocore_base = VIDEOCORE_BASE_RPI,
+        .desc = "Model A+",
+    },
+    {
+        .hwver  = 0x15,
         .type = RPI_HWVER_TYPE_PI1,
         .periph_base = PERIPH_BASE_RPI,
         .videocore_base = VIDEOCORE_BASE_RPI,
@@ -273,4 +294,3 @@ done:
 
     return result;
 }
-
