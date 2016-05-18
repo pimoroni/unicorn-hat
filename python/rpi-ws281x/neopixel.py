@@ -131,6 +131,10 @@ class Adafruit_NeoPixel(object):
 		"""
 		self.setPixelColor(n, Color(red, green, blue))
 
+
+	def getBrightness(self):
+		return ws.ws2811_channel_t_brightness_get(self._channel)
+
 	def setBrightness(self, brightness):
 		"""Scale each LED in the buffer by the provided brightness.  A brightness
 		of 0 is the darkest and 255 is the brightest.

@@ -115,7 +115,7 @@ def get_brightness():
 
     Returns a float between 0.0 and 1.0
     """
-    return round(ws2812.getBrightness()/128, 3)
+    return round(ws2812.getBrightness()/128.0, 3)
 
 
 def clear():
