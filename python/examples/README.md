@@ -17,6 +17,7 @@ import unicornhat
 unicornhat.set_layout(unicornhat.PHAT)
 ```
 
+Some pHAT specific version of examples are present in phat folder.
 
 clock.py
 --------
