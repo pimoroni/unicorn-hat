@@ -7,7 +7,7 @@ LED_COUNT      = 64      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
-LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
+LED_BRIGHTNESS = 128     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 
 ws2812 = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
@@ -49,10 +49,25 @@ PHAT = [
     [31, 23, 15, 7]
 ]
 
-def set_layout(pixel_map):
+AUTO = None
+
+def set_layout(pixel_map = AUTO):
+    global _map
+    if pixel_map is None:
+        pixel_map = PHAT # Assume PHAT
+        try:
+            product = open("/proc/device-tree/hat/product","r").read().strip()
+            if product[:11] == "Unicorn HAT":
+                pixel_map = HAT
+        except IOError:
+            pass
+        
+    _map = pixel_map
+
+def get_shape():
     global _map
 
-    _map = pixel_map
+    return (len(_map), len(_map[0]))
 
 def _clean_shutdown():
     """Registered at exit to ensure ws2812 cleans up after itself
