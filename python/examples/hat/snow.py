@@ -4,9 +4,8 @@ from random import randint
 import unicornhat as unicorn
 from time import sleep
 
-unicorn.set_layout(unicorn.AUTO)
-width,height=unicorn.get_shape()
-
+width = 8
+height = 8
 rows = []
 row_pointer = 0
 

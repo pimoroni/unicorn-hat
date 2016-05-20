@@ -63,3 +63,8 @@ phat_snow.py
 Pixels falling like snowflakes.
 
 
+phat_rainbow.py
+---------------
+
+The only pHAT specific example that I moved to the phat sub-folder (untouched).
+

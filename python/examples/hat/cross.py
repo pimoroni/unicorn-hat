@@ -4,8 +4,8 @@ import unicornhat as uh
 import time
 from random import randint
 
-uh.set_layout(uh.AUTO)
-width,height=uh.get_shape()
+width = 8
+height = 8
 points = []
 
 
