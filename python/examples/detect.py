@@ -9,7 +9,7 @@ print("")
 
 width,height=unicorn.get_shape()
 
-if height == weight:
+if height == width:
    print("Your height is equal to your width, so you must have a HAT.")
 else:
    print("Your height is NOT equal to your width, so you must have a pHAT.")
