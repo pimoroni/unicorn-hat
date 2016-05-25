@@ -9,10 +9,10 @@ print("")
 
 width,height=unicorn.get_shape()
 
-if height == 4:
-   print("Your height is 4, so you must have a pHAT.")
+if height == width:
+   print("Your height is equal to your width, so you must have a HAT.")
 else:
-   print("Your height is not 4, so you must have a HAT.")
+   print("Your height is NOT equal to your width, so you must have a pHAT.")
 
 print("")
 print("If your hardware has been properly detected, it should be safe to use the following in your code:")
