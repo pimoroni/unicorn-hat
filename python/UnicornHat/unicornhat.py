@@ -38,6 +38,13 @@ HAT = [
     [56, 57, 58, 59, 60, 61, 62, 63]
 ]
 
+PHAT_VERTICAL = [
+    [0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 ],
+    [8 , 9 , 10, 11, 12, 13, 14, 15],
+    [16, 17, 18, 19, 20, 21, 22, 23],
+    [24, 25, 26, 27, 28, 29, 30, 31]
+]
+
 PHAT = [
     [24, 16, 8,  0],
     [25, 17, 9,  1],
@@ -85,9 +92,20 @@ def rotation(r=0):
     180
     270"""
 
+    global _map
     global _rotation
     if r in [0, 90, 180, 270]:
-        _rotation = r
+        wx = len(_map)
+        wy = len(_map[0])
+        if wx == wy:
+          _rotation = r
+        else:
+          if r in [0, 180]:
+            _map = PHAT
+            _rotation = r
+          else:
+            _map = PHAT_VERTICAL
+            _rotation = r-90
         return True
     else:
         raise ValueError('Rotation must be 0, 90, 180 or 270 degrees')

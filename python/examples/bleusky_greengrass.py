@@ -4,9 +4,9 @@ import unicornhat as unicorn
 import time
 
 unicorn.set_layout(unicorn.AUTO)
+unicorn.rotation(0)
 width,height=unicorn.get_shape()
 
-unicorn.rotation(0)
 unicorn.brightness(0.4)
 
 y=0
