@@ -5,10 +5,10 @@ import time
 from random import randint
 
 uh.set_layout(uh.AUTO)
-uh_width,uh_height=uh.get_shape()
 uh.rotation(0)
-heights = []
+uh_width,uh_height=uh.get_shape()
 
+heights = []
 
 def setup():
 
