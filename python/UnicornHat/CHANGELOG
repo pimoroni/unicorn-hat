@@ -1,3 +1,14 @@
+2.1.2
+-----
+
+* Added AUTO set_layout which attempts to detect uHAT via EEPROM
+* Added get_shape() which returns a tuple of width/height
+
+2.1.1
+-----
+
+* Initialized to 128 brightness (max)
+
 2.1.0
 -----
 
