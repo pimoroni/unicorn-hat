@@ -5,9 +5,9 @@ import time
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
+unicorn.brightness(0.4)
 width,height=unicorn.get_shape()
 
-unicorn.brightness(0.4)
 
 y=0
 for x in range(width):

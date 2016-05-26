@@ -16,10 +16,10 @@ else:
 
 print("")
 print("If your hardware has been properly detected, it should be safe to use the following in your code:")
-print("unicornhat.set_layout(unicornhat.AUTO)")
+print("unicorn.set_layout(unicornhat.AUTO)")
 print("")
 print("Otherwise use one of the following in our code:")
 print("")
-print("unicornhat.set_layout(unicornhat.PHAT)")
-print("unicornhat.set_layout(unicornhat.HAT)")
+print("unicorn.set_layout(unicornhat.PHAT)")
+print("unicorn.set_layout(unicornhat.HAT)")
 print("")

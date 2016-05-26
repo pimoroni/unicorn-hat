@@ -4,7 +4,11 @@ import unicornhat as unicorn
 import time, math, colorsys
 
 unicorn.set_layout(unicorn.AUTO)
+unicorn.rotation(0)
+unicorn.brightness(0.4)
 u_width,u_height=unicorn.get_shape()
+
+
 
 # twisty swirly goodness
 def swirl(x, y, step):
