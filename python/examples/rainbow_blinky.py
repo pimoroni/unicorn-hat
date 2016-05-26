@@ -12,7 +12,6 @@ if height==4:
 else:
     delta=0
 
-print delta
 
 def make_gaussian(fwhm):
 	x = np.arange(0, 8, 1, float)
