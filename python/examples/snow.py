@@ -5,7 +5,10 @@ import unicornhat as unicorn
 from time import sleep
 
 unicorn.set_layout(unicorn.AUTO)
+unicorn.rotation(0)
+unicorn.brightness(0.4)
 width,height=unicorn.get_shape()
+
 
 rows = []
 row_pointer = 0
