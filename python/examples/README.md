@@ -42,7 +42,7 @@ detect.py
 Demo code to verify if the auto detection code properly identify if you have a unicorn HAT or a unicorn pHAT. The code assume that if height == width then you must have a HAT.
 
 
-bleusky_greengrass.py
+bluesky_greengrass.py
 ---------------------
 
 Example code to verify the rotation of the screen.
@@ -110,36 +110,4 @@ snow.py
 Falling snowflake pixels.
 
 
-
-
-Work in Progress
-================
-
-Program likely available in the HAT and maybe pHAT folder.
-
-
-clock.py
---------
-
-Uses `graphics.py` and shows how you can, but probably shouldn't, display an analogue clock on Unicorn HAT!
-
-
-unicornpaint/paint.py
----------------------
-
-Use your web browser to pixel paint onto Unicorn HAT.
-
-**Requirements:**
-
-    sudo pip install flask
-
-
-show_png.py
------------
-
-Shows how you can open and display a PNG image file, great for sprite animations.
-
-**Requirements:**
-
-    sudo pip install pillow
 
