@@ -62,6 +62,12 @@ simple.py
 Sets each pixel in turn and updates the display.
 
 
+rainbow.py
+----------
+
+Demonstrates the use of `colorsys` to animate through colour hues.
+
+
 rainbow_blinky.py
 -----------------
 
