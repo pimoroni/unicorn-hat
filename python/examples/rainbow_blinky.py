@@ -5,12 +5,14 @@ import time, colorsys
 import numpy as np
 
 unicorn.set_layout(unicorn.AUTO)
+unicorn.rotation(0)	# tested on pHAT/HAT with rotation 0, 90, 180 & 270
+unicorn.brightness(0.4)
 width,height=unicorn.get_shape()
 
-if height==4:
-    delta=2
-else:
+if height==width:
     delta=0
+else:
+    delta=2
 
 
 def make_gaussian(fwhm):
@@ -30,7 +32,10 @@ while True:
 			for x in range(width):
 				h = 1.0/(x + y + delta + 1)
 				s = 0.8
-				v = gauss[x,y+delta]
+				if height<=width:
+					v = gauss[x,y+delta]
+				else:
+					v = gauss[x+delta,y]
 				rgb = colorsys.hsv_to_rgb(h, s, v)
 				r = int(rgb[0]*255.0)
 				g = int(rgb[1]*255.0)
