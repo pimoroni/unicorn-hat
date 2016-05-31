@@ -1,5 +1,5 @@
-Unicorn HAT Examples
-====================
+Unified Unicorn HAT and pHAT Examples
+======================================
 
 By virture of the Unicorn HAT being a HAT(!), and hence using the Raspberry Pi's GPIO pins, all of these examples must be run with `sudo`, for example
 
@@ -10,30 +10,56 @@ or
     sudo python clock.py    
 
 
-Note: If you're using a Unicorn pHAT make sure you specify in your code, like so:
+The library can detect if you're using a Unicorn HAT or a Unicorn pHAT.
+The recommended initialisation is the folowing:
 
 ```python
-import unicornhat
-unicornhat.set_layout(unicornhat.PHAT)
+unicorn.set_layout(unicorn.AUTO)
+unicorn.rotation(0)
+unicorn.brightness(0.4)
+width,height=unicorn.get_shape()
 ```
 
+Explicitly seting the rotation to 0 let user of your code adapt it to their orientation. Forcing the brightness to 0.4 is for safety. Always use get_shape after having decide on the rotation.
 
-clock.py
---------
+If you code use properly width and height, it should adapt to current and futur geometry.
 
-Uses `graphics.py` and shows how you can, but probably shouldn't, display an analogue clock on Unicorn HAT!
+
+Note: If you're only using a Unicorn pHAT you may want to specify in your code, like so:
+
+```python
+import unicornhat as unicorn
+unicorn.set_layout(unicorn.PHAT)
+```
+
+Most exemple work both on HAT and pHAT using autodetect.
+Exemple that have not been adapted for the pHAT reside in hat folder.
+
+
+detect.py
+---------
+
+Demo code to verify if the auto detection code properly identify if you have a unicorn HAT or a unicorn pHAT. The code assume that if height == width then you must have a HAT.
+
+
+bluesky_greengrass.py
+---------------------
+
+Example code to verify the rotation of the screen.
+The sky (top) should be blue and the grass (bottom) green.
+If you can not orientate the screen, use unicorn.rotation(90) or 180 or 270 until you get blue and green at the expected location.
 
 
 demo.py
 -------
 
-Multi-effect demo;  twisty swirly goodness, roto-zooming checker board, weeee waaaah, rainbow search spotlights and zoom tunnel
+Multi-effect demo;  twisty swirly goodness, roto-zooming checker board, weeee waaaah, rainbow search spotlights and zoom tunnel.
 
 
-matrix.py
-----------
+simple.py
+---------
 
-Knock, knock, Neo.
+Sets each pixel in turn and updates the display.
 
 
 rainbow.py
@@ -60,27 +86,28 @@ random_sparkles.py
 Random multi-coloured sparkles.
 
 
-unicornpaint/paint.py
----------------------
+drop.py
+-------
 
-Use your web browser to pixel paint onto Unicorn HAT.
-
-**Requirements:**
-
-    sudo pip install flask
+Tetris like filling of a board with random color falling pixels.
 
 
-show_png.py
------------
+drop_four_orientation.py
+------------------------
 
-Shows how you can open and display a PNG image file, great for sprite animations.
-
-**Requirements:**
-
-    sudo pip install pillow
+Tetris like filling of a board with random color falling pixels. The demo show the 4 rotation in loop.
 
 
-simple.py
----------
+cross.py
+--------
 
-Sets each pixel in turn and updates the display.
+Crossing random multi-color pixels in the 4 directions.
+
+
+snow.py
+-------
+
+Falling snowflake pixels.
+
+
+
