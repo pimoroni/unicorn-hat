@@ -6,9 +6,10 @@ import numpy as np
 
 
 unicorn.set_layout(unicorn.AUTO)
+unicorn.rotation(0)
+unicorn.brightness(0.4)
 width,height=unicorn.get_shape()
 
-unicorn.brightness(0.5)
 
 while True:
 	rand_mat = np.random.rand(width,height)	
