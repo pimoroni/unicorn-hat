@@ -4,7 +4,7 @@ import unicornhat as unicorn
 import time, math, colorsys
 
 unicorn.set_layout(unicorn.AUTO)
-unicorn.rotation(0)
+unicorn.rotation(0)	# tested on pHAT/HAT with rotation 0, 90, 180 & 270
 unicorn.brightness(0.4)
 u_width,u_height=unicorn.get_shape()
 
@@ -12,7 +12,7 @@ u_width,u_height=unicorn.get_shape()
 
 # twisty swirly goodness
 def swirl(x, y, step):
-    x -= 4
+    x -= (u_width/2)
     y -= (u_height/2)
 
     dist = math.sqrt(pow(x, 2)+pow(y,2)) / 2.0
@@ -31,7 +31,7 @@ def swirl(x, y, step):
 
 # roto-zooming checker board
 def checker(x, y, step):
-    x -= 4
+    x -= (u_width/2)
     y -= (u_height/2)
 
     angle = (step / 10.0)
@@ -61,7 +61,7 @@ def checker(x, y, step):
 
 # weeee waaaah
 def blues_and_twos(x, y, step):
-    x -= 4
+    x -= (u_width/2)
     y -= (u_height/2)
 
     xs = (math.sin((x + step) / 10.0) / 2.0) + 1.0
@@ -94,7 +94,7 @@ def rainbow_search(x, y, step):
 def tunnel(x, y, step):
 
     speed = step / 100.0
-    x -= 4
+    x -= (u_width/2)
     y -= (u_height/2)
 
     xo = math.sin(step / 27.0) * 2
@@ -143,7 +143,7 @@ step = 0
 while True:
     for i in range(500):
         for y in range(u_height):
-            for x in range(8):              
+            for x in range(u_width):              
                 r, g, b = effects[0](x, y, step)
                 if i > 400:
                     r2, g2, b2 = effects[-1](x, y, step)
