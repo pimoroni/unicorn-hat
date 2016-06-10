@@ -28,4 +28,11 @@ Then all you need is:
 * unicornhat.show - Update UnicornHat with the current buffer
 * unicornhat.clear - Turn off all the pixels in the buffer and update UnicornHat
 
+Unicorn pHAT
+------------
+
+For use with the pHAT version type this in at the top of your file to set the board mode:
+
+* unicorn.set_layout(unicorn.PHAT)
+
 See the examples for more advanced usage.
