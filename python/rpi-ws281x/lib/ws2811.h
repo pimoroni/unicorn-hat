@@ -31,6 +31,8 @@
 #ifndef __WS2811_H__
 #define __WS2811_H__
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
