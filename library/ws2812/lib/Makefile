@@ -19,5 +19,5 @@ shared:
 	gcc -shared ws2812-RPi.o -o ws2812-RPi.so	
 
 clean:
-	-rm *.o
-	-rm *.a
+	-rm -f *.o
+	-rm -f *.a

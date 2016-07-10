@@ -1,11 +1,14 @@
-all: lib
-	gcc -Wall unicornd.c -o unicornd -I../../library/rpi-ws281x/lib -L../../library/rpi-ws281x/lib -lws2811
+all: unicornd
 
 lib:
-	make -C ../../library/rpi-ws281x/lib/
+	make -C ../../library/rpi-ws281x/lib/ lib
+
+unicornd: lib
+	gcc -Wall unicornd.c -o unicornd -I../../library/rpi-ws281x/lib -L../../library/rpi-ws281x/lib -lws2811
 
 clean:
-	-rm unicornd
+	make -C ../../library/rpi-ws281x/lib/ clean
+	-rm -f unicornd
 
 install:
 	cp unicornd /usr/sbin
