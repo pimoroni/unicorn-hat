@@ -1,8 +1,8 @@
 all: lib
-	gcc -Wall unicornd.c -o unicornd -I../../python/rpi-ws281x/lib -L../../python/rpi-ws281x/lib -lws2811
+	gcc -Wall unicornd.c -o unicornd -I../../library/rpi-ws281x/lib -L../../library/rpi-ws281x/lib -lws2811
 
 lib:
-	make -C ../../python/rpi-ws281x/lib/
+	make -C ../../library/rpi-ws281x/lib/
 
 clean:
 	-rm unicornd

@@ -8,4 +8,4 @@ dist/
 __pycache__
 ws2812.egg-info/
 .DS_Store
-python/examples/unicornpaint/saves/
+examples/unicornpaint/saves/
