@@ -28,7 +28,21 @@ sudo apt-get install python-pip python-dev
 sudo pip install unicornhat
 ```
 
-Then proceed to [python/examples](python/examples).
+**Install from Github clone**
+
+```
+git clone https://github.com/pimoroni/unicorn-hat
+cd unicorn-hat/
+sudo apt-get install python-dev
+cd library/rpi-ws281x
+sudo python setup.py install
+cd ../..
+cd library/UnicornHat
+sudo python setup.py install
+cd ../..
+```
+
+Then proceed to [examples](examples).
 
 ###Using with idle/idle3:
 
