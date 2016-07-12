@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 
-import unicornhat as uh
+import unicornhat as unicorn
 import time
 from random import randint
 
-width = 8
-height = 8
+
+unicorn.set_layout(unicorn.AUTO)
+unicorn.rotation(0)
+unicorn.brightness(0.4)
+width,height=unicorn.get_shape()
+
 points = []
 
 
@@ -55,10 +59,10 @@ def update_positions():
 
 def plot_points():
 
-    uh.clear()
+    unicorn.clear()
     for point in points:
-        uh.set_pixel(point.x, point.y, point.colour[0], point.colour[1], point.colour[2])
-    uh.show()
+        unicorn.set_pixel(point.x, point.y, point.colour[0], point.colour[1], point.colour[2])
+    unicorn.show()
 
 
 while True:

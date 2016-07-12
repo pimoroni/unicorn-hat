@@ -4,12 +4,17 @@ import unicornhat as unicorn
 import time, colorsys
 import numpy as np
 
-unicorn.brightness(0.5)
+
+unicorn.set_layout(unicorn.AUTO)
+unicorn.rotation(0)
+unicorn.brightness(0.4)
+width,height=unicorn.get_shape()
+
 
 while True:
-	rand_mat = np.random.rand(8,8)	
-	for y in range(8):
-		for x in range(8):
+	rand_mat = np.random.rand(width,height)	
+	for y in range(height):
+		for x in range(width):
 			h = 0.1 * rand_mat[x, y]
 			s = 0.8
 			v = rand_mat[x, y]
