@@ -39,7 +39,8 @@ sudo python setup.py install
 cd ../..
 cd library/UnicornHat
 sudo python setup.py install
-cd ../..```
+cd ../..
+```
 
 Then proceed to [examples](examples).
 
