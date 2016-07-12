@@ -48,10 +48,13 @@ def drop_ball():
     heights[ball_column] += 1
 
 
-setup()
 while True:
+  for rot in [0, 90, 180, 270]:
+    unicorn.rotation(rot)
+    uh_width,uh_height=unicorn.get_shape()
+    setup()
     for i in range(0, (uh_width-2)*(uh_height-1)):
         drop_ball()
     time.sleep(1)
-    setup()
+
 
