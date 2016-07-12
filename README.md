@@ -28,7 +28,7 @@ sudo apt-get install python-pip python-dev
 sudo pip install unicornhat
 ```
 
-**Install from Github clone
+**Install from Github clone**
 
 ```
 git clone https://github.com/pimoroni/unicorn-hat
@@ -39,7 +39,8 @@ sudo python setup.py install
 cd ../..
 cd library/UnicornHat
 sudo python setup.py install
-cd ../..```
+cd ../..
+```
 
 Then proceed to [examples](examples).
 
