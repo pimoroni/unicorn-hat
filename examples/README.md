@@ -20,7 +20,7 @@ unicorn.brightness(0.4)
 width,height=unicorn.get_shape()
 ```
 
-Explicitly seting the rotation to 0 let user of your code adapt it to their orientation. Forcing the brightness to 0.4 is for safety. Always use get_shape after having decide on the rotation.
+Explicitly setting the rotation to 0 let user of your code adapt it to their orientation. Forcing the brightness to 0.4 is for safety. Always use get_shape after having decide on the rotation.
 
 If you code use properly width and height, it should adapt to current and futur geometry.
 
@@ -33,7 +33,7 @@ unicorn.set_layout(unicorn.PHAT)
 ```
 
 Most exemple work both on HAT and pHAT using autodetect.
-Exemple that have not been adapted for the pHAT reside in hat folder.
+Example that have not been adapted for the pHAT reside in hat folder. Symetrically example that were specifically designed for the pHAT reside in the phat folder.
 
 
 detect.py
