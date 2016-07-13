@@ -29,16 +29,16 @@ def background(x, y, step):
 
     b = v + 1.0
     b = b * 15.0
-    b += 20      
+    b += 20
 
     r = 0
-   
+
     g /= (r/50) + 1
     b /= (r/50) + 1
 
     pos = int(step / steps_per)
     fill = int((float(step % steps_per) / float(steps_per)) * 8.0)
-    
+
     if x < pos:
         r = math.sin(sin_off[y][x] + (step / 20.0))
         r *= 30
@@ -58,7 +58,7 @@ def effect():
     # trigger effect
     for i in range(steps_per * 8):
         for y in range(8):
-            for x in range(8):              
+            for x in range(8):
                 r, g, b = background(x, y, i)
                 r = int(max(0, min(255, r)))
                 g = int(max(0, min(255, g)))
@@ -74,7 +74,7 @@ def effect():
         for y in range(8):
             for x in range(8):
                 r = 0
-                b = 0             
+                b = 0
                 g = 100
                 g *= tick_mask[y][x]
                 g *= v

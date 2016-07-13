@@ -4,7 +4,7 @@ import unicornhat as unicorn
 import time, math, colorsys
 
 unicorn.set_layout(unicorn.AUTO)
-unicorn.rotation(0)	# tested on pHAT/HAT with rotation 0, 90, 180 & 270
+unicorn.rotation(0) # tested on pHAT/HAT with rotation 0, 90, 180 & 270
 unicorn.brightness(0.4)
 u_width,u_height=unicorn.get_shape()
 
@@ -18,8 +18,8 @@ def swirl(x, y, step):
     dist = math.sqrt(pow(x, 2)+pow(y,2)) / 2.0
     angle = (step / 10.0) + (dist * 1.5)
     s = math.sin(angle);
-    c = math.cos(angle);    
-    
+    c = math.cos(angle);
+
     xs = x * c - y * s;
     ys = x * s + y * c;
 
@@ -36,8 +36,8 @@ def checker(x, y, step):
 
     angle = (step / 10.0)
     s = math.sin(angle);
-    c = math.cos(angle);    
-    
+    c = math.cos(angle);
+
     xs = x * c - y * s;
     ys = x * s + y * c;
 
@@ -72,7 +72,7 @@ def blues_and_twos(x, y, step):
     b = math.sin(x * scale / 2.0) + math.cos(y * scale / 2.0)
     g = r - .8
     g = 0 if g < 0 else g
-    
+
     b -= r
     b /= 1.4
 
@@ -115,10 +115,10 @@ def tunnel(x, y, step):
         angle += math.pi
 
     angle /= 2 * math.pi # convert angle to 0...1 range
-    
+
     shade = math.sqrt(math.pow(x, 2) + math.pow(y, 2)) / 2.1
     shade = 1 if shade > 1 else shade
-    
+
 
     angle += speed
     depth = speed + (math.sqrt(math.pow(x, 2) + math.pow(y, 2)) / 10)
@@ -128,7 +128,7 @@ def tunnel(x, y, step):
 
 
     col = col1 if int(abs(angle * 6.0)) % 2 == 0 else col2
-    
+
     td = .3 if int(abs(depth * 3.0)) % 2 == 0 else 0
 
     col = (col[0] + td, col[1] + td, col[2] + td)
@@ -143,7 +143,7 @@ step = 0
 while True:
     for i in range(500):
         for y in range(u_height):
-            for x in range(u_width):              
+            for x in range(u_width):
                 r, g, b = effects[0](x, y, step)
                 if i > 400:
                     r2, g2, b2 = effects[-1](x, y, step)
@@ -158,7 +158,7 @@ while True:
                 unicorn.set_pixel(x, y, r, g, b)
 
         step += 1
-        
+
         unicorn.show()
 
         time.sleep(0.01)
