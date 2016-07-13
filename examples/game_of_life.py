@@ -4,6 +4,11 @@ import unicornhat as unicorn
 import random
 import time
 
+try:
+    xrange
+except NameError:
+    xrange = range
+
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(90)
 unicorn.brightness(0.4)
