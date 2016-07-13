@@ -1,3 +1,5 @@
+.PHONY: clean lib install install-archlinux
+
 all: unicornd
 
 lib:

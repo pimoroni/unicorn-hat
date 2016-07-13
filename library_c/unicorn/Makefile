@@ -1,3 +1,5 @@
+.PHONY: clean lib
+
 all: unicorn
 
 lib:

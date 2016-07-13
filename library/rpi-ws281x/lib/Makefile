@@ -1,4 +1,7 @@
+.PHONY: clean lib
+
 all: lib test
+
 lib: libws2811.a
 
 

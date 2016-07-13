@@ -1,3 +1,5 @@
+.PHONY: clean shared
+
 CPU := $(shell cat /proc/cpuinfo | grep BCM | awk '{print $$3}' | tr -d ' ')
 
 $(warning Detected CPU=$(CPU))

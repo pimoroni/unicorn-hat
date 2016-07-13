@@ -1,3 +1,5 @@
+.PHONY: clean build install
+
 all: clean build
 
 install:
