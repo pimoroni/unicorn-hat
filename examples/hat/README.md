@@ -7,7 +7,7 @@ By virture of the Unicorn HAT being a HAT(!), and hence using the Raspberry Pi's
 
 or
 
-    sudo python clock.py    
+    sudo python clock.py
 
 
 The example in this hat folder are only workin on the Unicorn HAT and have not been adapted for the pHAT geometry. Feel free to give it a try and move them down to the examples folder if you are successfull.

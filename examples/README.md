@@ -7,7 +7,7 @@ By virture of the Unicorn HAT being a HAT(!), and hence using the Raspberry Pi's
 
 or
 
-    sudo python clock.py    
+    sudo python clock.py
 
 
 The library can detect if you're using a Unicorn HAT or a Unicorn pHAT.

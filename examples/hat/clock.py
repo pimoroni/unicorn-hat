@@ -19,7 +19,7 @@ class UnicornDrawing(Drawing):
     unicorn.set_pixel(x, y, col.r, col.g, col.b)
 
   def show(self):
-  	unicorn.show()
+    unicorn.show()
 
 d = UnicornDrawing()
 
@@ -49,19 +49,19 @@ def tick():
 
   # Set daytime or nighttime brightness
   setBrightness(currenttime)
-  
+
   d.clear()
   # Draw the circle around the clock
   d.circle(O_X,O_Y,R,Color(255,0,255))
-  
+
   # Draw the clock hands
   d.circle_line(O_X,O_Y,R-1,(-360.0*(currenthour/12.0)),Color(255,0,0))
   d.circle_line(O_X,O_Y,R-1,(-360.0*(currentmin/60.0)), Color(0,255,0))
   d.circle_line(O_X,O_Y,R-1,(-360.0*(currentsec/60.0)), Color(0,0,255))
-  
+
   # draw buffer to hardware
   d.show()
-  
+
   threading.Timer(1,tick).start()
 
 tick()

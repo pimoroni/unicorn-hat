@@ -1,26 +1,25 @@
-#include "ws2811.h"
-#include "board_info.h"
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <assert.h>
+#include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <math.h>
+#include <signal.h>
 #include <stdarg.h>
 #include <stdint.h>
-#include <dirent.h>
-#include <fcntl.h>
-#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <unistd.h>
+
 #include <sys/mman.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/time.h>
-#include <unistd.h>
-#include <string.h>
-#include <errno.h>
-#include <math.h>
-#include <time.h>
-#include <signal.h>
+#include <sys/types.h>
 
 #include <png.h>
+
+#include "ws2811.h"
 
 #define TARGET_FREQ    WS2811_TARGET_FREQ
 #define GPIO_PIN       18
@@ -379,10 +378,6 @@ int main(int argc, char **argv) {
 
     setvbuf(stdout, NULL, _IONBF, 0);
 
-    if (board_info_init() < 0)
-    {
-        return -1;
-    }
     if(ws2811_init(&ledstring))
     {
         return -1;
