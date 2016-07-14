@@ -4,6 +4,11 @@ import unicornhat as unicorn
 import random
 import time
 
+try:
+    xrange
+except NameError:
+    xrange = range
+
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(90)
 unicorn.brightness(0.4)
@@ -14,7 +19,7 @@ size = width*height
 class GameOfLife:
     def __init__(self):
         self.board = [int(7 * random.getrandbits(1)) for _ in xrange(size)]
-	self.color = [[154, 154, 174], [0, 0, 255], [0, 0, 200], [0, 0, 160], [0, 0, 140], [0, 0, 90], [0, 0, 60], [0, 0, 0,]]
+        self.color = [[154, 154, 174], [0, 0, 255], [0, 0, 200], [0, 0, 160], [0, 0, 140], [0, 0, 90], [0, 0, 60], [0, 0, 0,]]
 
     def value(self, x, y):
         index = ((x % width) * height) + (y % height)
