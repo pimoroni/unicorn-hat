@@ -1,3 +1,5 @@
+.PHONY: clean shared
+
 CPU := $(shell cat /proc/cpuinfo | grep BCM | awk '{print $$3}' | tr -d ' ')
 
 $(warning Detected CPU=$(CPU))
@@ -19,5 +21,5 @@ shared:
 	gcc -shared ws2812-RPi.o -o ws2812-RPi.so	
 
 clean:
-	-rm *.o
-	-rm *.a
+	-rm -f *.o
+	-rm -f *.a

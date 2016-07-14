@@ -16,22 +16,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <unistd.h>
-#include <string.h>
 #include <signal.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
-#include <sys/types.h>
 #include <sys/socket.h>
-#include <sys/un.h>
 #include <sys/stat.h>
+#include <sys/types.h> 
+#include <sys/un.h>
 
-#include <ws2811.h>
-#include <board_info.h>
+#include "ws2811.h"
 
 #define TARGET_FREQ    WS2811_TARGET_FREQ
 #define GPIO_PIN       18
@@ -133,10 +131,6 @@ init_unicorn_hat(void)
 	}
 
 	setvbuf(stdout, NULL, _IONBF, 0);
-
-	if (board_info_init() < 0) {
-		exit(1);
-	}
 
 	if (ws2811_init(&ledstring) < 0) {
 		exit(1);

@@ -69,7 +69,7 @@ class Drawing():
     self.pixel(x0 - r, y0, col)
 
     while x < y:
-      if f >= 0: 
+      if f >= 0:
           y -= 1
           ddf_y += 2
           f += ddf_y
