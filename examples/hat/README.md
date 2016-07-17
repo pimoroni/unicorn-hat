@@ -1,7 +1,7 @@
 Unicorn HAT Examples
 ====================
 
-By virture of the Unicorn HAT being a HAT(!), and hence using the Raspberry Pi's GPIO pins, all of these examples must be run with `sudo`, for example
+The examples in this folder must be run with `sudo`, like so:
 
     sudo ./clock.py
 
@@ -10,8 +10,7 @@ or
     sudo python clock.py
 
 
-The example in this hat folder are only workin on the Unicorn HAT and have not been adapted for the pHAT geometry. Feel free to give it a try and move them down to the examples folder if you are successfull.
-
+The examples in this folder are intended for the Unicorn HAT and have not been designed for the pHAT geometry. Feel free to give it a try and move them up inside the main examples folder if you are successful making them work adequately with both boards.
 
 clock.py
 --------
@@ -26,8 +25,7 @@ Used by clock.py
 eve.py
 ------
 
-TODO: Please fill some information about this example code.
-Seems to monitor usb device?!
+Monitors the usb bus and displays a checkmark when a new device is detected.
 
 matrix.py
 ---------
@@ -43,7 +41,6 @@ Use your web browser to pixel paint onto Unicorn HAT.
 
     sudo pip install flask
 
-
 show_png.py
 -----------
 
@@ -52,5 +49,3 @@ Shows how you can open and display a PNG image file (here lofi.png), great for s
 **Requirements:**
 
     sudo pip install pillow
-
-

@@ -1,7 +1,7 @@
 Unified Unicorn HAT and pHAT Examples
 ======================================
 
-By virture of the Unicorn HAT being a HAT(!), and hence using the Raspberry Pi's GPIO pins, all of these examples must be run with `sudo`, for example
+The examples in this folder must be run with `sudo`, like so:
 
     sudo ./clock.py
 
@@ -11,43 +11,41 @@ or
 
 
 The library can detect if you're using a Unicorn HAT or a Unicorn pHAT.
-The recommended initialisation is the folowing:
+The recommended initialisation is as folows:
 
 ```python
+import unicornhat as unicorn
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
 unicorn.brightness(0.4)
 width,height=unicorn.get_shape()
 ```
 
-Explicitly setting the rotation to 0 let user of your code adapt it to their orientation. Forcing the brightness to 0.4 is for safety. Always use get_shape after having decide on the rotation.
+Explicitly setting the rotation to 0 lets users of your code adapt it to their orientation. Forcing the brightness to 0.4 is for safety. Always use the get_shape() call after having decided on the rotation. If your code uses width and height properly, it should adapt to current and future geometry.
 
-If you code use properly width and height, it should adapt to current and futur geometry.
-
-
-Note: If you're only using a Unicorn pHAT you may want to specify in your code, like so:
+Note: If you're only using a Unicorn pHAT you may want to specify it in your code, like so:
 
 ```python
 import unicornhat as unicorn
 unicorn.set_layout(unicorn.PHAT)
 ```
 
-Most exemple work both on HAT and pHAT using autodetect.
-Example that have not been adapted for the pHAT reside in hat folder. Symetrically example that were specifically designed for the pHAT reside in the phat folder.
+Most examples work with both Unicorn HAT and pHAT, using autodetect. Examples that have not been adapted for the pHAT reside in hat folder. Similarly, examples that were specifically designed for the pHAT reside in the phat folder.
 
 
 detect.py
 ---------
 
-Demo code to verify if the auto detection code properly identify if you have a unicorn HAT or a unicorn pHAT. The code assume that if height == width then you must have a HAT.
+Demo code to verify if the auto detection code properly identifies if you have a unicorn HAT or a unicorn pHAT. The code assumes that if height == width then you must have a HAT.
+
+IMPORTANT: for the auto detection process to work, Unicorn HAT must be fitted onto the GPIO at boot time. If that was not the case, the auto detection will default to the pHAT layout of 8x4!
 
 
 bluesky_greengrass.py
 ---------------------
 
-Example code to verify the rotation of the screen.
-The sky (top) should be blue and the grass (bottom) green.
-If you can not orientate the screen, use unicorn.rotation(90) or 180 or 270 until you get blue and green at the expected location.
+Example code to verify the rotation of the screen. The sky (top) should be blue and the grass (bottom) should be green.
+If you can not re-orientate the screen, use unicorn.rotation(90) or 180 or 270 until you get blue and green in the expected location.
 
 
 demo.py
