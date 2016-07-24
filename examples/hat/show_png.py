@@ -15,14 +15,14 @@ import signal
 import time
 
 try:
-    from PIL import Image
-except ImportError:
-    exit("This script requires the PIL module\nInstall with: sudo pip install PIL")
-
-try:
     import numpy
 except ImportError:
     exit("This script requires the numpy module\nInstall with: sudo pip install numpy")
+
+try:
+    from PIL import Image
+except ImportError:
+    exit("This script requires the PIL module\nInstall with: sudo pip install PIL")
 
 import unicornhat as unicorn
 

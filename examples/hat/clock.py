@@ -4,11 +4,7 @@ import signal
 import threading
 import time
 
-try:
-    from graphics import Drawing, Color
-except ImportError:
-    exit("This script requires the graphics module\nInstall with: sudo pip install graphics")
-
+from graphics import Drawing, Color
 import unicornhat as unicorn
 
 
