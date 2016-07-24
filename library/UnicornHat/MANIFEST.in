@@ -1,5 +1,5 @@
-include README
-include CHANGELOG
+include CHANGELOG.txt
 include LICENSE.txt
-include unicornhat.py
+include README.txt
 include setup.py
+include unicornhat.py
