@@ -1,8 +1,16 @@
 #!/usr/bin/env python
 
+import signal
+import threading
+import time
+
+try:
+    from graphics import Drawing, Color
+except ImportError:
+    exit("This script requires the graphics module\nInstall with: sudo pip install graphics")
+
 import unicornhat as unicorn
-from graphics import Drawing, Color
-import time, signal, threading
+
 
 class UnicornDrawing(Drawing):
   def __init__(self):

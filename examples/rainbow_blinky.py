@@ -1,8 +1,15 @@
 #!/usr/bin/env python
 
+import colorsys
+import time
+
+try:
+    import numpy as np
+except ImportError:
+    exit("This script requires the numpy module\nInstall with: sudo pip install numpy")
+
 import unicornhat as unicorn
-import time, colorsys
-import numpy as np
+
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0) # tested on pHAT/HAT with rotation 0, 90, 180 & 270

@@ -2,6 +2,7 @@
 
 import unicornhat as unicorn
 
+
 print("Trying to detect if you have a Unicorn HAT or Unicorn pHAT")
 unicorn.set_layout(unicorn.AUTO)
 print("Autodetection finished, let's see the result...")

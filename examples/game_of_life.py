@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-import unicornhat as unicorn
 import random
 import time
+
+import unicornhat as unicorn
+
 
 try:
     xrange

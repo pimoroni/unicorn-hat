@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-import unicornhat as unicorn
-from random import randint
 import time
+from random import randint
+
+import unicornhat as unicorn
+
 
 unicorn.rotation(90)
 
