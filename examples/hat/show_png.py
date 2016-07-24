@@ -22,7 +22,7 @@ except ImportError:
 try:
     from PIL import Image
 except ImportError:
-    exit("This script requires the PIL module\nInstall with: sudo pip install PIL")
+    exit("This script requires the pillow module\nInstall with: sudo pip install pillow")
 
 import unicornhat as unicorn
 
