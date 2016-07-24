@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 """
 Copyright (c) 2014 Pimoroni
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -34,16 +35,16 @@ classifiers = ['Development Status :: 5 - Production/Stable',
                'Topic :: System :: Hardware']
 
 setup(
-    name        = 'unicornhat',
-    version     = '2.1.2',
-    author      = 'Philip Howard',
-    author_email= 'phil@pimoroni.com',
-    description = """The Python library for UnicornHAT/pHAT a matrix of 64 or 32, eye-burning, ws2812 LEDs!""",
-    long_description = open('README').read() + open('CHANGELOG').read(),
-    license     = 'MIT',
-    keywords    = 'Raspberry Pi Unicorn HAT',
-    url         = 'http://shop.pimoroni.com',
-    classifiers = classifiers,
-    py_modules  = [ 'unicornhat' ],
-    install_requires = ['rpi_ws281x >= 2.0.0'],
+    name            = 'unicornhat',
+    version         = '2.1.2',
+    author          = 'Philip Howard',
+    author_email    = 'phil@pimoroni.com',
+    description     = """Python library for UnicornHAT/pHAT""",
+    long_description= open('README.txt').read() + open('CHANGELOG.txt').read(),
+    license         = 'MIT',
+    keywords        = 'Raspberry Pi Unicorn HAT',
+    url             = 'http://shop.pimoroni.com',
+    classifiers     = classifiers,
+    py_modules      = [ 'unicornhat' ],
+    install_requires= ['rpi_ws281x >= 2.0.0']
 )
