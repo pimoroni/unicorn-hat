@@ -4,6 +4,9 @@ from random import randint
 import unicornhat as unicorn
 from time import sleep
 
+MIN_BRIGHTNESS = 50
+MAX_BRIGHTNESS = 155
+
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
 unicorn.brightness(0.4)
@@ -33,7 +36,7 @@ def get_new_row():
 
     # get a new blank row and add a random brightness snowflake to a random column
     row = get_blank_row()
-    row[randint(0, width - 1)] = 50 + randint(0, 155)
+    row[randint(0, width - 1)] = MIN_BRIGHTNESS + randint(0, MAX_BRIGHTNESS)
     return row
 
 
@@ -43,7 +46,6 @@ def update_display():
     c = row_pointer
     for h in range(height):
         for w in range(width):
-            # val is between 50 and 255
             val = rows[c][w]
 
             # invert coordinates
