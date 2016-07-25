@@ -1,8 +1,17 @@
 #!/usr/bin/env python
 
-from flask import Flask, render_template
+import os
+import stat
+import threading
+import time
+
+try:
+    from flask import Flask, render_template
+except ImportError:
+    exit("This script requires the flask module\nInstall with: sudo pip install flask")
+
 import unicornhat as unicorn
-import time, os, stat, threading
+
 
 control_panel = """
     <table cellspacing="0" cellpadding="0" border-collapse="collapse">"""

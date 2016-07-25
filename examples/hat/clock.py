@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 
-import unicornhat as unicorn
+import signal
+import threading
+import time
+
 from graphics import Drawing, Color
-import time, signal, threading
+import unicornhat as unicorn
+
 
 class UnicornDrawing(Drawing):
   def __init__(self):

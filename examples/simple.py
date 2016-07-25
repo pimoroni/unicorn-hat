@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-import unicornhat as unicorn
 import time
+
+import unicornhat as unicorn
+
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
