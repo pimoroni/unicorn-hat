@@ -11,9 +11,21 @@ http://forums.tigsource.com/index.php?topic=8834.0
 Licensed under Creative Commons Attribution-Noncommercial-Share Alike 3.0 Unported License.
 '''
 
+import signal
+import time
+
+try:
+    import numpy
+except ImportError:
+    exit("This script requires the numpy module\nInstall with: sudo pip install numpy")
+
+try:
+    from PIL import Image
+except ImportError:
+    exit("This script requires the pillow module\nInstall with: sudo pip install pillow")
+
 import unicornhat as unicorn
-from PIL import Image
-import signal, numpy, time
+
 
 unicorn.rotation(90)
 unicorn.brightness(0.9)

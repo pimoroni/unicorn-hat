@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import unicornhat as unicorn
 import time
 from random import randint
+
+import unicornhat as unicorn
 
 
 unicorn.set_layout(unicorn.AUTO)
@@ -72,4 +73,3 @@ while True:
     plot_points()
     update_positions()
     time.sleep(0.03)
-

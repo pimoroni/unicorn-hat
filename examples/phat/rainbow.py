@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
+import colorsys
+import math
+import time
+
 import unicornhat as unicorn
-import time, math, colorsys
+
 
 unicorn.set_layout(unicorn.PHAT)
 unicorn.brightness(0.5)

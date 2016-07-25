@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
-import unicornhat as unicorn
 import time
+
+import unicornhat as unicorn
+
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
 unicorn.brightness(0.4)
 width,height=unicorn.get_shape()
-
 
 y=0
 for x in range(width):
@@ -28,4 +29,3 @@ for y in range(1,3):
     time.sleep(0.05)
 
 time.sleep(10)
-

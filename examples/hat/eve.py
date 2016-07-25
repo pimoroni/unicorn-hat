@@ -1,7 +1,23 @@
 #!/usr/bin/env python
 
+import colorsys
+import math
+import random
+import sys
+import time
+
+try:
+    import glib
+except ImportError:
+    exit("This script requires the glib module")
+
+try:
+    import gudev
+except ImportError:
+    exit("This script requires the gudev module")
+
 import unicornhat as unicorn
-import time, math, colorsys, random, sys, glib, gudev
+
 
 sin_off = [[0]*8 for i in range(8)]
 for y in range(8):

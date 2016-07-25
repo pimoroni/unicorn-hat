@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 
+import colorsys
+import math
+import time
+
 import unicornhat as unicorn
-import time, math, colorsys
+
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0) # tested on pHAT/HAT with rotation 0, 90, 180 & 270
 unicorn.brightness(0.4)
 u_width,u_height=unicorn.get_shape()
-
 
 
 # twisty swirly goodness

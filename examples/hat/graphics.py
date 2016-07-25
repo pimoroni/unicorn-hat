@@ -2,7 +2,10 @@
 This file is used in UnicornHat examples
 for drawing things.
 '''
-import colorsys, math
+
+import colorsys
+import math
+
 
 class Color():
   def __init__(self, r, g, b):

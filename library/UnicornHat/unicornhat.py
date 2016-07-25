@@ -1,6 +1,8 @@
-from neopixel import *
 import atexit
 import colorsys
+
+from neopixel import *
+
 
 # LED strip configuration:
 LED_COUNT      = 64      # Number of LED pixels.
