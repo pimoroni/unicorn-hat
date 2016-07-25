@@ -5,6 +5,13 @@ from random import randint
 
 import unicornhat as unicorn
 
+print("""Drop: Four Orientation
+
+The same as Drop, but showing the virtual bucket in 4 different orientations.
+
+If you're using a Unicorn HAT and only half the screen lights up, 
+edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
+""")
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)

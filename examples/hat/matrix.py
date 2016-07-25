@@ -5,6 +5,10 @@ from random import randint
 
 import unicornhat as unicorn
 
+print("""Matrix
+
+Follow the white rabbit...
+""")
 
 unicorn.rotation(90)
 
