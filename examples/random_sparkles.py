@@ -4,6 +4,13 @@ from random import randint
 
 import unicornhat as unicorn
 
+print("""Random Sparkles
+
+Displays random, colorful sparkles.
+
+If you're using a Unicorn HAT and only half the screen lights up, 
+edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
+""")
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)

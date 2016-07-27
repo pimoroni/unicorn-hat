@@ -5,6 +5,13 @@ from time import sleep
 
 import unicornhat as unicorn
 
+print("""Snow
+
+Draws random white pixels to look like a snowstorm.
+
+If you're using a Unicorn HAT and only half the screen lights up, 
+edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
+""")
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)

@@ -5,6 +5,14 @@ import time
 
 import unicornhat as unicorn
 
+print("""Game Of Life
+
+Runs Conway's Game Of Life on your Unicorn HAT, this starts 
+with a random spread of life, so results may vary!
+
+If you're using a Unicorn HAT and only half the screen lights up, 
+edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
+""")
 
 try:
     xrange
