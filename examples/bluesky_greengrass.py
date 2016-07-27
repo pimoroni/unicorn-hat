@@ -4,6 +4,14 @@ import time
 
 import unicornhat as unicorn
 
+print("""Blue Sky, Green Grass
+
+Displays a horizon on your Unicorn HAT/pHAT so you can
+see which orientation is which.
+
+If you're using a Unicorn HAT and only half the screen lights up, 
+edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
+""")
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)

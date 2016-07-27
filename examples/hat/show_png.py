@@ -28,7 +28,7 @@ import unicornhat as unicorn
 
 
 unicorn.rotation(90)
-unicorn.brightness(0.9)
+unicorn.brightness(0.5)
 
 img = Image.open('lofi.png')
 

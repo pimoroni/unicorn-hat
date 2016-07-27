@@ -7,6 +7,12 @@ import time
 from graphics import Drawing, Color
 import unicornhat as unicorn
 
+print("""Clock
+
+Displays an analog clock.
+
+Automatically dims at night.
+""")
 
 class UnicornDrawing(Drawing):
   def __init__(self):
@@ -43,7 +49,7 @@ def setBrightness(currenttime):
   if(currenthour < 10 or currenthour > 20):
     unicorn.brightness(0.5)
   else:
-    unicorn.brightness(1)
+    unicorn.brightness(0.8)
 
 def tick():
   currenttime = time.localtime()
