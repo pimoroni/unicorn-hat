@@ -10,6 +10,13 @@ except ImportError:
 
 import unicornhat as unicorn
 
+print("""Random Blinky
+
+Blinks random yellow-orange-red LEDs.
+
+If you're using a Unicorn HAT and only half the screen lights up, 
+edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
+""")
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)

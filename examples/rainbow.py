@@ -6,6 +6,14 @@ import time
 
 import unicornhat as unicorn
 
+print("""Rainbow
+
+Displays a beautiful rainbow across your HAT/pHAT :D demonstrating
+the use of colorsys to cycle through colour hues.
+
+If you're using a Unicorn HAT and only half the screen lights up, 
+edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
+""")
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
