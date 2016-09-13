@@ -61,6 +61,13 @@ PHAT = [
 AUTO = None
 
 def set_layout(pixel_map = AUTO):
+    """Set the layout to Unicorn HAT or Unicorn pHAT
+
+    Note: auto detection relies upon the HAT EEPROM. Your Unicorn HAT
+    must be connected before boot to successfully auto detect.
+
+    :param pixel_map: Choose the layout to set, can be either HAT, PHAT, PHAT_VERTICAL or AUTO
+    """
     global _map
     if pixel_map is None:
         pixel_map = PHAT # Assume PHAT
@@ -74,6 +81,7 @@ def set_layout(pixel_map = AUTO):
     _map = pixel_map
 
 def get_shape():
+    """Returns the shape (width, height) of the display"""
     global _map
 
     return (len(_map), len(_map[0]))
@@ -88,11 +96,8 @@ def _clean_shutdown():
 def rotation(r=0):
     """Set the display rotation
 
-    Valid values:
-    0
-    90
-    180
-    270"""
+    :param r: Specify the rotation in degrees: 0, 90, 180 or 270
+    """
 
     global _map
     global _rotation
@@ -116,7 +121,10 @@ def rotation(r=0):
 def brightness(b=0.2):
     """Set the display brightness between 0.0 and 1.0
 
-    0.2 is highly recommended, UnicornHat can get painfully bright!"""
+    0.2 is highly recommended, UnicornHat can get painfully bright!
+
+    :param b: Brightness from 0.0 to 1.0 (default 0.2)
+    """
 
     if b > 1 or b < 0:
         raise ValueError('Brightness must be between 0.0 and 1.0')
@@ -153,14 +161,13 @@ def off():
 
 
 def get_index_from_xy(x, y):
-    """Convert an x, y value to an index on the display"""
+    """Convert an x, y value to an index on the display
+
+    :param x: Horizontal position from 0 to 7
+    :param y: Vertical position from 0 to 7
+    """
     wx = len(_map) - 1
     wy = len(_map[0]) - 1
-
-    #if x > wx or x < 0:
-    #    raise ValueError('X position must be between 0 and {wx}'.format(wx=wx))
-    #if y > wy or y < 0:
-    #    raise ValueError('Y position must be between 0 and {wy}'.format(wy=wy))
 
     y = (wy)-y
 
@@ -180,7 +187,14 @@ def get_index_from_xy(x, y):
 
 
 def set_pixel_hsv(x, y, h, s, v):
-    """Set a single pixel to a colour using HSV"""
+    """Set a single pixel to a colour using HSV
+
+    :param x: Horizontal position from 0 to 7
+    :param y: Veritcal position from 0 to 7
+    :param h: Hue from 0.0 to 1.0 ( IE: degrees around hue wheel/360.0 )
+    :param s: Saturation from 0.0 to 1.0
+    :param v: Value (also known as brightness) from 0.0 to 1.0
+    """
     index = get_index_from_xy(x, y)
     if index is not None:
         r, g, b = [int(n*255) for n in colorsys.hsv_to_rgb(h, s, v)]
@@ -188,14 +202,24 @@ def set_pixel_hsv(x, y, h, s, v):
 
 
 def set_pixel(x, y, r, g, b):
-    """Set a single pixel to RGB colour"""
+    """Set a single pixel to RGB colour
+
+    :param x: Horizontal position from 0 to 7
+    :param y: Veritcal position from 0 to 7
+    :param r: Amount of red from 0 to 255
+    :param g: Amount of green from 0 to 255
+    :param b: Amount of blue from 0 to 255
+    """
     index = get_index_from_xy(x, y)
     if index is not None:
         ws2812.setPixelColorRGB(index, r, g, b)
 
 
 def get_pixel(x, y):
-    """Get the RGB value of a single pixel"""
+    """Get the RGB value of a single pixel
+
+    :param x: Horizontal position from 0 to 7
+    :param y: Veritcal position from 0 to 7"""
     index = get_index_from_xy(x, y)
     if index is not None:
         pixel = ws2812.getPixelColorRGB(index)
@@ -203,6 +227,18 @@ def get_pixel(x, y):
 
 
 def set_pixels(pixels):
+    """Set all pixels using a pixel shader style function
+
+    :param pixels: A function which accepts the x and y positions of a pixel and returns values r, g and b
+
+    For example, this would be synonymous to clear::
+
+        set_pixels(lambda x, y: return 0,0,0)
+
+    Or perhaps we want to map red along the horizontal axis, and blue along the vertical::
+
+        set_pixels(lambda x, y: return (x/7.0) * 255, 0, (y/7.0) * 255)
+    """
     for x in range(8):
         for y in range(8):
             r, g, b = pixels[y][x]
