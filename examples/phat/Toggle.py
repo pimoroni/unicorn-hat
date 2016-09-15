@@ -18,11 +18,13 @@ def print_header():
 def toggle(tog):
         #toggle has been called determine state
         if tog:
+                #randomise red, green and blue
                 r = randint(30, 255)
                 g = randint(30, 255)
                 b = randint(30, 255)
                 msg="On!"
         else:
+                #clear red, green and blue
                 r=0
                 g=0
                 b=0
