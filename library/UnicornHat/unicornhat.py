@@ -226,7 +226,12 @@ def get_pixel(x, y):
         return int(pixel.r), int(pixel.g), int(pixel.b)
 
 
-def set_pixels(pixels):
+def set_all(r, g, b):
+    """Set all pixels to a specific colour"""
+    shade_pixels(lambda x, y: (r, g, b))
+
+
+def shade_pixels(shader):
     """Set all pixels using a pixel shader style function
 
     :param pixels: A function which accepts the x and y positions of a pixel and returns values r, g and b
@@ -239,15 +244,24 @@ def set_pixels(pixels):
 
         set_pixels(lambda x, y: return (x/7.0) * 255, 0, (y/7.0) * 255)
     """
-    for x in range(8):
-        for y in range(8):
-            r, g, b = pixels[y][x]
+    
+    width, height = get_shape()
+    for x in range(width):
+        for y in range(height):
+            r, g, b = shader(x, y)
             set_pixel(x, y, r, g, b)
+
+
+def set_pixels(pixels):
+    """Set all pixels using an array of `get_shape()`"""
+
+    shade_pixels(lambda x, y: pixels[y][x])
 
 
 def get_pixels():
     """Get the RGB value of all pixels in a 7x7x3 2d array of tuples"""
-    return [[get_pixel(x, y) for x in range(8)] for y in range(8)]
+    width, height = get_shape()
+    return [[get_pixel(x, y) for x in range(width)] for y in range(height)]
 
 
 def show():
