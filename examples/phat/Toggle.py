@@ -7,6 +7,9 @@ from random import randint
 unicorn.set_layout(unicorn.PHAT)
 unicorn.brightness(0.5)
 
+#get the width and height of the hat installed
+width, height = unicorn.get_shape()
+
 def print_header():
         #print the program's description
         print("Unicorn PHat Toggle LEDs with input!")
@@ -32,8 +35,8 @@ def toggle(tog):
         #print the relevant message
         print(msg,r,g,b)
         #set the LEDs to the relevant lighting (all on/off)
-        for y in range(4):
-                for x in range(8):
+        for y in range(height):
+                for x in range(width):
                         unicorn.set_pixel(x,y,r,g,b)
                         unicorn.show()
         #return the inverse boolean variable that was passed in
