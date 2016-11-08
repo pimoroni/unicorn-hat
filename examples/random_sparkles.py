@@ -4,6 +4,7 @@ from random import randint
 
 import unicornhat as unicorn
 
+
 print("""Random Sparkles
 
 Displays random, colorful sparkles.

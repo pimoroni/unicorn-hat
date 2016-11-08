@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from time import sleep
+from sys import exit
 
 try:
     from pyfiglet import figlet_format
@@ -8,6 +9,7 @@ except ImportError:
     exit("This script requires the pyfiglet module\nInstall with: sudo pip install pyfiglet")
 
 import unicornhat as unicorn
+
 
 print("""Figlet
 

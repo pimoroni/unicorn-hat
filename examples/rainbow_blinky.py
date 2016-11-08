@@ -2,9 +2,10 @@
 
 import colorsys
 import time
+from sys import exit
 
 try:
-    import numpy as np
+    import numpy
 except ImportError:
     exit("This script requires the numpy module\nInstall with: sudo pip install numpy")
 
@@ -30,11 +31,11 @@ else:
 
 
 def make_gaussian(fwhm):
-    x = np.arange(0, 8, 1, float)
-    y = x[:, np.newaxis]
+    x = numpy.arange(0, 8, 1, float)
+    y = x[:, numpy.newaxis]
     x0, y0 = 3.5, 3.5
     fwhm = fwhm
-    gauss = np.exp(-4 * np.log(2) * ((x - x0) ** 2 + (y - y0) ** 2) / fwhm ** 2)
+    gauss = numpy.exp(-4 * numpy.log(2) * ((x - x0) ** 2 + (y - y0) ** 2) / fwhm ** 2)
     return gauss
 
 while True:

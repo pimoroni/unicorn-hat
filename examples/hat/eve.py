@@ -3,8 +3,8 @@
 import colorsys
 import math
 import random
-import sys
 import time
+from sys import exit
 
 try:
     import glib

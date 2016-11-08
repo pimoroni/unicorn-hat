@@ -4,6 +4,7 @@ import time
 
 import unicornhat as unicorn
 
+
 print("""Simple
 
 Turns each pixel on in turn and updates the display.

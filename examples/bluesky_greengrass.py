@@ -4,6 +4,7 @@ import time
 
 import unicornhat as unicorn
 
+
 print("""Blue Sky, Green Grass
 
 Displays a horizon on your Unicorn HAT/pHAT so you can

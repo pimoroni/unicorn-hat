@@ -6,6 +6,7 @@ import time
 
 import unicornhat as unicorn
 
+
 print("""Demo
 
 This pixel shading demo transitions between 4 classic graphics demo effects.

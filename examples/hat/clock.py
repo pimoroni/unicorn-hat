@@ -7,6 +7,7 @@ import time
 from graphics import Drawing, Color
 import unicornhat as unicorn
 
+
 print("""Clock
 
 Displays an analog clock.

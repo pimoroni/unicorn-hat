@@ -6,6 +6,7 @@ import time
 
 import unicornhat as unicorn
 
+
 print("""Rainbow
 
 Displays a beautiful rainbow across your HAT/pHAT :D demonstrating

@@ -4,6 +4,7 @@ from time import sleep
 
 import unicornhat as unicorn
 
+
 print("""ASCII Pic
 
 You should see a scrolling image, defined in the below variable ASCIIPIC.

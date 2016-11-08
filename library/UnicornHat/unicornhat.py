@@ -1,7 +1,7 @@
 import atexit
 import colorsys
 
-from neopixel import *
+from neopixel import Adafruit_NeoPixel
 
 
 # LED strip configuration:

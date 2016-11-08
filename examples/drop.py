@@ -5,6 +5,7 @@ from random import randint
 
 import unicornhat as unicorn
 
+
 print("""Drop
 
 Creates a virtual bucket and fills it with randomly coloured dots.

@@ -5,6 +5,7 @@ from random import randint
 
 import unicornhat as unicorn
 
+
 print("""Cross
 
 You should see randomly coloured dots crossing paths with each other.

@@ -5,6 +5,7 @@ from random import randint
 
 import unicornhat as unicorn
 
+
 print("""Drop: Four Orientation
 
 The same as Drop, but showing the virtual bucket in 4 different orientations.

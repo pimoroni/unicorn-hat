@@ -5,6 +5,7 @@ import time
 
 import unicornhat as unicorn
 
+
 print("""Game Of Life
 
 Runs Conway's Game Of Life on your Unicorn HAT, this starts 
