@@ -21,7 +21,13 @@
 
 #include "ws2811.h"
 
+/*
+ * For PWM0 (default setup) use CHANNEL 0, GPIO_PIN 18, DMA 5
+ * For PWM1 (requires re-soldering) use CHANNEL 1, GPIO_PIN 13, DMA 8
+ */
+
 #define TARGET_FREQ    WS2811_TARGET_FREQ
+#define CHANNEL        0
 #define GPIO_PIN       18
 #define DMA            5
 
@@ -35,7 +41,7 @@ ws2811_t ledstring =
     .dmanum = DMA,
     .channel =
     {
-        [0] =
+        [CHANNEL] =
         {
             .gpionum    = GPIO_PIN,
             .count      = LED_COUNT,
@@ -47,13 +53,13 @@ ws2811_t ledstring =
 
 void setBrightness(int b)
 {
-    ledstring.channel[0].brightness = b;
+    ledstring.channel[CHANNEL].brightness = b;
     return;
 }
 
 void setPixelColorRGB(int pixel, int r, int g, int b)
 {
-    ledstring.channel[0].leds[pixel] = (r << 16) | (g << 8) | b;
+    ledstring.channel[CHANNEL].leds[pixel] = (r << 16) | (g << 8) | b;
     return;
 }
 
