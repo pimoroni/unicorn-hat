@@ -23,7 +23,7 @@ fit on the small display of 4x8.
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
-unicorn.brightness(0.4)
+unicorn.brightness(0.5)
 width,height=unicorn.get_shape()
 
 TXT = "HELLO"

@@ -11,7 +11,9 @@ print("""Matrix
 Follow the white rabbit...
 """)
 
+unicorn.set_layout(unicorn.HAT)
 unicorn.rotation(90)
+unicorn.brightness(0.5)
 
 wrd_rgb = [[154, 173, 154], [0, 255, 0], [0, 200, 0], [0, 162, 0], [0, 145, 0], [0, 96, 0], [0, 74, 0], [0, 0, 0,]]
 

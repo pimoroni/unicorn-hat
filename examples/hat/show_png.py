@@ -23,6 +23,7 @@ except ImportError:
 import unicornhat as unicorn
 
 
+unicorn.set_layout(unicorn.HAT)
 unicorn.rotation(90)
 unicorn.brightness(0.5)
 

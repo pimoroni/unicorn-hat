@@ -19,6 +19,10 @@ except ImportError:
 import unicornhat as unicorn
 
 
+unicorn.set_layout(unicorn.HAT)
+unicorn.rotation(0)
+unicorn.brightness(0.5)
+
 sin_off = [[0]*8 for i in range(8)]
 for y in range(8):
     for x in range(8):

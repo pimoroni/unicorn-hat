@@ -21,7 +21,7 @@ edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0) # tested on pHAT/HAT with rotation 0, 90, 180 & 270
-unicorn.brightness(0.4)
+unicorn.brightness(0.5)
 width,height=unicorn.get_shape()
 
 if height==width:
