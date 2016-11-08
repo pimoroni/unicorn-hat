@@ -13,11 +13,7 @@ Licensed under Creative Commons Attribution-Noncommercial-Share Alike 3.0 Unport
 
 import signal
 import time
-
-try:
-    import numpy
-except ImportError:
-    exit("This script requires the numpy module\nInstall with: sudo pip install numpy")
+from sys import exit
 
 try:
     from PIL import Image
@@ -27,6 +23,7 @@ except ImportError:
 import unicornhat as unicorn
 
 
+unicorn.set_layout(unicorn.HAT)
 unicorn.rotation(90)
 unicorn.brightness(0.5)
 

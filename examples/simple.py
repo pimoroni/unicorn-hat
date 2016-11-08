@@ -4,6 +4,7 @@ import time
 
 import unicornhat as unicorn
 
+
 print("""Simple
 
 Turns each pixel on in turn and updates the display.
@@ -14,7 +15,7 @@ edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
-unicorn.brightness(0.4)
+unicorn.brightness(0.5)
 width,height=unicorn.get_shape()
 
 

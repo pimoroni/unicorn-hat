@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from time import sleep
+from sys import exit
 
 try:
     from pyfiglet import figlet_format
@@ -8,6 +9,7 @@ except ImportError:
     exit("This script requires the pyfiglet module\nInstall with: sudo pip install pyfiglet")
 
 import unicornhat as unicorn
+
 
 print("""Figlet
 
@@ -21,7 +23,7 @@ fit on the small display of 4x8.
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
-unicorn.brightness(0.4)
+unicorn.brightness(0.5)
 width,height=unicorn.get_shape()
 
 TXT = "HELLO"

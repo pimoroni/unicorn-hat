@@ -5,6 +5,7 @@ from random import randint
 
 import unicornhat as unicorn
 
+
 print("""Cross
 
 You should see randomly coloured dots crossing paths with each other.
@@ -15,7 +16,7 @@ edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
-unicorn.brightness(0.4)
+unicorn.brightness(0.5)
 width,height=unicorn.get_shape()
 
 points = []
