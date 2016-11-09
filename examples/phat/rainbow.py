@@ -8,6 +8,7 @@ import unicornhat as unicorn
 
 
 unicorn.set_layout(unicorn.PHAT)
+unicorn.rotation(0)
 unicorn.brightness(0.5)
 
 print("Reticulating splines")

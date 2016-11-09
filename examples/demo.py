@@ -6,6 +6,7 @@ import time
 
 import unicornhat as unicorn
 
+
 print("""Demo
 
 This pixel shading demo transitions between 4 classic graphics demo effects.
@@ -16,7 +17,7 @@ edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0) # tested on pHAT/HAT with rotation 0, 90, 180 & 270
-unicorn.brightness(0.4)
+unicorn.brightness(0.5)
 u_width,u_height=unicorn.get_shape()
 
 

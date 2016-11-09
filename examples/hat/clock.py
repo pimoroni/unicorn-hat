@@ -7,6 +7,11 @@ import time
 from graphics import Drawing, Color
 import unicornhat as unicorn
 
+
+unicorn.set_layout(unicorn.HAT)
+unicorn.rotation(0)
+unicorn.brightness(0.5)
+
 print("""Clock
 
 Displays an analog clock.

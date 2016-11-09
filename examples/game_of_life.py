@@ -5,6 +5,7 @@ import time
 
 import unicornhat as unicorn
 
+
 print("""Game Of Life
 
 Runs Conway's Game Of Life on your Unicorn HAT, this starts 
@@ -21,7 +22,7 @@ except NameError:
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(90)
-unicorn.brightness(0.4)
+unicorn.brightness(0.5)
 width,height=unicorn.get_shape()
 
 size = width*height

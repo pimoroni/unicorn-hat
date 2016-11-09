@@ -2,6 +2,7 @@
 
 import unicornhat as unicorn
 
+
 print("""Detect
 
 Note: Your Unicorn HAT must be plugged in before boot to detect properly!
