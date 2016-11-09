@@ -8,11 +8,8 @@ sck = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print('Unicorn Started')
 
 connected = False
-
 port = 7676
-
 pixels = ['000000'] * 64
-
 attempt = 0
 
 while not connected:

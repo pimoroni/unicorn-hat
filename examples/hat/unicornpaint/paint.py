@@ -4,6 +4,7 @@ import os
 import stat
 import threading
 import time
+from sys import exit
 
 try:
     from flask import Flask, render_template

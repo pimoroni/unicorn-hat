@@ -2,13 +2,15 @@
 
 import colorsys
 import time
+from sys import exit
 
 try:
-    import numpy as np
+    import numpy
 except ImportError:
     exit("This script requires the numpy module\nInstall with: sudo pip install numpy")
 
 import unicornhat as unicorn
+
 
 print("""Random Blinky
 
@@ -20,12 +22,12 @@ edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
-unicorn.brightness(0.4)
+unicorn.brightness(0.5)
 width,height=unicorn.get_shape()
 
 
 while True:
-    rand_mat = np.random.rand(width,height)
+    rand_mat = numpy.random.rand(width,height)
     for y in range(height):
         for x in range(width):
             h = 0.1 * rand_mat[x, y]

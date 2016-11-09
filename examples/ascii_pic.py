@@ -4,6 +4,7 @@ from time import sleep
 
 import unicornhat as unicorn
 
+
 print("""ASCII Pic
 
 You should see a scrolling image, defined in the below variable ASCIIPIC.
@@ -13,7 +14,7 @@ If the smiley looks sad, change the rotation from 0 to 180.
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
-unicorn.brightness(0.4)
+unicorn.brightness(0.5)
 width,height=unicorn.get_shape()
 
 # Every line needs to be exactly 8 characters

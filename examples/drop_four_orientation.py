@@ -5,6 +5,7 @@ from random import randint
 
 import unicornhat as unicorn
 
+
 print("""Drop: Four Orientation
 
 The same as Drop, but showing the virtual bucket in 4 different orientations.
@@ -15,7 +16,7 @@ edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
 
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
-unicorn.brightness(0.4)
+unicorn.brightness(0.5)
 uh_width,uh_height=unicorn.get_shape()
 
 heights = []

@@ -5,7 +5,15 @@ import signal
 import socket
 import threading
 import time
-from Tkinter import *
+from sys import exit, version_info
+
+try:
+    from Tkinter import Canvas, Frame, Tk
+except ImportError:
+    if version_info[0] < 3:
+        exit("This library requires python-tk\nInstall with: sudo apt-get install python-tk")
+    elif version_info[0] == 3:
+        exit("This library requires python3-tk\nInstall with: sudo apt-get install python3-tk")
 
 
 PIXELS_X = 8
