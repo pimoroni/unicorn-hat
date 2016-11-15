@@ -10,20 +10,20 @@ Here you'll find everything you need to start lighting up your Unicorn HAT or pH
 
 Python users should probably ignore most of this repository and just:
 
-**Full install for beginners:**
+**Full install ( recommended ):**
 
 ```bash
-\curl -sS get.pimoroni.com/unicornhat | bash
+\curl -sS https://get.pimoroni.com/unicornhat | bash
 ```
 
-**Install for Python 3 ( idle3 ):**
+**Install for Python 3:**
 
 ```bash
 sudo apt-get install python3-pip python3-dev
-sudo pip-3.2 install unicornhat
+sudo pip3 install unicornhat
 ```
 
-**Install for Python 2 ( idle ):**
+**Install for Python 2:**
 
 ```bash
 sudo apt-get install python-pip python-dev
