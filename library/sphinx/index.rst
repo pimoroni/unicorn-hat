@@ -19,3 +19,77 @@ At A Glance
 .. automoduleoutline:: unicornhat
    :members:
 
+Brightness
+----------
+
+.. autofunction:: unicornhat.brightness
+
+Clear
+-----
+
+.. autofunction:: unicornhat.clear
+
+Get Brightness
+--------------
+
+.. autofunction:: unicornhat.get_brightness
+
+Get Pixel
+---------
+
+.. autofunction:: unicornhat.get_pixel
+
+Get Pixels
+----------
+
+.. autofunction:: unicornhat.get_pixels
+
+Get Shape
+---------
+
+.. autofunction:: unicornhat.get_shape
+
+Turn Off
+--------
+
+.. autofunction:: unicornhat.off
+
+Rotation
+--------
+
+.. autofunction:: unicornhat.rotation
+
+Set All
+-------
+
+.. autofunction:: unicornhat.set_all
+
+Set Layout
+----------
+
+.. autofunction:: unicornhat.set_layout
+
+Set Pixel
+---------
+
+.. autofunction:: unicornhat.set_pixel
+
+Set Pixel HSV
+-------------
+
+.. autofunction:: unicornhat.set_pixel_hsv
+
+Set Pixels
+----------
+
+.. autofunction:: unicornhat.set_pixels
+
+Shade Pixels
+------------
+
+.. autofunction:: unicornhat.shade_pixels
+
+Show
+----
+
+.. autofunction:: unicornhat.show
