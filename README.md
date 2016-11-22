@@ -54,6 +54,13 @@ Then proceed to [examples](examples).
 sudo idle
 ```
 
+###Documentation & Support
+
+* Getting started - https://learn.pimoroni.com/tutorial/unicorn-hat/getting-started-with-unicorn-hat
+* Function reference - http://docs.pimoroni.com/unicornhat/
+* GPIO Pinout - http://pinout.xyz/pinout/unicorn_hat, http://pinout.xyz/pinout/unicorn_phat
+* Get help - http://forums.pimoroni.com/c/support
+
 ###Based Upon rpi_ws281x
 
 `unicornhat` is based upon a modified, Pi 2/3 compatible version of the RPi ws281x Library by Jeremy Garff.
