@@ -8,9 +8,14 @@
 Welcome
 -------
 
-* More information - https://shop.pimoroni.com/products/blinkt
-* Get the code - https://github.com/pimoroni/blinkt
-* Get started - https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-blinkt
+This documentation will guide you through the methods available in the Unicorn HAT python library.
+
+Unicorn HAT is a Raspberry Pi add-on with 64 individually controllable RGB LEDs.
+
+* More information - https://shop.pimoroni.com/products/unicorn-hat
+* GPIO pinout - https://pinout.xyz/unicorn_hat
+* Get the code - https://github.com/pimoroni/unicorn-hat
+* Get started - https://learn.pimoroni.com/tutorial/unicorn-hat/getting-started-with-unicorn-hat
 * Get help - http://forums.pimoroni.com/c/support
 
 At A Glance
