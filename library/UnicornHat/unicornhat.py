@@ -1,7 +1,7 @@
 import atexit
 import colorsys
 
-from neopixel import *
+from neopixel import Adafruit_NeoPixel
 
 
 # LED strip configuration:
@@ -10,9 +10,10 @@ LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 128     # Set to 0 for darkest and 255 for brightest
+LED_CHANNEL    = 0       # PWM channel
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 
-ws2812 = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
+ws2812 = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
 ws2812.begin()
 
 """
@@ -226,7 +227,12 @@ def get_pixel(x, y):
         return int(pixel.r), int(pixel.g), int(pixel.b)
 
 
-def set_pixels(pixels):
+def set_all(r, g, b):
+    """Set all pixels to a specific colour"""
+    shade_pixels(lambda x, y: (r, g, b))
+
+
+def shade_pixels(shader):
     """Set all pixels using a pixel shader style function
 
     :param pixels: A function which accepts the x and y positions of a pixel and returns values r, g and b
@@ -239,15 +245,24 @@ def set_pixels(pixels):
 
         set_pixels(lambda x, y: return (x/7.0) * 255, 0, (y/7.0) * 255)
     """
-    for x in range(8):
-        for y in range(8):
-            r, g, b = pixels[y][x]
+    
+    width, height = get_shape()
+    for x in range(width):
+        for y in range(height):
+            r, g, b = shader(x, y)
             set_pixel(x, y, r, g, b)
+
+
+def set_pixels(pixels):
+    """Set all pixels using an array of `get_shape()`"""
+
+    shade_pixels(lambda x, y: pixels[y][x])
 
 
 def get_pixels():
     """Get the RGB value of all pixels in a 7x7x3 2d array of tuples"""
-    return [[get_pixel(x, y) for x in range(8)] for y in range(8)]
+    width, height = get_shape()
+    return [[get_pixel(x, y) for x in range(width)] for y in range(height)]
 
 
 def show():
