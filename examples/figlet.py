@@ -28,7 +28,7 @@ width,height=unicorn.get_shape()
 
 TXT = "HELLO"
 
-figletText = figlet_format(TXT+' ', "banner") # banner font generates text with heigth 7
+figletText = figlet_format(TXT+' ', "banner", width=1000) # banner font generates text with heigth 7
 textMatrix = figletText.split("\n")[:width] # width should be 8 on both HAT and pHAT!
 textWidth = len(textMatrix[0]) # the total length of the result from figlet
 i = -1
