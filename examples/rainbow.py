@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import colorsys
 import math
 import time
 
@@ -9,8 +8,7 @@ import unicornhat as unicorn
 
 print("""Rainbow
 
-Displays a beautiful rainbow across your HAT/pHAT :D demonstrating
-the use of colorsys to cycle through colour hues.
+Displays a beautiful rainbow across your HAT/pHAT :D
 
 If you're using a Unicorn HAT and only half the screen lights up, 
 edit this example and  change 'unicorn.AUTO' to 'unicorn.HAT' below.
@@ -34,9 +32,8 @@ while True:
         i = i + 0.3
         for y in range(height):
                 for x in range(width):
-                        r = 0#x * 32
-                        g = 0#y * 32
-                        xy = x + y / 4
+                        r = 0
+                        g = 0
                         r = (math.cos((x+i)/2.0) + math.cos((y+i)/2.0)) * 64.0 + 128.0
                         g = (math.sin((x+i)/1.5) + math.sin((y+i)/2.0)) * 64.0 + 128.0
                         b = (math.sin((x+i)/2.0) + math.cos((y+i)/1.5)) * 64.0 + 128.0
