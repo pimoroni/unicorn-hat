@@ -70,7 +70,7 @@ def tick():
   d.circle(O_X,O_Y,R,Color(255,0,255))
 
   # Draw the clock hands
-  d.circle_line(O_X,O_Y,R-1,(-360.0*(currenthour/12.0)),Color(255,0,0))
+  d.circle_line(O_X,O_Y,R-1,(-360.0*((currenthour % 12)/12.0)),Color(255,0,0))
   d.circle_line(O_X,O_Y,R-1,(-360.0*(currentmin/60.0)), Color(0,255,0))
   d.circle_line(O_X,O_Y,R-1,(-360.0*(currentsec/60.0)), Color(0,0,255))
 
