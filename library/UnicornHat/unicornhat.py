@@ -29,6 +29,7 @@ _rotation = 0
 _wx = 8
 _wy = 8
 _map = []
+_pixels = [(0,0,0) for x in range(64)]
 
 """
 Store a map of pixel indexes for
@@ -94,13 +95,16 @@ def set_layout(pixel_map = AUTO):
 
     :param pixel_map: Choose the layout to set, can be either HAT, PHAT, PHAT_VERTICAL or AUTO
     """
+
     global _map
+
     if pixel_map is None:
         pixel_map = PHAT # Assume PHAT
         try:
             product = open("/proc/device-tree/hat/product","r").read().strip()
             if product[:11] == "Unicorn HAT":
                 pixel_map = HAT
+
         except IOError:
             pass
         
@@ -108,6 +112,7 @@ def set_layout(pixel_map = AUTO):
 
 def get_shape():
     """Returns the shape (width, height) of the display"""
+
     global _map
 
     return (len(_map), len(_map[0]))
@@ -116,6 +121,7 @@ def _clean_shutdown():
     """Registered at exit to ensure ws2812 cleans up after itself
     and all pixels are turned off.
     """
+
     off()
 
 
@@ -127,11 +133,14 @@ def rotation(r=0):
 
     global _map
     global _rotation
+
     if r in [0, 90, 180, 270]:
         wx = len(_map)
         wy = len(_map[0])
+
         if wx == wy:
           _rotation = r
+
         else:
           if r in [0, 180]:
             _map = PHAT
@@ -139,7 +148,9 @@ def rotation(r=0):
           else:
             _map = PHAT_VERTICAL
             _rotation = r-90
+
         return True
+
     else:
         raise ValueError('Rotation must be 0, 90, 180 or 270 degrees')
 
@@ -158,9 +169,12 @@ def brightness(b=0.2):
     """Absolute max brightness has been capped to 50%, do not change
     this unless you know what you're doing.
     UnicornHAT draws too much current above 50%."""
+
     brightness = int(b*128.0)
+
     if brightness < 30:
         print("Warning: Low brightness chosen, your UnicornHAT might not light up!")
+
     ws2812.setBrightness(brightness)
 
 
@@ -169,6 +183,7 @@ def get_brightness():
 
     Returns a float between 0.0 and 1.0
     """
+
     return round(ws2812.getBrightness()/128.0, 3)
 
 
@@ -176,12 +191,15 @@ def clear():
     """Clear the buffer"""
     for x in range(64):
         ws2812.setPixelColorRGB(x, 0, 0, 0)
+        _pixels[x] = (0, 0, 0)
 
 
 def off():
     """Clear the buffer and immediately update UnicornHat
 
-    Turns off all pixels."""
+    Turns off all pixels.
+    """
+
     clear()
     show()
 
@@ -192,6 +210,7 @@ def get_index_from_xy(x, y):
     :param x: Horizontal position from 0 to 7
     :param y: Vertical position from 0 to 7
     """
+
     wx = len(_map) - 1
     wy = len(_map[0]) - 1
 
@@ -212,7 +231,7 @@ def get_index_from_xy(x, y):
     return index
 
 
-def set_pixel_hsv(x, y, h, s, v):
+def set_pixel_hsv(x, y, h, s=None, v=None):
     """Set a single pixel to a colour using HSV
 
     :param x: Horizontal position from 0 to 7
@@ -221,11 +240,16 @@ def set_pixel_hsv(x, y, h, s, v):
     :param s: Saturation from 0.0 to 1.0
     :param v: Value (also known as brightness) from 0.0 to 1.0
     """
+
+    if type(h) is tuple:
+        h, s, v = h
+
     r, g, b = [int(n*255) for n in colorsys.hsv_to_rgb(h, s, v)]
+
     set_pixel(x, y, r, g, b)
 
 
-def set_pixel(x, y, r, g, b):
+def set_pixel(x, y, r, g=None, b=None):
     """Set a single pixel to RGB colour
 
     :param x: Horizontal position from 0 to 7
@@ -234,25 +258,33 @@ def set_pixel(x, y, r, g, b):
     :param g: Amount of green from 0 to 255
     :param b: Amount of blue from 0 to 255
     """
+
+    if type(r) is tuple:
+        r, g, b = r
+
     index = get_index_from_xy(x, y)
+
     if index is not None:
         r, g, b = GAMMA[r], GAMMA[g], GAMMA[b]
         ws2812.setPixelColorRGB(index, r, g, b)
+        _pixels[index] = (r, g, b)
 
 
 def get_pixel(x, y):
     """Get the RGB value of a single pixel
 
     :param x: Horizontal position from 0 to 7
-    :param y: Veritcal position from 0 to 7"""
+    :param y: Veritcal position from 0 to 7
+    """
+
     index = get_index_from_xy(x, y)
     if index is not None:
-        pixel = ws2812.getPixelColorRGB(index)
-        return int(pixel.r), int(pixel.g), int(pixel.b)
+        return _pixels[index]
 
 
 def set_all(r, g, b):
     """Set all pixels to a specific colour"""
+
     shade_pixels(lambda x, y: (r, g, b))
 
 
@@ -285,13 +317,17 @@ def set_pixels(pixels):
 
 def get_pixels():
     """Get the RGB value of all pixels in a 7x7x3 2d array of tuples"""
+
     width, height = get_shape()
+
     return [[get_pixel(x, y) for x in range(width)] for y in range(height)]
 
 
 def show():
     """Update UnicornHat with the contents of the display buffer"""
+
     ws2812.show()
+
 
 set_layout(HAT)
 
