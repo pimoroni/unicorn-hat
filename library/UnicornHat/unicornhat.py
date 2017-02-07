@@ -282,8 +282,11 @@ def get_pixel(x, y):
         return _pixels[index]
 
 
-def set_all(r, g, b):
+def set_all(r, g=None, b=None):
     """Set all pixels to a specific colour"""
+
+    if type(r) is tuple:
+        r, g, b = r
 
     shade_pixels(lambda x, y: (r, g, b))
 
