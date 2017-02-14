@@ -11,9 +11,9 @@ uh_width,uh_height=unicorn.get_shape()
 
 
 for rot in [0, 90, 180, 270]:
-  print rot
+  print(rot)
   unicorn.rotation(rot)
   unicorn.set_pixel(0,0,255,255,255)
-  print unicorn.get_rotation()
+  print(unicorn.get_rotation())
   unicorn.show()
   time.sleep(1)
