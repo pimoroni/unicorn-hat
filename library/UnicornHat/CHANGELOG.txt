@@ -1,3 +1,11 @@
+2.1.3
+-----
+
+* Feature: Added set_all and shade_pixels which now drives set_pixels
+* Feature: Added PHAT_VERTICAL optional orientation
+* Bugfix: get_brightness now returns value
+* Bugfix: get_pixels now takes into account pHAT/HAT shape
+
 2.1.2
 -----
 
