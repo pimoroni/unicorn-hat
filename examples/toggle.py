@@ -1,13 +1,16 @@
 #!/usr/bin/env python
-#import necessary modules
-import unicornhat as unicorn
-from time import sleep
+
 from random import randint
+from time import sleep
+
+import unicornhat as unicorn
+
+
 #setup the unicorn hat
-unicorn.set_layout(unicorn.PHAT)
+unicorn.set_layout(unicorn.auto)
 unicorn.brightness(0.5)
 
-#get the width and height of the hat installed
+#get the width and height of the hardware
 width, height = unicorn.get_shape()
 
 def print_header():
