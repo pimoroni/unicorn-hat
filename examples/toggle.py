@@ -7,7 +7,7 @@ import unicornhat as unicorn
 
 
 #setup the unicorn hat
-unicorn.set_layout(unicorn.auto)
+unicorn.set_layout(unicorn.AUTO)
 unicorn.brightness(0.5)
 
 #get the width and height of the hardware
