@@ -41,7 +41,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('paint.html')
+    if height == width:
+        return render_template('painthat.html')
+    else:
+        return render_template('paintphat.html')
 
 @app.route('/save/<filename>')
 def save(filename):
