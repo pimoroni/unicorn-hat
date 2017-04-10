@@ -14,12 +14,15 @@ except ImportError:
 import unicornhat as unicorn
 
 
+unicorn.set_layout(unicorn.AUTO)
+width,height=unicorn.get_shape()
+
 control_panel = """
     <table cellspacing="0" cellpadding="0" border-collapse="collapse">"""
 
-for y in range(8):
+for y in range(height):
     control_panel += '<tr>'
-    for x in range(8):
+    for x in range(width):
         control_panel += '<td data-x="' + str(x) + '" data-y="' + str(y) + '" data-hex="000000" style="background-color:#000000;"></td>'
     control_panel += '</tr>'
 
