@@ -91,7 +91,14 @@ body {
     top:470px;
 }
 
-.unicorn {
+.unicornhat {
+    width:600px;
+    height:700px;
+    position:relative;
+    background:#000;
+}
+
+.unicornphat {
     width:600px;
     height:700px;
     position:relative;

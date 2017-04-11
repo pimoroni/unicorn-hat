@@ -176,7 +176,7 @@ static const rpi_hw_t rpi_hw_info[] = {
         .videocore_base = VIDEOCORE_BASE_RPI,
         .desc = "Compute Module",
     },
-            
+
     //
     // Pi Zero
     //
@@ -200,6 +200,13 @@ static const rpi_hw_t rpi_hw_info[] = {
         .periph_base = PERIPH_BASE_RPI,
         .videocore_base = VIDEOCORE_BASE_RPI,
         .desc = "Pi Zero v1.3",
+    },
+    {
+        .hwver  = 0x9000c1,
+        .type = RPI_HWVER_TYPE_PI1,
+        .periph_base = PERIPH_BASE_RPI,
+        .videocore_base = VIDEOCORE_BASE_RPI,
+        .desc = "Pi Zero W v1.1",
     },
 
     //

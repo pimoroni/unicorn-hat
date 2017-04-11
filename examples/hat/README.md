@@ -32,15 +32,6 @@ matrix.py
 
 Knock, knock, Neo.
 
-unicornpaint/paint.py
----------------------
-
-Use your web browser to pixel paint onto Unicorn HAT.
-
-**Requirements:**
-
-    sudo pip install flask
-
 show_png.py
 -----------
 

@@ -46,5 +46,5 @@ setup(
     url             = 'http://shop.pimoroni.com',
     classifiers     = classifiers,
     py_modules      = [ 'unicornhat' ],
-    install_requires= ['rpi_ws281x >= 2.0.0']
+    install_requires= ['rpi_ws281x >= 2.0.5']
 )

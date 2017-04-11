@@ -14,12 +14,15 @@ except ImportError:
 import unicornhat as unicorn
 
 
+unicorn.set_layout(unicorn.AUTO)
+width,height=unicorn.get_shape()
+
 control_panel = """
     <table cellspacing="0" cellpadding="0" border-collapse="collapse">"""
 
-for y in range(8):
+for y in range(height):
     control_panel += '<tr>'
-    for x in range(8):
+    for x in range(width):
         control_panel += '<td data-x="' + str(x) + '" data-y="' + str(y) + '" data-hex="000000" style="background-color:#000000;"></td>'
     control_panel += '</tr>'
 
@@ -38,7 +41,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('paint.html')
+    if height == width:
+        return render_template('painthat.html')
+    else:
+        return render_template('paintphat.html')
 
 @app.route('/save/<filename>')
 def save(filename):
@@ -84,5 +90,5 @@ def set_pixel(x, y, r, g, b):
     return "ok"
 
 if __name__ == "__main__":
-    unicorn.brightness(0.3)
+    unicorn.brightness(0.5)
     app.run(host='0.0.0.0', debug=True)

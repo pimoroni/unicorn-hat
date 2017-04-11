@@ -4,7 +4,19 @@ Available from Pimoroni:
 http://shop.pimoroni.com/products/unicorn-hat  
 http://shop.pimoroni.com/products/unicorn-phat
 
-###`unicornhat` Python Library & Examples
+### Important Notice
+
+Because Unicorn HAT uses the PWM hardware, which is also how your Raspberry Pi generates analog audio, you may see random colour patterns and flickering.
+
+If this happens, you should add the following to your `/boot/config.txt`:
+
+```
+hdmi_force_hotplug=1
+```
+
+Sound will work fine using speakers on, for example, an HDMI TV, but you will not be able to use your Pi's 3.5mm audio jack in conjunction with Unicorn HAT.
+
+### `unicornhat` Python Library & Examples
 
 Here you'll find everything you need to start lighting up your Unicorn HAT or pHAT using python.
 
@@ -46,7 +58,7 @@ cd ../..
 
 Then proceed to [examples](examples).
 
-###Using with idle/idle3:
+### Using with idle/idle3:
 
 `unicornhat` needs root access to function. Please make sure you start LXTerminal and run idle or idle3 with the "sudo" command like so:
 
@@ -54,14 +66,14 @@ Then proceed to [examples](examples).
 sudo idle
 ```
 
-###Documentation & Support
+### Documentation & Support
 
 * Getting started - https://learn.pimoroni.com/tutorial/unicorn-hat/getting-started-with-unicorn-hat
 * Function reference - http://docs.pimoroni.com/unicornhat/
 * GPIO Pinout - http://pinout.xyz/pinout/unicorn_hat, http://pinout.xyz/pinout/unicorn_phat
 * Get help - http://forums.pimoroni.com/c/support
 
-###Based Upon rpi_ws281x
+### Based Upon rpi_ws281x
 
 `unicornhat` is based upon a modified, Pi 2/3 compatible version of the RPi ws281x Library by Jeremy Garff.
 
@@ -70,7 +82,7 @@ The library was modified by Richard Hirst.
 * Modified version: https://github.com/richardghirst/rpi_ws281x
 * Original: https://github.com/jgarff/rpi_ws281x
 
-###RaspberryPi-NeoPixel-WS2812
+### RaspberryPi-NeoPixel-WS2812
 
 Note: `unicornhat` is no longer based upon this library, but this information is included for posterity.
 
