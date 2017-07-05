@@ -31,17 +31,16 @@ example:
 
 ## unicorn-hat animations 8x8
 
-| fog            | partly-cloudy-day                          | partly-cloudy-night                            |
-|:--------------:|:------------------------------------------:|:----------------------------------------------:|
-| ![fog][fog-sd] | ![partly-cloudy-day][partly-cloudy-day-sd] | ![partly-cloudy-night][partly-cloudy-night-sd] |
-
-| clear-night                    | clear-day                  | cloudy               |
-|:------------------------------:|:--------------------------:|:--------------------:|
-| ![clear-night][clear-night-sd] | ![clear-day][clear-day-sd] | ![cloudy][cloudy-sd] |
-
-| rain             | snow             | windy              | error              |
-|:----------------:|:----------------:|:------------------:|:------------------:|
-| ![rain][rain-sd] | ![snow][snow-sd] | ![windy][windy-sd] | ![error][error-sd] |
+|                                | old unicornhat                             |                                                |
+|:------------------------------:|:------------------------------------------:|:----------------------------------------------:|
+| fog                            | partly-cloudy-day                          | partly-cloudy-night                            |
+| ![fog][fog-sd]                 | ![partly-cloudy-day][partly-cloudy-day-sd] | ![partly-cloudy-night][partly-cloudy-night-sd] |
+| clear-night                    | clear-day                                  | cloudy                                         |
+| ![clear-night][clear-night-sd] | ![clear-day][clear-day-sd]                 | ![cloudy][cloudy-sd]                           |
+| rain                           | snow                                       | windy                                          |
+| ![rain][rain-sd]               | ![snow][snow-sd]                           | ![windy][windy-sd]                             |
+| error                          | raspberry                                  | pimoroni pirate                                |
+| ![error][error-sd]             | ![raspberry][raspberry-sd]                 | ![pimoroni_pirate][pimoroni_pirate-sd]         |
 
 
 [clear-day-sd]: https://github.com/LoveBootCaptain/unicornhat_weather_icons/blob/master/animation/SD/clear-day.gif "clear-day"
@@ -55,7 +54,10 @@ example:
 [rain-sd]: https://github.com/LoveBootCaptain/unicornhat_weather_icons/blob/master/animation/SD/rain.gif "rain"
 [snow-sd]: https://github.com/LoveBootCaptain/unicornhat_weather_icons/blob/master/animation/SD/snow.gif "snow"
 [windy-sd]: https://github.com/LoveBootCaptain/unicornhat_weather_icons/blob/master/animation/SD/windy.gif "windy"
+
 [error-sd]: https://github.com/LoveBootCaptain/unicornhat_weather_icons/blob/master/animation/SD/error.gif "error"
+[raspberry-sd]: https://github.com/LoveBootCaptain/unicornhat_weather_icons/blob/master/animation/SD/raspberry.gif "raspberry"
+[pimoroni_pirate-sd]: https://github.com/LoveBootCaptain/unicornhat_weather_icons/blob/master/animation/SD/pimoroni.gif "pimoroni pirate"
 
 [Buy the old Unicorn HAT on Pimoroni](https://shop.pimoroni.com/products/unicorn-hat "Buy the old Unicorn HAT on Pimoroni")
 
