@@ -17,7 +17,7 @@ loop() finally loops through all png images in a folder (you might guessed it) s
 
 Usage:
 
-```python weather-icons.py options```
+```sudo python weather-icons.py options```
     
 options:
 - loop
@@ -25,9 +25,9 @@ options:
 
 example:
 
-```weather-icons.py loop```
+```sudo python weather-icons.py loop```
 
-```weather-icons.py clear-day.png```
+```sudo python weather-icons.py clear-day.png```
 
 
 ## unicorn-hat animations 8x8
