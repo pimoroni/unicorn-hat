@@ -74,15 +74,15 @@ cycle_time = 0.25
 def helper():
     print('''
     Usage:
-    python weather-icons.py options
+    sudo python weather-icons.py options
     
     options:
     loop
     image-file.png
 
     example:
-    weather-icons.py loop
-    weather-icons.py clear-day.png
+    sudo python weather-icons.py loop
+    sudo python weather-icons.py clear-day.png
     
     try one of the files from this list: 
     {}
