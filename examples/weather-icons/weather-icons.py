@@ -60,7 +60,7 @@ print('''
     ''')
 
 unicorn.brightness(1)
-unicorn.rotation(0)
+unicorn.rotation(90)
 
 folder_path = 'icons/'
 
