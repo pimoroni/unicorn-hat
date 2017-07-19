@@ -22,6 +22,7 @@ Store the rotation of UnicornHat, defaults to
 HDMI port facing downwards
 """
 _rotation = 0
+_requested_rotation = 0
 _wx = 8
 _wy = 8
 _map = []
@@ -102,7 +103,10 @@ def rotation(r=0):
 
     global _map
     global _rotation
+    global _requested_rotation
+
     if r in [0, 90, 180, 270]:
+        _requested_rotation=r
         wx = len(_map)
         wy = len(_map[0])
         if wx == wy:
@@ -117,6 +121,16 @@ def rotation(r=0):
         return True
     else:
         raise ValueError('Rotation must be 0, 90, 180 or 270 degrees')
+
+
+def get_rotation():
+    """Get the display rotation value
+
+    Returns an integer, either 0, 90, 180 or 270
+    """
+    global _requested_rotation
+
+    return _requested_rotation
 
 
 def brightness(b=0.2):
