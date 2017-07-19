@@ -79,14 +79,16 @@ def set_layout(pixel_map = AUTO):
                 pixel_map = HAT
         except IOError:
             pass
-        
+
     _map = pixel_map
+
 
 def get_shape():
     """Returns the shape (width, height) of the display"""
     global _map
 
     return (len(_map), len(_map[0]))
+
 
 def _clean_shutdown():
     """Registered at exit to ensure ws2812 cleans up after itself
@@ -128,7 +130,6 @@ def get_rotation():
 
     Returns an integer, either 0, 90, 180 or 270
     """
-    global _requested_rotation
 
     return _requested_rotation
 
