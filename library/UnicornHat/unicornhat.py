@@ -48,6 +48,7 @@ Store the rotation of UnicornHat, defaults to
 HDMI port facing downwards
 """
 _rotation = 0
+_requested_rotation = 0
 _wx = 8
 _wy = 8
 _map = []
@@ -108,8 +109,9 @@ def set_layout(pixel_map = AUTO):
 
         except IOError:
             pass
-        
+
     _map = pixel_map
+
 
 def get_shape():
     """Returns the shape (width, height) of the display"""
@@ -117,6 +119,7 @@ def get_shape():
     global _map
 
     return (len(_map), len(_map[0]))
+
 
 def _clean_shutdown():
     """Registered at exit to ensure ws2812 cleans up after itself
@@ -134,8 +137,10 @@ def rotation(r=0):
 
     global _map
     global _rotation
+    global _requested_rotation
 
     if r in [0, 90, 180, 270]:
+        _requested_rotation=r
         wx = len(_map)
         wy = len(_map[0])
 
@@ -154,6 +159,15 @@ def rotation(r=0):
 
     else:
         raise ValueError('Rotation must be 0, 90, 180 or 270 degrees')
+
+
+def get_rotation():
+    """Get the display rotation value
+
+    Returns an integer, either 0, 90, 180 or 270
+    """
+
+    return _requested_rotation
 
 
 def brightness(b=0.2):
