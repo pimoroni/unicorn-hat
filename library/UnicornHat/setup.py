@@ -36,7 +36,7 @@ classifiers = ['Development Status :: 5 - Production/Stable',
 
 setup(
     name            = 'unicornhat',
-    version         = '2.1.3',
+    version         = '2.2.0',
     author          = 'Philip Howard',
     author_email    = 'phil@pimoroni.com',
     description     = """Python library for UnicornHAT/pHAT""",
