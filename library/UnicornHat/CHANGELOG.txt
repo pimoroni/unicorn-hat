@@ -1,3 +1,8 @@
+2.2.1
+-----
+
+* Refactor: Switched to using rpi_ws218x 3.x.x
+
 2.1.3
 -----
 
