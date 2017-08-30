@@ -42,16 +42,13 @@ sudo apt-get install python-pip python-dev
 sudo pip install unicornhat
 ```
 
-**Install from Github clone**
+**Install from GitHub**
+
+Note this library requires the rpi_ws281x Python library which you can find here: https://github.com/pimoroni/rpi_ws281x-python
 
 ```
 git clone https://github.com/pimoroni/unicorn-hat
-cd unicorn-hat/
-sudo apt-get install python-dev python-setuptools
-cd library/rpi-ws281x
-sudo python setup.py install
-cd ../..
-cd library/UnicornHat
+cd unicorn-hat/library/UnicornHat
 sudo python setup.py install
 cd ../..
 ```
