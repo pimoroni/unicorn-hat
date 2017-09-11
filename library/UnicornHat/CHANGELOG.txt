@@ -1,3 +1,8 @@
+2.2.2
+-----
+
+* Bugfix: Switched to DMA channel 10 to avoid SD card locking + freezing
+
 2.2.1
 -----
 
