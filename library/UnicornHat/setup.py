@@ -36,7 +36,7 @@ classifiers = ['Development Status :: 5 - Production/Stable',
 
 setup(
     name            = 'unicornhat',
-    version         = '2.2.2',
+    version         = '2.2.3',
     author          = 'Philip Howard',
     author_email    = 'phil@pimoroni.com',
     description     = """Python library for UnicornHAT/pHAT""",
@@ -46,5 +46,5 @@ setup(
     url             = 'http://shop.pimoroni.com',
     classifiers     = classifiers,
     py_modules      = [ 'unicornhat' ],
-    install_requires= ['rpi_ws281x >= 3.0.2']
+    install_requires= ['rpi_ws281x >= 3.0.3']
 )

@@ -2,7 +2,7 @@ import atexit
 import colorsys
 from rpi_ws281x import __version__ as __rpi_ws281x__, PixelStrip, Color
 
-__version__ = '2.2.2'
+__version__ = '2.2.3'
 
 # LED strip configuration:
 LED_COUNT      = 64      # Number of LED pixels.
