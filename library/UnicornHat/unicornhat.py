@@ -1,12 +1,8 @@
 import atexit
 import colorsys
+from rpi_ws281x import __version__ as __rpi_ws281x__, PixelStrip, Color
 
-try:
-    from rpi_ws281x import __version__, PixelStrip, Color
-except ImportError:
-    from neopixel import Adafruit_NeoPixel as PixelStrip, Color
-    __version__ = "legacy"
-
+__version__ = '2.2.2'
 
 # LED strip configuration:
 LED_COUNT      = 64      # Number of LED pixels.
@@ -34,11 +30,7 @@ LED_GAMMA = [
 191,193,194,196,198,200,202,204,206,208,210,212,214,216,218,220,
 222,224,227,229,231,233,235,237,239,241,244,246,248,250,252,255]
 
-if __version__ == "legacy":
-    ws2812 = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-
-else:
-    ws2812 = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_GAMMA)
+ws2812 = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_GAMMA)
 
 ws2812.begin()
 
