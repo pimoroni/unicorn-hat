@@ -89,6 +89,12 @@ PHAT = [
 
 AUTO = None
 
+def set_gamma(gamma):
+    ws2812.setGamma(gamma)
+
+def disable_gamma():
+    set_gamma(list(range(256)))
+
 def set_layout(pixel_map = AUTO):
     """Set the layout to Unicorn HAT or Unicorn pHAT
 
