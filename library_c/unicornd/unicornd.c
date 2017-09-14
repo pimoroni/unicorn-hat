@@ -33,7 +33,7 @@
 
 #define TARGET_FREQ    WS2811_TARGET_FREQ
 #define GPIO_PIN       18
-#define DMA            5
+#define DMA            10
 
 #define WIDTH          8
 #define HEIGHT         8
@@ -168,14 +168,6 @@ typedef struct pos_s {
 	uint8_t x;
 	uint8_t y;
 } pos_t;
-
-#define TARGET_FREQ    WS2811_TARGET_FREQ
-#define GPIO_PIN       18
-#define DMA            5
-
-#define WIDTH          8
-#define HEIGHT         8
-#define LED_COUNT      (WIDTH * HEIGHT)
 
 static
 int

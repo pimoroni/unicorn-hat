@@ -9,6 +9,21 @@ user.
 It can handle only one connection at a time and
 since the socket has `0777` mode every user can connect to the socket.
 
+### Building
+
+Run `./build.sh` to clone and build the rpi_ws281x library and this daemon.
+
+Otherwise make sure you have scons installed, initalize the submodule directory and build manually:
+
+```
+sudo apt install scons
+git submodule update --init
+cd rpi_ws281x
+scons build
+cd ../
+make
+```
+
 ### Installation
 #### Raspbian
 
