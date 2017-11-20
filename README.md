@@ -63,6 +63,25 @@ Then proceed to [examples](examples).
 sudo idle
 ```
 
+### Error Codes
+
+Sometimes Unicorn HAT may fail with an error code, this table details some of the places to look for answers in specific cases:
+
+* -1 Generic failure
+* -2 Out of memory
+* -3 Hardware revision is not supported - see: https://github.com/pimoroni/unicorn-hat/issues/70
+* -4 Memory lock failed
+* -5 mmap() failed
+* -6 Unable to map registers into userspace
+* -7 Unable to initialize GPIO
+* -8 Unable to initialize PWM"
+* -9 Failed to create mailbox device
+* -10 DMA error
+* -11 Selected GPIO not possible
+* -12 Unable to initialize PCM
+* -13 Unable to initialize SPI
+* -14 SPI transfer error
+
 ### Documentation & Support
 
 * Getting started - https://learn.pimoroni.com/tutorial/unicorn-hat/getting-started-with-unicorn-hat
