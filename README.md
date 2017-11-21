@@ -69,9 +69,9 @@ Sometimes Unicorn HAT may fail with an error code, this table details some of th
 
 * -1 Generic failure
 * -2 Out of memory
-* -3 Hardware revision is not supported - see: https://github.com/pimoroni/unicorn-hat/issues/70
+* -3 Hardware revision is not supported - **see: https://github.com/pimoroni/unicorn-hat/issues/70**
 * -4 Memory lock failed
-* -5 mmap() failed
+* -5 mmap() failed - **you probably forgot to run your code as root, use `sudo python yourcode.py`**
 * -6 Unable to map registers into userspace
 * -7 Unable to initialize GPIO
 * -8 Unable to initialize PWM"
