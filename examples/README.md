@@ -11,7 +11,7 @@ or
 
 
 The library can detect if you're using a Unicorn HAT or a Unicorn pHAT.
-The recommended initialisation is as folows:
+The recommended initialisation is as follows:
 
 ```python
 import unicornhat as unicorn
