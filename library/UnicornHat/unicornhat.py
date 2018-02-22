@@ -277,7 +277,7 @@ def set_pixel(x, y, r, g=None, b=None):
     if type(r) is tuple:
         r, g, b = r
     
-    elif type(r) is string:
+    elif type(r) is str:
         r, g, b = colors[r]
 
     index = get_index_from_xy(x, y)
