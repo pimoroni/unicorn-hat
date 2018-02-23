@@ -348,6 +348,13 @@ def set_all(r, g=None, b=None):
 
     if type(r) is tuple:
         r, g, b = r
+    
+    elif type(r) is str:
+        try:
+            r, g, b = COLORS[r.lower()]
+        
+        except KeyError:
+            raise ValueError('Invalid color!')
 
     shade_pixels(lambda x, y: (r, g, b))
 
