@@ -3,31 +3,60 @@
 import unicornhat as unicorn
 
 
-print("""Detect
+print("""Unicorn HAT Detect-o-matic v2.0
 
 Note: Your Unicorn HAT must be plugged in before boot to detect properly!
 
 """)
 
+product = None
 
-print("Trying to detect if you have a Unicorn HAT or Unicorn pHAT")
-unicorn.set_layout(unicorn.AUTO)
-print("Autodetection finished, let's see the result...")
-print("")
+try:
+    product = open("/proc/device-tree/hat/product","r").read().strip()
+except IOError:
+    pass
 
-width,height=unicorn.get_shape()
+if product is None:
+    print(
+"""We couldn't find a connected EEPROM, so we'll assume you're using a Unicorn pHAT.
 
-if height == width:
-   print("Your height is equal to your width, so you must have a HAT.")
+You should use the following in your code:
+
+    import unicornhat
+    unicornhat.set_layout(unicornhat.PHAT)
+
+If you're sure you've connected a HAT, use:
+
+    import unicornhat
+    unicornhat.set_layout(unicornhat.HAT)
+""")
+
 else:
-   print("Your height is NOT equal to your width, so you must have a pHAT.")
+    if product[:11] == "unicornhat":
+        print(
+"""We found a Unicorn HAT connected to your Pi.
 
-print("")
-print("If your hardware has been properly detected, it should be safe to use the following in your code:")
-print("unicorn.set_layout(unicorn.AUTO)")
-print("")
-print("Otherwise use one of the following in our code:")
-print("")
-print("unicorn.set_layout(unicorn.PHAT)")
-print("unicorn.set_layout(unicorn.HAT)")
-print("")
+You should use the following in your code:
+
+    import unicornhat
+    unicornhat.set_layout(unicornhat.HAT)
+
+""")
+    else:
+        print(
+"""Hold up, we found "{}" connected to your Pi!
+
+Go walk the plank, landlubber! That ain't no Unicorn HAT
+
+If this is wrong, chances are you've swapped HATs or pHATs without rebooting.
+
+You should use the following in your code for Unicorn HAT:
+
+    import unicornhat
+    unicornhat.set_layout(unicornhat.HAT)
+
+Or for Unicorn pHAT:
+
+    import unicornhat
+    unicornhat.set_layout(unicornhat.PHAT)
+""")
