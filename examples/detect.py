@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-import unicornhat as unicorn
-
 
 print("""Unicorn HAT Detect-o-matic v2.0
 
@@ -12,7 +10,7 @@ Note: Your Unicorn HAT must be plugged in before boot to detect properly!
 product = None
 
 try:
-    product = open("/proc/device-tree/hat/product","r").read().strip()
+    product = open("/proc/device-tree/hat/product","r").read().strip().replace("\x00", "")
 except IOError:
     pass
 
@@ -59,4 +57,4 @@ Or for Unicorn pHAT:
 
     import unicornhat
     unicornhat.set_layout(unicornhat.PHAT)
-""")
+""".format(product))
