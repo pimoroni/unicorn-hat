@@ -30,7 +30,18 @@ LED_GAMMA = [
 191,193,194,196,198,200,202,204,206,208,210,212,214,216,218,220,
 222,224,227,229,231,233,235,237,239,241,244,246,248,250,252,255]
 
-colors = {'red':(255,0,0),'green':(0,255,0),'blue':(0,0,255),'yellow':(255,255,0),'magenta':(255,0,255),'cyan':(0,255,255), 'black':(0,0,0),'white':(255,0,0),'gray':(127,127,127),'grey':(127,127,127)}
+COLORS = {
+    'red':(255,0,0),
+    'green':(0,255,0),
+    'blue':(0,0,255),
+    'yellow':(255,255,0),
+    'magenta':(255,0,255),
+    'cyan':(0,255,255), 
+    'black':(0,0,0),
+    'white':(255,0,0),
+    'gray':(127,127,127),
+    'grey':(127,127,127)
+}
 
 ws2812 = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_GAMMA)
 
@@ -278,7 +289,11 @@ def set_pixel(x, y, r, g=None, b=None):
         r, g, b = r
     
     elif type(r) is str:
-        r, g, b = colors[r]
+        try:
+            r, g, b = colors[r].lower()
+        
+        except KeyError:
+            print('Invalid color!')
 
     index = get_index_from_xy(x, y)
 
