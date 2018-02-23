@@ -149,6 +149,7 @@ def get_shape():
 
     global _map
 
+    setup() # Shape is unset until this is called
     return (len(_map), len(_map[0]))
 
 
@@ -170,6 +171,7 @@ def rotation(r=0):
     global _rotation
     global _requested_rotation
 
+    setup()
     if r in [0, 90, 180, 270]:
         _requested_rotation=r
         wx = len(_map)
@@ -264,6 +266,8 @@ def get_index_from_xy(x, y):
     :param y: Vertical position from 0 to 7
     """
 
+    setup()
+
     wx = len(_map) - 1
     wy = len(_map[0]) - 1
 
@@ -345,9 +349,6 @@ def get_pixel(x, y):
 
 def set_all(r, g=None, b=None):
     """Set all pixels to a specific colour"""
-
-    if type(r) is tuple:
-        r, g, b = r
 
     shade_pixels(lambda x, y: (r, g, b))
 
