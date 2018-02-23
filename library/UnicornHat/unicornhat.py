@@ -30,9 +30,6 @@ LED_GAMMA = [
 191,193,194,196,198,200,202,204,206,208,210,212,214,216,218,220,
 222,224,227,229,231,233,235,237,239,241,244,246,248,250,252,255]
 
-ws2812 = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_GAMMA)
-
-ws2812.begin()
 
 """
 Store the rotation of UnicornHat, defaults to
@@ -45,6 +42,8 @@ _wx = 8
 _wy = 8
 _map = []
 _pixels = [(0,0,0) for x in range(64)]
+_is_setup = False
+ws2812 = None
 
 """
 Store a map of pixel indexes for
@@ -81,11 +80,32 @@ PHAT = [
 
 AUTO = None
 
+def setup():
+    global ws2812, _is_setup
+
+    if _is_setup:
+        return
+
+    ws2812 = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_GAMMA)
+
+    ws2812.begin()
+
+    set_layout(HAT)
+
+    atexit.register(_clean_shutdown)
+
+    _is_setup = True
+
+
 def set_gamma(gamma):
+    setup()
     ws2812.setGamma(gamma)
 
+
 def disable_gamma():
+    setup()
     set_gamma(list(range(256)))
+
 
 def set_layout(pixel_map = AUTO):
     """Set the layout to Unicorn HAT or Unicorn pHAT
@@ -176,6 +196,8 @@ def brightness(b=0.2):
     :param b: Brightness from 0.0 to 1.0 (default 0.2)
     """
 
+    setup()
+
     if b > 1 or b < 0:
         raise ValueError('Brightness must be between 0.0 and 1.0')
 
@@ -197,11 +219,16 @@ def get_brightness():
     Returns a float between 0.0 and 1.0
     """
 
+    setup()
+
     return round(ws2812.getBrightness()/128.0, 3)
 
 
 def clear():
     """Clear the buffer"""
+
+    setup()
+
     for x in range(64):
         ws2812.setPixelColorRGB(x, 0, 0, 0)
         _pixels[x] = (0, 0, 0)
@@ -272,6 +299,8 @@ def set_pixel(x, y, r, g=None, b=None):
     :param b: Amount of blue from 0 to 255
     """
 
+    setup()
+
     if type(r) is tuple:
         r, g, b = r
 
@@ -341,9 +370,6 @@ def get_pixels():
 def show():
     """Update UnicornHat with the contents of the display buffer"""
 
+    setup()
     ws2812.show()
 
-
-set_layout(HAT)
-
-atexit.register(_clean_shutdown)
