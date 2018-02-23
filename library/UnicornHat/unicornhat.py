@@ -293,7 +293,7 @@ def set_pixel(x, y, r, g=None, b=None):
             r, g, b = colors[r].lower()
         
         except KeyError:
-            print('Invalid color!')
+            raise ValueError('Invalid color!')
 
     index = get_index_from_xy(x, y)
 
