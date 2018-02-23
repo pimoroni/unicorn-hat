@@ -290,7 +290,7 @@ def set_pixel(x, y, r, g=None, b=None):
     
     elif type(r) is str:
         try:
-            r, g, b = colors[r].lower()
+            r, g, b = COLORS[r].lower()
         
         except KeyError:
             raise ValueError('Invalid color!')
