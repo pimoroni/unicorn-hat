@@ -326,7 +326,7 @@ def set_pixel(x, y, r, g=None, b=None):
             r, g, b = COLORS[r.lower()]
         
         except KeyError:
-            r, g, b = int(r[:2],16), int(r[2:4],16), int(r[4:8],16)
+            r, g, b = int(r,16).to_bytes(3,'big')
 
     index = get_index_from_xy(x, y)
 
