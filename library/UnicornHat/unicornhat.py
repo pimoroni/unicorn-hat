@@ -326,7 +326,7 @@ def set_pixel(x, y, r, g=None, b=None):
             r, g, b = COLORS[r.lower()]
         
         except KeyError:
-            if len(r) == 6:
+            if len(r.lstrip('#')) == 6:
                 r, g, b = int(r.lstrip('#'),16).to_bytes(3,'big')
             
             else:
