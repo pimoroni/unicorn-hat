@@ -30,19 +30,29 @@ LED_GAMMA = [
 191,193,194,196,198,200,202,204,206,208,210,212,214,216,218,220,
 222,224,227,229,231,233,235,237,239,241,244,246,248,250,252,255]
 
-COLORS = {
-    'red':(255,0,0),
-    'green':(0,255,0),
-    'blue':(0,0,255),
-    'yellow':(255,255,0),
-    'magenta':(255,0,255),
-    'cyan':(0,255,255), 
-    'black':(0,0,0),
-    'white':(255,255,255),
-    'gray':(127,127,127),
-    'grey':(127,127,127)
-}
+colors = {'red':(255,0,0),
+          'lime':(0,255,0),
+          'blue':(0,0,255),
+          'yellow':(255,255,0),
+          'magenta':(255,0,255),
+          'cyan':(0,255,255),
+          'black':(0,0,0),
+          'silver':(192,192,192),
+          'maroon':(128,0,0),
+          'olive':(128,128,0),
+          'green':(0,128,0),
+          'purple':(128,0,128),
+          'teal':(0,128,128),
+          'navy':(0,0,128),
+          'orange':(255,165,0),
+          'gold':(255,215,0),
+          'purple':(128,0,128),
+          'indigo':(75,0,130)
+          }
 
+ws2812 = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_GAMMA)
+
+ws2812.begin()
 
 """
 Store the rotation of UnicornHat, defaults to
@@ -55,8 +65,6 @@ _wx = 8
 _wy = 8
 _map = []
 _pixels = [(0,0,0) for x in range(64)]
-_is_setup = False
-ws2812 = None
 
 """
 Store a map of pixel indexes for
@@ -93,32 +101,11 @@ PHAT = [
 
 AUTO = None
 
-def setup():
-    global ws2812, _is_setup
-
-    if _is_setup:
-        return
-
-    ws2812 = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_GAMMA)
-
-    ws2812.begin()
-
-    set_layout(HAT)
-
-    atexit.register(_clean_shutdown)
-
-    _is_setup = True
-
-
 def set_gamma(gamma):
-    setup()
     ws2812.setGamma(gamma)
 
-
 def disable_gamma():
-    setup()
     set_gamma(list(range(256)))
-
 
 def set_layout(pixel_map = AUTO):
     """Set the layout to Unicorn HAT or Unicorn pHAT
@@ -149,7 +136,6 @@ def get_shape():
 
     global _map
 
-    setup() # Shape is unset until this is called
     return (len(_map), len(_map[0]))
 
 
@@ -171,7 +157,6 @@ def rotation(r=0):
     global _rotation
     global _requested_rotation
 
-    setup()
     if r in [0, 90, 180, 270]:
         _requested_rotation=r
         wx = len(_map)
@@ -211,8 +196,6 @@ def brightness(b=0.2):
     :param b: Brightness from 0.0 to 1.0 (default 0.2)
     """
 
-    setup()
-
     if b > 1 or b < 0:
         raise ValueError('Brightness must be between 0.0 and 1.0')
 
@@ -234,16 +217,11 @@ def get_brightness():
     Returns a float between 0.0 and 1.0
     """
 
-    setup()
-
     return round(ws2812.getBrightness()/128.0, 3)
 
 
 def clear():
     """Clear the buffer"""
-
-    setup()
-
     for x in range(64):
         ws2812.setPixelColorRGB(x, 0, 0, 0)
         _pixels[x] = (0, 0, 0)
@@ -265,8 +243,6 @@ def get_index_from_xy(x, y):
     :param x: Horizontal position from 0 to 7
     :param y: Vertical position from 0 to 7
     """
-
-    setup()
 
     wx = len(_map) - 1
     wy = len(_map[0]) - 1
@@ -316,18 +292,10 @@ def set_pixel(x, y, r, g=None, b=None):
     :param b: Amount of blue from 0 to 255
     """
 
-    setup()
-
     if type(r) is tuple:
         r, g, b = r
-    
     elif type(r) is str:
-        try:
-            r, g, b = COLORS[r.lower()]
-        
-        except KeyError:
-            raise ValueError('Invalid color!')
-
+        r,g,b = colors[r]
     index = get_index_from_xy(x, y)
 
     if index is not None:
@@ -349,6 +317,9 @@ def get_pixel(x, y):
 
 def set_all(r, g=None, b=None):
     """Set all pixels to a specific colour"""
+
+    if type(r) is tuple:
+        r, g, b = r
 
     shade_pixels(lambda x, y: (r, g, b))
 
@@ -391,6 +362,9 @@ def get_pixels():
 def show():
     """Update UnicornHat with the contents of the display buffer"""
 
-    setup()
     ws2812.show()
 
+
+set_layout(HAT)
+
+atexit.register(_clean_shutdown)
