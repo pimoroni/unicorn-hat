@@ -27,6 +27,7 @@ white = (255,255,255)
 
 #alarm must be 24 hour format
 alarm_time = '07:00'
+alarm_flash_time=5
 #inform the world what time the alarm will go off
 print('Alarm set for: ', alarm_time)
 
@@ -63,15 +64,19 @@ def alarm(t,c):
     #grab the hour and minute from the set alarm time
     h = int(alarm_time[:2])
     m = int(alarm_time[3:])
-    #now check if it's time to flash the alarm or not
-    if t.hour == h:
-        if t.minute == m:
-            #it's on the hour and on the minute, time to signal the alarm!
-            uh.brightness(1)
-            #this will make it flash ON when a second is equal and OFF when it is odd
-            if int(t.second % 2) == 0:
-                #when converted to binary 3 = '11', so this will turn ON 2 LEDs per row
-                b = '3'
+    s = 0
+    #create time slot for alarm for today
+    at = t.replace(hour=h,minute=m,second=s)
+    #create a new time object by adding x minutes to the alarm time
+    ft = at + datetime.timedelta(minutes=alarm_flash_time)
+    #now check if it's time to flash the alarm or not, by checking if we have passed the time it is meant to go off or 5 minutes have not gone passed
+    if t >= at and t < ft:
+        #signal the alarm!
+        uh.brightness(1)
+        #this will make it flash ON when a second is equal and OFF when it is odd
+        if int(t.second % 2) == 0:
+            #when converted to binary 3 = '11', so this will turn ON 2 LEDs per row
+            b = '3'
     #always update the pixels, the logic above will decide if it displays or not
     #3 rows, 2 LEDs wide for the alarm
     draw_time_string(b, 2, 6, 1, c)
