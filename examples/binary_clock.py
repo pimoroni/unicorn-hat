@@ -37,24 +37,21 @@ print('Alarm set for: ', alarm_time)
 #o = offset, all values are displayed with right alignment as conventional binary dictates, the offest will move it to the left
 #y = this is the y-axis, i.e. what row you want it displayed on
 #c = colour you want the binary to display as
-def draw_time_string(t,l,o,y,c):
+def draw_time_string(time_string,width,offset,row,colour):
     #convert the time value to binary
-    t = bin(int(t))[2:]
-    #pad the binary with zeroes to left to the specified length
-    t = '{:0>{}}'.format(t,l)
-    #loop through each bit 
-    for i in range(0,len(t)):
-        #grab the actual binary value
-        v = t[i]
+    value = bin(int(time_string))
+    #loop through the given width of the binary time 
+    for i in range(0,width):
         #if it's 1 then the LED should be ON otherwise it will be OFF, i.e. display the colour specified or else it will be black
-        if v == '1':
-            rgb = c
+        if value & 1:
+            rgb = colour
         else:
             rgb = (0,0,0)
         #determine where on the row it should display this LED
-        x = (width - l - o) + i
+        column = (width - width - offset) + i
         #set the pixel... duh!
-        uh.set_pixel(x,y,rgb)
+        uh.set_pixel(column,row,rgb)
+        value >>= 1
 
 #make use of the remaining space to be used an alarm
 def alarm(t,c):
