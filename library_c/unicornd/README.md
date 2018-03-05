@@ -19,7 +19,7 @@ Otherwise make sure you have scons installed, initalize the submodule directory 
 sudo apt install scons
 git submodule update --init
 cd rpi_ws281x
-scons build
+scons build # If scons build fails, try scons without the build argument
 cd ../
 make
 ```
