@@ -15,6 +15,7 @@ uh.set_layout(uh.AUTO)
 uh.brightness(0.5)
 #we need the width of the hat for the padding, see below
 width, height = uh.get_shape()
+right_most_pixel=width-1
 
 #colour tuples 
 red = (255,0,0)
@@ -32,23 +33,33 @@ alarm_flash_time=5
 print('Alarm set for: ', alarm_time)
 
 #This function will draw the binary time at a specified location and colour
-#t = time value which will be converted to binary
-#l = length of the binary string once converted, e.g. day will not go past 31 so only needs 4 bits not like minutes or seconds which need 6 bits
-#o = offset, all values are displayed with right alignment as conventional binary dictates, the offest will move it to the left
-#y = this is the y-axis, i.e. what row you want it displayed on
-#c = colour you want the binary to display as
-def draw_time_string(time_string,width,offset,row,colour):
+#time_string, containing time value which will be used for the bit comparison
+#length, .i.e. width of the binary string once converted, e.g. day will not go past 31 so only needs 4 bits not like minutes or seconds which need 6 bits
+#offset, all values are displayed with right alignment as conventional binary dictates, the offest will move it to the left
+#row you want the time to be displayed on, this is the y-axis
+#colour, you want the binary to display as
+def draw_time_string(time_string,length,offset,row,colour):
     #convert the time value to binary
-    value = bin(int(time_string))
+    value = int(time_string)
     #loop through the given width of the binary time 
-    for i in range(0,width):
-        #if it's 1 then the LED should be ON otherwise it will be OFF, i.e. display the colour specified or else it will be black
+    # Our value will be a number <= 59
+    # It takes 6 binary digits (bits) to represent all possible values
+    # For example: 17 minutes = 0b10001
+    # If we step through these binary digits from right to left,
+    # this results in the first and fifth pixels being lit.
+    for i in range(right_most_pixel,right_most_pixel-length,-1):
+        # The & operator gives us a result containing all the bits that
+        # are set in both values, for example:
+        #
+        # 1 & 1 = 1 (ie: 0b1 & 0b1 = 0b1)
+        # 2 & 1 = 0 (ie: 0b10 & 0b01 = 0b00)
+        # 7 & 27 = 3 (ie: 0b00111 & 0b11011 = 0b00011
         if value & 1:
             rgb = colour
         else:
             rgb = (0,0,0)
         #determine where on the row it should display this LED
-        column = (width - width - offset) + i
+        column = (i - offset) 
         #set the pixel... duh!
         uh.set_pixel(column,row,rgb)
         value >>= 1
@@ -103,8 +114,9 @@ def binary_clock():
 
             #sleep for sec, cos we don't want to wast unnecessary CPU
             sleep(1)
-    except:
-        print("Exiting")
+    except Exception as e:
+        print(e)
+    print("Exiting")
 
 if __name__ == "__main__":
     binary_clock()
