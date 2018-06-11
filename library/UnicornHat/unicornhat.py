@@ -364,7 +364,7 @@ def set_all(r, g=None, b=None):
     shade_pixels(lambda x, y: (r, g, b))
 
 
-def shade_pixels(shader):
+def shade_pixels(shader, *args):
     """Set all pixels using a pixel shader style function
 
     :param pixels: A function which accepts the x and y positions of a pixel and returns values r, g and b
@@ -381,7 +381,7 @@ def shade_pixels(shader):
     width, height = get_shape()
     for x in range(width):
         for y in range(height):
-            r, g, b = shader(x, y)
+            r, g, b = shader(x, y, *args)
             set_pixel(x, y, r, g, b)
 
 
