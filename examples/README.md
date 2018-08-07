@@ -3,11 +3,11 @@ Unified Unicorn HAT and pHAT Examples
 
 The examples in this folder must be run with `sudo`, like so:
 
-    sudo ./clock.py
+    sudo ./binary_clock.py
 
 or
 
-    sudo python clock.py
+    sudo python binary_clock.py
 
 
 The library can detect if you're using a Unicorn HAT or a Unicorn pHAT.
@@ -106,6 +106,11 @@ snow.py
 -------
 
 Falling snowflake pixels.
+
+binary_clock.py
+---------------
+
+Use the first four lines of the display as a binary clock
 
 
 
