@@ -367,7 +367,7 @@ def set_all(r, g=None, b=None):
 def shade_pixels(shader, *args):
     """Set all pixels using a pixel shader style function
 
-    :param pixels: A function which accepts the x and y positions of a pixel and returns values r, g and b
+    :param shader: A function which accepts the x and y positions of a pixel and returns a tuple (r, g, b)
 
     For example, this would be synonymous to clear::
 
