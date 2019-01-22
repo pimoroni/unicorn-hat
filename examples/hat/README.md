@@ -12,6 +12,16 @@ or
 
 The examples in this folder are intended for the Unicorn HAT and have not been designed for the pHAT geometry. Feel free to give it a try and move them up inside the main examples folder if you are successful making them work adequately with both boards.
 
+candle.py
+---------
+
+A simple animation simulating a candle flame.
+
+candle_with_timer.py
+--------------------
+
+Builds upon candle.py by adding a fade-out effect to make it useful as a soothing sleep light that will reduce in size and brightnes gradually.
+
 clock.py
 --------
 
