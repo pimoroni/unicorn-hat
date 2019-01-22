@@ -79,7 +79,7 @@ end_time = start_time + (60 * minutes) # spanning midnight OK, since end_time ca
 # Example:  brightness=0.5 * fade_minutes=10 --> 5 minute fade-out period
 fade_minutes = 30
 
-print('Lighting a candle for',round( ( end_time - start_time )/60, 0 ),'minutes.')
+print('Lighting a candle for {} minutes.'.format(round( ( end_time - start_time )/60, 0 )))
 
 try:
     while time.time() < end_time:
