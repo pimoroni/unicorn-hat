@@ -25,7 +25,7 @@ Python users should probably ignore most of this repository and just:
 **Full install ( recommended ):**
 
 ```bash
-\curl -sS https://get.pimoroni.com/unicornhat | bash
+curl -sS https://get.pimoroni.com/unicornhat | bash
 ```
 
 **Install for Python 3:**
