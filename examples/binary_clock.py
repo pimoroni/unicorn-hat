@@ -6,7 +6,7 @@ from time import sleep
 
 print("""True Binary Clock made by Jarrod Price, inspired by Iorga Dragos Florian and reviewed by Philip Howard
 Displays the time on the LEDs as follows:
-Top row ->  First 4 = Month(Pink), Last 4 = Day(Blue)
+Top row ->  First 4 = Month(Pink), Last 4 = Day(Blue/Green. If Green add 16 to value shown, no lights = 16th)
 Second row ->  First 2 = Alarm(Orange), Last 6 = Hour(Red)
 Third row -> First 2 = Alarm(Orange), Last 6 = Minute(Yellow)
 Fourth row ->  First 2 = Alarm(Orange), Last 6 = Second(Green)""")
@@ -107,7 +107,27 @@ def binary_clock():
 
             # draw each time string in their specific locations
             draw_time_string(now.month, 4, 4, 0, magenta)
-            draw_time_string(now.day >> 1, 4, 0, 0, lightblue if now.day & 16 else blue)
+
+            # Day field is 4 bits (lights) long, and as we don't use 0-indexed
+            # days of the month, that means we can only represent 1-15 (0b1 - 0b1111)
+            # To solve this, if the day > 15 (0b1111), we change the colour to indidcate
+            # that 16 (0b10000) must be added to the displayed value.
+            if now.day > 0b1111:
+                # Day > 15
+
+                # Truncate the day to only 4 bits, as we only have 4 lights
+                # This will remove the bit representing 16, which will
+                # be encoded as colour
+                day = now.day & 0b1111
+
+                # Encode the missing bit as colour
+                day_colour = green
+            else:
+                # Day is 15 or less so the bit representing 16 is not set and the number can be displayed normally
+                day = now.day
+                day_colour = blue
+
+            draw_time_string(day, 4, 0, 0, day_colour)
             draw_time_string(now.hour, 6, 0, 1, red)
             draw_time_string(now.minute, 6, 0, 2, yellow)
             draw_time_string(now.second, 6, 0, 3, green)
