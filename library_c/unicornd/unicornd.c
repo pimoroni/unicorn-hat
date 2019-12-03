@@ -146,6 +146,7 @@ init_unicorn_hat(void)
 #define	UNICORND_CMD_SET_PIXEL      1
 #define	UNICORND_CMD_SET_ALL_PIXELS 2
 #define	UNICORND_CMD_SHOW           3
+#define	UNICORND_CMD_CLEAR          4
 
 #define recv_or_return(socket, buf, len, flags) \
 {                                               \
@@ -275,6 +276,11 @@ handle_client(int client_socket) {
 				show();
 				break;
 
+			case UNICORND_CMD_CLEAR:
+
+				clear_led_buffer();
+				break;
+				
 			default:
 
 				close(client_socket);
