@@ -16,7 +16,7 @@ def connect():
     global sock
     sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     sock.connect(UNICORND_SOCKET_PATH)
-    atexit.register(close
+    atexit.register(close)
 
 def set_brightness(val):
     sock.send(struct.pack('=cc',*[chr(UNICORND_CMD_SET_BRIGHTNESS), val]))
