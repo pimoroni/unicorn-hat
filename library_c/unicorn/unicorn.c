@@ -368,12 +368,39 @@ int main(int argc, char **argv) {
         }
     }
 
+    /* All terminating signals, as described by 'man 7 signal'. */
+    static const int term_signals[] = {
+        /* POSIX.1-1990 */
+        SIGHUP,
+        SIGINT,
+        SIGQUIT,
+        SIGILL,
+        SIGABRT,
+        SIGFPE,
+        SIGKILL,
+        SIGSEGV,
+        SIGPIPE,
+        SIGALRM,
+        SIGTERM,
+        SIGUSR1,
+        SIGUSR2,
+        /* POSIX.1-2001 */
+        SIGBUS,
+        SIGPOLL,
+        SIGPROF,
+        SIGSYS,
+        SIGTRAP,
+        SIGVTALRM,
+        SIGXCPU,
+        SIGXFSZ,
+    };
+
     int i;
-    for (i = 0; i < 64; i++) {
+    for (i = 0; i < sizeof(term_signals)/sizeof(term_signals[0]); i++) {
         struct sigaction sa;
         memset(&sa, 0, sizeof(sa));
         sa.sa_handler = unicorn_exit;
-        sigaction(i, &sa, NULL);
+        sigaction(term_signals[i], &sa, NULL);
     }
 
     setvbuf(stdout, NULL, _IONBF, 0);
