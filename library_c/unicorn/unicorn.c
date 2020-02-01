@@ -41,6 +41,7 @@ ws2811_t ledstring =
             .count      = LED_COUNT,
             .invert     = 0,
             .brightness = 55,
+            .strip_type = WS2811_STRIP_GRB,
         }
     }
 };
