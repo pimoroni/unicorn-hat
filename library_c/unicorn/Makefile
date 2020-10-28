@@ -1,13 +1,15 @@
-.PHONY: clean lib
+.PHONY: all clean
+
+ws281x_path = ../unicornd/rpi_ws281x
 
 all: unicorn
 
-lib:
-	make -C ../../library/rpi-ws281x/lib/ lib
+$(ws281x_path)/libws2811.a:
+	scons -C $(ws281x_path)
 
-unicorn: lib
-	gcc -Wall unicorn.c -o unicorn -I../../library/rpi-ws281x/lib -L../../library/rpi-ws281x/lib -lm -lws2811 -lpng
+unicorn: $(ws281x_path)/libws2811.a unicorn.c
+	gcc -Wall unicorn.c -o unicorn -I$(ws281x_path) -L$(ws281x_path) -lm -lws2811 -lpng
 
 clean:
-	make -C ../../library/rpi-ws281x/lib/ clean
+	scons -C $(ws281x_path) --clean
 	-rm -f unicorn
