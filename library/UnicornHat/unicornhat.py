@@ -54,6 +54,8 @@ COLORS = {
     'indigo':(75,0,130)
 }
 
+# Don't show warnings if UNSAFE
+UNSAFE = False
 
 """
 Store the rotation of UnicornHat, defaults to
@@ -120,6 +122,9 @@ def setup():
 
     _is_setup = True
 
+def set_unsafe(safe=False):
+    global UNSAFE
+    UNSAFE=safe
 
 def set_gamma(gamma):
     setup()
@@ -222,6 +227,7 @@ def brightness(b=0.2):
     :param b: Brightness from 0.0 to 1.0 (default 0.2)
     """
 
+    global UNSAFE
     setup()
 
     if b > 1 or b < 0:
@@ -233,7 +239,7 @@ def brightness(b=0.2):
 
     brightness = int(b*128.0)
 
-    if brightness < 30:
+    if brightness < 30 and not UNSAFE:
         print("Warning: Low brightness chosen, your UnicornHAT might not light up!")
 
     ws2812.setBrightness(brightness)
