@@ -97,4 +97,10 @@ Sets the pixel at x,y to colour r,g,b. The x value should be between 0 and 7, th
 
 Note that for compatibility with Unicorn HAT y values between 4 and 7 will be accepted but wrap around the range. In other words they are technically acceptable but should be avoided when writing programs designed for the pHAT.
 
+```python
+set_unsafe( True )
+```
+
+Disables warnings about brightness while running.
+
 All other functions detailed in the HAT sections are otherwise valid and identical.
