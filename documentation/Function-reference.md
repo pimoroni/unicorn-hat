@@ -42,7 +42,7 @@ Clears the buffer and updates Unicorn HAT immediately by calling clear, and then
 set_pixel(x, y, r, g, b)
 ```
 
-Sets the pixel at x,y to colour r,g,b. The x and y values should be between 0 and 7, and r, g, b between 0 and 255. The actual brightness value displayed will depend upon the global brightness.
+Sets the pixel at x,y to colour r,g,b. The x and y values should be between 0 and 7, and r, g, b between 0 and 255. The actual brightness value displayed will depend upon the global brightness. You can also set r to a predefined color (check the code) or a hex value like FFB4D2 and omit g and b.
 
 ```python
 get_pixel(x, y)

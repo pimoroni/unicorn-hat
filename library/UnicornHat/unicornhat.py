@@ -316,6 +316,18 @@ def set_pixel_hsv(x, y, h, s=None, v=None):
 
     set_pixel(x, y, r, g, b)
 
+def convert_hex(hexstr=None):
+    """Attempt to convert the input string from a
+    hex range (like HTML) to a RGB range
+
+    :param hexstr: Hex string like FFB4C0
+    """
+
+    r = int("0x"+hexstr[0:2], 16)
+    g = int("0x"+hexstr[3:5], 16)
+    b = int("0x"+hexstr[5:], 16)
+
+    return (r, g, b, )
 
 def set_pixel(x, y, r, g=None, b=None):
     """Set a single pixel to RGB colour
@@ -334,7 +346,10 @@ def set_pixel(x, y, r, g=None, b=None):
     
     elif type(r) is str:
         try:
-            r, g, b = COLORS[r.lower()]
+            if r.lower() in COLORS:
+                r, g, b = COLORS[r.lower()]
+            else:
+                r, g, b = convert_hex(r)
         
         except KeyError:
             raise ValueError('Invalid color!')
